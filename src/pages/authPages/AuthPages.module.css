@@ -1,0 +1,16 @@
+.form-container {
+  border: 1px solid black;
+  border-radius: 25px;
+  padding: 2rem;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center; /* center horizontal */
+  align-items: center;
+}
