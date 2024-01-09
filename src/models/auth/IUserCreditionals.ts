@@ -1,11 +1,11 @@
 export interface IUserCreditionals {
-  email: string;
+  login: string;
   password: string;
 }
 
-export function validateEmail(email: string): boolean {
+export function validateEmail(login: string): boolean {
   let isValid = false;
-  if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+  if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(login)) {
     isValid = true;
   }
   return isValid;

@@ -10,7 +10,7 @@ import {
 
 export default function LogInForm() {
   const [formState, setFormState] = useState<IUserCreditionals>({
-    email: "",
+    login: "",
     password: "",
   });
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
@@ -21,7 +21,7 @@ export default function LogInForm() {
   }
 
   let isValidForm =
-    validateEmail(formState.email) && validatePassword(formState.password);
+    validateEmail(formState.login) && validatePassword(formState.password);
 
   return (
     <form onSubmit={submit} noValidate>
@@ -32,10 +32,9 @@ export default function LogInForm() {
         onChange={(email) => {
           setFormState({
             ...formState,
-            email: email,
+            login: email,
           });
-          let isValid = validateEmail(email);
-          setIsValidEmail(isValid);
+          setIsValidEmail(validateEmail(email));
         }}
         isValid={isValidEmail}
         errorMessage={"Некорректный формат электронной почты"}
@@ -49,8 +48,7 @@ export default function LogInForm() {
             ...formState,
             password: password,
           });
-          let isVlalid = validatePassword(password);
-          setIsValidPassword(isVlalid);
+          setIsValidPassword(validatePassword(password));
         }}
         isValid={isValidPassword}
         errorMessage={
