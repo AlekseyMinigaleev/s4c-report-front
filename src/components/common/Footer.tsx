@@ -1,9 +1,11 @@
-import React from "react"
+import { createPortal } from "react-dom";
 
 export default function Footer() {
-  return (
-    <footer>
-      footer
-    </footer>
-  ) 
-};
+  const rootElement = document.getElementById("root");
+
+  if (!rootElement) {
+    return null;
+  }
+
+  return createPortal(<footer>footer</footer>, rootElement);
+}
