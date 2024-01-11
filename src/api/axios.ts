@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 const axiosInstance = axios.create({
   baseURL: "http://localhost:5041/api/",
 });
@@ -9,4 +9,5 @@ axiosInstance.interceptors.request.use((config) => {
   }
   return config;
 });
+
 export default axiosInstance;

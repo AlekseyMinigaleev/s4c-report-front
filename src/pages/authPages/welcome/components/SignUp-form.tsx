@@ -1,33 +1,31 @@
 import React, { useState } from "react";
-import InputField from "../InputField/InputField";
-import classes from "./Form.module.css";
-import Button from "../Button/Button";
+import InputField from "../../components/InputField/InputField";
+import Button from "../../components/Button/Button";
 import {
-  IUserCreditionals,
-  validateEmail,
+  validateLogin,
   validatePassword,
-} from "../../../models/auth/IUserCreditionals";
-import axios from "../../../api/axios";
+} from "../../../../models/auth/IUserCreditionals";
+import {
+  CreateAccountPayload,
+  DefaultErrorMessagesState,
+  ErrorMessages,
+  createAccount,
+} from "../../../../api/auth/CreateAccount";
 
-interface SignUpFormFields {
-  creditionals: IUserCreditionals;
+interface FormFields {
+  email: string;
   developerPageUrl: string;
   rsyaAuthorizationToken: string;
+  password: string;
   repeatPassword: string;
 }
 
-interface ValidationState {
+interface FormValidationState {
   email: boolean;
   developerPageUrl: boolean;
   rsyaAuthorizationToken: boolean;
   password: boolean;
   repeatPassword: boolean;
-}
-
-interface ServerErrorMessages {
-  login: string[];
-  developerPageUrl: string[];
-  rsyaAuthorizationToken: string[];
 }
 
 type ValidationFieldsName =
@@ -39,17 +37,15 @@ type ValidationFieldsName =
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [formState, setFormState] = useState<SignUpFormFields>({
-    creditionals: {
-      login: "",
-      password: "",
-    },
+  const [formState, setFormState] = useState<FormFields>({
+    email: "",
+    password: "",
     developerPageUrl: "",
     rsyaAuthorizationToken: "",
     repeatPassword: "",
   });
 
-  const [validationState, setValidationState] = useState<ValidationState>({
+  const [validationState, setValidationState] = useState<FormValidationState>({
     email: true,
     developerPageUrl: true,
     rsyaAuthorizationToken: true,
@@ -57,12 +53,9 @@ export default function SignUpForm() {
     repeatPassword: true,
   });
 
-  const [serverErrorMessages, setServerErrorMessages] =
-    useState<ServerErrorMessages>({
-      login: [],
-      developerPageUrl: [],
-      rsyaAuthorizationToken: [],
-    });
+  const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
+    DefaultErrorMessagesState
+  );
 
   const defaultErrorMessages = {
     email: "Некорректный формат электронной почты",
@@ -71,7 +64,7 @@ export default function SignUpForm() {
   };
 
   const fieldValidations: Record<string, (value: string) => boolean> = {
-    email: validateEmail,
+    email: validateLogin,
     developerPageUrl: validateDeveloperPageUrl,
     rsyaAuthorizationToken: validateRsyaAuthorizationToken,
     password: validatePassword,
@@ -89,26 +82,14 @@ export default function SignUpForm() {
     );
   }
   function validateRepeatPassword(repeatPassword: string): boolean {
-    return formState.creditionals.password == repeatPassword;
+    return formState.password == repeatPassword;
   }
 
   function handleFieldChange(fieldName: ValidationFieldsName, value: string) {
-    if (fieldName == "password") {
-      setFormState((prev) => ({
-        ...prev,
-        creditionals: { ...prev.creditionals, [fieldName]: value },
-      }));
-    } else if (fieldName == "email") {
-      setFormState((prev) => ({
-        ...prev,
-        creditionals: { ...prev.creditionals, login: value },
-      }));
-    } else {
-      setFormState((prev) => ({
-        ...prev,
-        [fieldName]: value,
-      }));
-    }
+    setFormState((prev) => ({
+      ...prev,
+      [fieldName]: value,
+    }));
 
     setValidationState((prev) => ({
       ...prev,
@@ -123,53 +104,53 @@ export default function SignUpForm() {
     return errorMessages.length == 0 ? defaultErrorMessage : errorMessages[0];
   }
 
-  function clearErrorMessages() {
-    setServerErrorMessages({
-      login: [],
-      developerPageUrl: [],
-      rsyaAuthorizationToken: [],
-    });
-  }
+  async function executeCreateAccount() {
+    setIsLoading(true);
 
-  async function createAccount() {
-    try {
-      setIsLoading(true);
-      await axios.post(
-        "Authentication/CreateAccount",
-        JSON.stringify({
-          credentionals: formState.creditionals,
-          developerPageUrl: formState.developerPageUrl,
-          rsyaAuthorizationToken: formState.rsyaAuthorizationToken,
-        })
-      );
-      clearErrorMessages();
-    } catch (error: any) {
-      if (error.response && error.response.data) {
-        const serverErrors: ServerErrorMessages = {
-          login: error.response.data.login || [],
-          developerPageUrl: error.response.data.developerPageUrl || [],
-          rsyaAuthorizationToken:
-            error.response.data.rsyaAuthorizationToken || [],
-        };
-        setServerErrorMessages(serverErrors);
+    let payload: CreateAccountPayload = {
+      credentionals: {
+        login: formState.email,
+        password: formState.password,
+      },
+      developerPageUrl: formState.developerPageUrl,
+      rsyaAuthorizationToken: formState.rsyaAuthorizationToken,
+    };
+
+    let response = await createAccount(payload);
+
+    if (response.statusCode == 200) {
+      setValidationState({
+        ...validationState,
+        email: response.errorMessages.login.length == 0,
+        developerPageUrl: response.errorMessages.developerPageUrl.length == 0,
+        rsyaAuthorizationToken:
+          response.errorMessages.rsyaAuthorizationToken.length == 0,
+      });
+      setIsLoading(false);
+
+      return;
+    }
+
+    if (response.statusCode == 400) {
+      if (response.errorMessages != null) {
+        setErrorMessages(response.errorMessages);
 
         setValidationState({
           ...validationState,
-
-          email: serverErrors.login.length == 0,
-          developerPageUrl: serverErrors.developerPageUrl.length == 0,
+          email: response.errorMessages.login.length == 0,
+          developerPageUrl: response.errorMessages.developerPageUrl.length == 0,
           rsyaAuthorizationToken:
-            serverErrors.rsyaAuthorizationToken.length == 0,
+            response.errorMessages.rsyaAuthorizationToken.length == 0,
         });
       }
-    } finally {
       setIsLoading(false);
+      return;
     }
   }
 
   let isValidFormForRequest =
-    validateEmail(formState.creditionals.login) &&
-    validatePassword(formState.creditionals.password) &&
+    validateLogin(formState.email) &&
+    validatePassword(formState.password) &&
     validateDeveloperPageUrl(formState.developerPageUrl) &&
     validateRsyaAuthorizationToken(formState.rsyaAuthorizationToken) &&
     validateRepeatPassword(formState.repeatPassword);
@@ -184,7 +165,7 @@ export default function SignUpForm() {
         isValid={validationState.email}
         errorMessage={getErrorMessage(
           defaultErrorMessages.email,
-          serverErrorMessages.login
+          errorMessages.login
         )}
       />
 
@@ -198,7 +179,7 @@ export default function SignUpForm() {
         isValid={validationState.developerPageUrl}
         errorMessage={getErrorMessage(
           defaultErrorMessages.developerPageUrl,
-          serverErrorMessages.developerPageUrl
+          errorMessages.developerPageUrl
         )}
       />
 
@@ -212,7 +193,7 @@ export default function SignUpForm() {
         isValid={validationState.rsyaAuthorizationToken}
         errorMessage={getErrorMessage(
           defaultErrorMessages.rsyaAuthorizationToken,
-          serverErrorMessages.rsyaAuthorizationToken
+          errorMessages.rsyaAuthorizationToken
         )}
       />
 
@@ -238,7 +219,7 @@ export default function SignUpForm() {
         errorMessage={"Пароли не совпадают"}
       />
       <Button
-        onClick={createAccount}
+        onClick={executeCreateAccount}
         isActive={isValidFormForRequest}
         disabled={!isValidFormForRequest || isLoading}
       >

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import InputField from "../InputField/InputField";
+import InputField from "../../components/InputField/InputField";
 import classes from "./Form.module.css";
-import Button from "../Button/Button";
+import Button from "../../components/Button/Button";
 import {
-  IUserCreditionals,
-  validateEmail,
+  validateLogin,
   validatePassword,
-} from "../../../models/auth/IUserCreditionals";
+} from "../../../../models/auth/IUserCreditionals";
+import { UserCreditionals } from "../../../../api/auth/UserCreditionals";
 
 export default function LogInForm() {
-  const [formState, setFormState] = useState<IUserCreditionals>({
+  const [formState, setFormState] = useState<UserCreditionals>({
     login: "",
     password: "",
   });
@@ -21,7 +21,7 @@ export default function LogInForm() {
   }
 
   let isValidForm =
-    validateEmail(formState.login) && validatePassword(formState.password);
+    validateLogin(formState.login) && validatePassword(formState.password);
 
   return (
     <form onSubmit={submit} noValidate>
@@ -34,7 +34,7 @@ export default function LogInForm() {
             ...formState,
             login: email,
           });
-          setIsValidEmail(validateEmail(email));
+          setIsValidEmail(validateLogin(email));
         }}
         isValid={isValidEmail}
         errorMessage={"Некорректный формат электронной почты"}
