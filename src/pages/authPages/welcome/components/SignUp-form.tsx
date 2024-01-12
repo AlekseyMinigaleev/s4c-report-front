@@ -2,158 +2,85 @@ import React, { useState } from "react";
 import InputField from "../../components/InputField/InputField";
 import Button from "../../components/Button/Button";
 import {
-  validateLogin,
-  validatePassword,
-} from "../../../../models/auth/IUserCreditionals";
-import {
   CreateAccountPayload,
   DefaultErrorMessagesState,
   ErrorMessages,
   createAccount,
+  Response,
 } from "../../../../api/auth/CreateAccount";
+import {
+  validateLogin,
+  validateDeveloperPageUrl,
+  validateRsyaAuthorizationToken,
+  validatePassword,
+  validateRepeatPassword,
+} from "../helpers/validations";
+import { useFormField } from "../../../../hooks/useFormField";
+import { getErrorMessage } from "../helpers/utils";
 
-interface FormFields {
-  email: string;
-  developerPageUrl: string;
-  rsyaAuthorizationToken: string;
-  password: string;
-  repeatPassword: string;
-}
-
-interface FormValidationState {
-  email: boolean;
-  developerPageUrl: boolean;
-  rsyaAuthorizationToken: boolean;
-  password: boolean;
-  repeatPassword: boolean;
-}
-
-type ValidationFieldsName =
-  | "email"
-  | "developerPageUrl"
-  | "rsyaAuthorizationToken"
-  | "password"
-  | "repeatPassword";
+const defaultErrorMessages = {
+  email: "Некорректный формат электронной почты",
+  developerPageUrl: "Указана не корректная ссылка на страницу разработчика",
+  rsyaAuthorizationToken: "Указан неверный токен авторизации",
+};
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [formState, setFormState] = useState<FormFields>({
-    email: "",
-    password: "",
-    developerPageUrl: "",
-    rsyaAuthorizationToken: "",
-    repeatPassword: "",
-  });
 
-  const [validationState, setValidationState] = useState<FormValidationState>({
-    email: true,
-    developerPageUrl: true,
-    rsyaAuthorizationToken: true,
-    password: true,
-    repeatPassword: true,
-  });
+  const email = useFormField<string>("", validateLogin);
+  const password = useFormField<string>("", validatePassword);
+  const developerPageUrl = useFormField<string>("", validateDeveloperPageUrl);
+  const rsyaAuthorizationToken = useFormField<string>(
+    "",
+    validateRsyaAuthorizationToken
+  );
+  const repeatPassword = useFormField<string>("", validateRepeatPassword);
 
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
     DefaultErrorMessagesState
   );
 
-  const defaultErrorMessages = {
-    email: "Некорректный формат электронной почты",
-    developerPageUrl: "Указана не корректная ссылка на страницу разработчика",
-    rsyaAuthorizationToken: "Указан неверный токен авторизации",
-  };
-
-  const fieldValidations: Record<string, (value: string) => boolean> = {
-    email: validateLogin,
-    developerPageUrl: validateDeveloperPageUrl,
-    rsyaAuthorizationToken: validateRsyaAuthorizationToken,
-    password: validatePassword,
-    repeatPassword: validateRepeatPassword,
-  };
-
-  function validateDeveloperPageUrl(email: string): boolean {
-    let pattern = "https://yandex.ru/games/developer?name=";
-    return email.startsWith(pattern);
-  }
-  function validateRsyaAuthorizationToken(rsyaAuthorizationToken: string) {
-    return (
-      /^[a-zA-Z0-9_]+$/.test(rsyaAuthorizationToken) ||
-      rsyaAuthorizationToken == ""
-    );
-  }
-  function validateRepeatPassword(repeatPassword: string): boolean {
-    return formState.password == repeatPassword;
-  }
-
-  function handleFieldChange(fieldName: ValidationFieldsName, value: string) {
-    setFormState((prev) => ({
-      ...prev,
-      [fieldName]: value,
-    }));
-
-    setValidationState((prev) => ({
-      ...prev,
-      [fieldName]: fieldValidations[fieldName](value),
-    }));
-  }
-
-  function getErrorMessage(
-    defaultErrorMessage: string,
-    errorMessages: string[]
-  ): string {
-    return errorMessages.length == 0 ? defaultErrorMessage : errorMessages[0];
-  }
-
-  async function executeCreateAccount() {
+  async function handleCreateAccount() {
     setIsLoading(true);
 
-    let payload: CreateAccountPayload = {
+    const response = await sendCreateAccountRequest();
+
+    setErrorMessages(response.errorMessages);
+
+    setValidationStates(response.errorMessages);
+
+    setIsLoading(false);
+  }
+
+  async function sendCreateAccountRequest(): Promise<Response> {
+    const payload: CreateAccountPayload = {
       credentionals: {
-        login: formState.email,
-        password: formState.password,
+        login: email.value,
+        password: password.value,
       },
-      developerPageUrl: formState.developerPageUrl,
-      rsyaAuthorizationToken: formState.rsyaAuthorizationToken,
+      developerPageUrl: developerPageUrl.value,
+      rsyaAuthorizationToken: rsyaAuthorizationToken.value,
     };
 
-    let response = await createAccount(payload);
+    const response = await createAccount(payload);
 
-    if (response.statusCode == 200) {
-      setValidationState({
-        ...validationState,
-        email: response.errorMessages.login.length == 0,
-        developerPageUrl: response.errorMessages.developerPageUrl.length == 0,
-        rsyaAuthorizationToken:
-          response.errorMessages.rsyaAuthorizationToken.length == 0,
-      });
-      setIsLoading(false);
+    return response;
+  }
 
-      return;
-    }
-
-    if (response.statusCode == 400) {
-      if (response.errorMessages != null) {
-        setErrorMessages(response.errorMessages);
-
-        setValidationState({
-          ...validationState,
-          email: response.errorMessages.login.length == 0,
-          developerPageUrl: response.errorMessages.developerPageUrl.length == 0,
-          rsyaAuthorizationToken:
-            response.errorMessages.rsyaAuthorizationToken.length == 0,
-        });
-      }
-      setIsLoading(false);
-      return;
-    }
+  function setValidationStates(errorMessages: ErrorMessages) {
+    email.setIsValid(errorMessages.login.length == 0);
+    developerPageUrl.setIsValid(errorMessages.developerPageUrl.length == 0);
+    rsyaAuthorizationToken.setIsValid(
+      errorMessages.rsyaAuthorizationToken.length == 0
+    );
   }
 
   let isValidFormForRequest =
-    validateLogin(formState.email) &&
-    validatePassword(formState.password) &&
-    validateDeveloperPageUrl(formState.developerPageUrl) &&
-    validateRsyaAuthorizationToken(formState.rsyaAuthorizationToken) &&
-    validateRepeatPassword(formState.repeatPassword);
+    validateLogin(email.value) &&
+    validatePassword(password.value) &&
+    validateDeveloperPageUrl(developerPageUrl.value) &&
+    validateRsyaAuthorizationToken(rsyaAuthorizationToken.value) &&
+    validateRepeatPassword(repeatPassword.value, password.value);
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -161,8 +88,8 @@ export default function SignUpForm() {
         type="email"
         required={true}
         placeholderText="Почта"
-        onChange={(email: string) => handleFieldChange("email", email)}
-        isValid={validationState.email}
+        onChange={email.handleChange}
+        isValid={email.isValid}
         errorMessage={getErrorMessage(
           defaultErrorMessages.email,
           errorMessages.login
@@ -173,10 +100,8 @@ export default function SignUpForm() {
         type="text"
         required={true}
         placeholderText="Ссылка на страницу разработчика"
-        onChange={(developerPageUrl: string) =>
-          handleFieldChange("developerPageUrl", developerPageUrl)
-        }
-        isValid={validationState.developerPageUrl}
+        onChange={developerPageUrl.handleChange}
+        isValid={developerPageUrl.isValid}
         errorMessage={getErrorMessage(
           defaultErrorMessages.developerPageUrl,
           errorMessages.developerPageUrl
@@ -187,10 +112,8 @@ export default function SignUpForm() {
         type="text"
         required={false}
         placeholderText="Токен авторизации РСЯ"
-        onChange={(rsyaAyuthorizationToken: string) =>
-          handleFieldChange("rsyaAuthorizationToken", rsyaAyuthorizationToken)
-        }
-        isValid={validationState.rsyaAuthorizationToken}
+        onChange={rsyaAuthorizationToken.handleChange}
+        isValid={rsyaAuthorizationToken.isValid}
         errorMessage={getErrorMessage(
           defaultErrorMessages.rsyaAuthorizationToken,
           errorMessages.rsyaAuthorizationToken
@@ -201,8 +124,8 @@ export default function SignUpForm() {
         type="password"
         required={true}
         placeholderText="Пароль"
-        onChange={(password: string) => handleFieldChange("password", password)}
-        isValid={validationState.password}
+        onChange={password.handleChange}
+        isValid={password.isValid}
         errorMessage={
           "Минимальная длина пароля - 8 символов, пароль должен содержать хотя бы одну: заглавную букву, строчную букву, цифру"
         }
@@ -212,14 +135,12 @@ export default function SignUpForm() {
         type="password"
         required={true}
         placeholderText="повтор пароля"
-        onChange={(repeatPassword: string) => {
-          handleFieldChange("repeatPassword", repeatPassword);
-        }}
-        isValid={validateRepeatPassword(formState.repeatPassword)}
+        onChange={repeatPassword.handleChange}
+        isValid={validateRepeatPassword(repeatPassword.value, password.value)}
         errorMessage={"Пароли не совпадают"}
       />
       <Button
-        onClick={executeCreateAccount}
+        onClick={handleCreateAccount}
         isActive={isValidFormForRequest}
         disabled={!isValidFormForRequest || isLoading}
       >

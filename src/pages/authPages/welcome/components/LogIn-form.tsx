@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import InputField from "../../components/InputField/InputField";
 import classes from "./Form.module.css";
 import Button from "../../components/Button/Button";
-import {
-  validateLogin,
-  validatePassword,
-} from "../../../../models/auth/IUserCreditionals";
 import { UserCreditionals } from "../../../../api/auth/UserCreditionals";
+import { validateLogin, validatePassword } from "../helpers/validations";
 
 export default function LogInForm() {
   const [formState, setFormState] = useState<UserCreditionals>({

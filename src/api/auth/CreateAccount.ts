@@ -31,6 +31,7 @@ export async function createAccount(
     statusCode: 123,
     errorMessages: DefaultErrorMessagesState,
   };
+
   await axios
     .post("authentication/createAccount", JSON.stringify(payload))
     .then((response) => {
@@ -40,7 +41,6 @@ export async function createAccount(
       };
     })
     .catch((error) => {
-      console.log(`error: ${error}`);
       result = {
         statusCode: error.response.status,
         errorMessages: {
