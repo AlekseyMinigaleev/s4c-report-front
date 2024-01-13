@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import axios from "../axios";
 import { UserCreditionals } from "./UserCreditionals";
 
@@ -7,18 +8,13 @@ export interface CreateAccountPayload {
   rsyaAuthorizationToken: string;
 }
 
-export interface Response {
-  statusCode: number;
-  errorMessages: ErrorMessages;
-}
-
 export interface ErrorMessages {
   login: string[];
   developerPageUrl: string[];
   rsyaAuthorizationToken: string[];
 }
 
-export const DefaultErrorMessagesState: ErrorMessages = {
+export const DEFAULT_ERROR_MESSAGES: ErrorMessages = {
   login: [],
   developerPageUrl: [],
   rsyaAuthorizationToken: [],
@@ -26,30 +22,17 @@ export const DefaultErrorMessagesState: ErrorMessages = {
 
 export async function createAccount(
   payload: CreateAccountPayload
-): Promise<Response> {
-  let result: Response = {
-    statusCode: 123,
-    errorMessages: DefaultErrorMessagesState,
+): Promise<ErrorMessages> {
+  const response = await axios.post(
+    "authentication/createAccount",
+    JSON.stringify(payload)
+  );
+
+  const errorMessages: ErrorMessages = {
+    login: response.data?.login || [],
+    developerPageUrl: response.data?.developerPageUrl || [],
+    rsyaAuthorizationToken: response?.data.rsyaAuthorizationToken || [],
   };
 
-  await axios
-    .post("authentication/createAccount", JSON.stringify(payload))
-    .then((response) => {
-      result = {
-        statusCode: response.status,
-        errorMessages: DefaultErrorMessagesState,
-      };
-    })
-    .catch((error) => {
-      result = {
-        statusCode: error.response.status,
-        errorMessages: {
-          login: error.response.data?.login || [],
-          developerPageUrl: error.response.data?.developerPageUrl || [],
-          rsyaAuthorizationToken:
-            error.response?.data.rsyaAuthorizationToken || [],
-        },
-      };
-    });
-  return result;
+  return errorMessages;
 }

@@ -3,10 +3,9 @@ import InputField from "../../components/InputField/InputField";
 import Button from "../../components/Button/Button";
 import {
   CreateAccountPayload,
-  DefaultErrorMessagesState,
   ErrorMessages,
   createAccount,
-  Response,
+  DEFAULT_ERROR_MESSAGES,
 } from "../../../../api/auth/CreateAccount";
 import {
   validateLogin,
@@ -26,6 +25,9 @@ const defaultErrorMessages = {
 
 export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
+    DEFAULT_ERROR_MESSAGES
+  );
 
   const email = useFormField<string>("", validateLogin);
   const password = useFormField<string>("", validatePassword);
@@ -36,23 +38,8 @@ export default function SignUpForm() {
   );
   const repeatPassword = useFormField<string>("", validateRepeatPassword);
 
-  const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
-    DefaultErrorMessagesState
-  );
-
   async function handleCreateAccount() {
     setIsLoading(true);
-
-    const response = await sendCreateAccountRequest();
-
-    setErrorMessages(response.errorMessages);
-
-    setValidationStates(response.errorMessages);
-
-    setIsLoading(false);
-  }
-
-  async function sendCreateAccountRequest(): Promise<Response> {
     const payload: CreateAccountPayload = {
       credentionals: {
         login: email.value,
@@ -62,9 +49,13 @@ export default function SignUpForm() {
       rsyaAuthorizationToken: rsyaAuthorizationToken.value,
     };
 
-    const response = await createAccount(payload);
+    const errorMessages = await createAccount(payload);
 
-    return response;
+    setErrorMessages(errorMessages);
+
+    setValidationStates(errorMessages);
+
+    setIsLoading(false);
   }
 
   function setValidationStates(errorMessages: ErrorMessages) {
