@@ -5,17 +5,18 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import WelcomPage from "./pages/WelcomePage";
+import Welcome from "./pages/Welcome";
+import Auth from "./pages/authPages/Auth";
 import Footer from "./components/common/Footer";
-import AuthPage from "./pages/authPages/AuthPage";
+
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/welcome" element={<WelcomPage />} />
-          <Route path="/auth/*" element={<AuthPage />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/auth/*" element={<Auth/>} />
         </Routes>
       </Router>
       <Footer />

@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function ResetPasswordPage() {
+export default function ResetPassword() {
   return (
     <>
       <h1>Reset password page</h1>

@@ -5,9 +5,9 @@ interface InputFieldProps {
   type: string;
   placeholderText: string;
   required?: boolean;
-  onChange: (value: string) => void;
   isValid: boolean;
   errorMessage: string;
+  onChange: (value: string) => void;
 }
 
 export default function InputField(props: InputFieldProps) {
