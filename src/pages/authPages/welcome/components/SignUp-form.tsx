@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputField from "../../components/InputField/InputField";
 import Button from "../../components/Button/Button";
 import {
@@ -16,6 +16,7 @@ import {
 } from "../helpers/validations";
 import { useFormField } from "../../../../hooks/useFormField";
 import { getErrorMessage } from "../helpers/utils";
+import AuthContext from "../../../../context/AuthProvider";
 
 const defaultErrorMessages = {
   email: "Некорректный формат электронной почты",
@@ -24,6 +25,8 @@ const defaultErrorMessages = {
 };
 
 export default function SignUpForm() {
+  const authContext = useContext(AuthContext);
+  console.log(authContext);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
     DEFAULT_ERROR_MESSAGES
