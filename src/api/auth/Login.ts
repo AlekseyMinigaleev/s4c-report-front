@@ -1,32 +1,19 @@
+import { AxiosResponse } from "axios";
 import api from "../axios";
-import { UserCreditionals } from "./UserCreditionals";
+import { UserCreditionals } from "./models/UserCreditionals";
+import { AuthenticationTokens } from "../../models/AuthenticationTokens";
 
 export interface LoginPayload {
   userCreditionals: UserCreditionals;
 }
 
-export interface LoginResponse {
-  jwtToken: string;
-}
-
 export async function Login(
   payload: LoginPayload
-): Promise<LoginResponse | string> {
-  const response = await api.post(
+): Promise<AxiosResponse<AuthenticationTokens, any>> {
+  const response = await api.post<AuthenticationTokens>(
     "authentication/login",
     JSON.stringify(payload)
   );
-  let result: LoginResponse | string = "";
 
-  if (response.status == 400) {
-    result = response.data?.NotFound[0];
-  }
-
-  if (response.status == 200) {
-    result = {
-      jwtToken: response.data,
-    };
-  }
-
-  return result;
+  return response;
 }

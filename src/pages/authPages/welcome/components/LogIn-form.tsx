@@ -5,8 +5,11 @@ import Button from "../../components/Button/Button";
 import { validateLogin, validatePassword } from "../helpers/validations";
 import { useFormField } from "../../../../hooks/useFormField";
 import AuthContext from "../../../../context/AuthProvider";
-import { Login, LoginPayload, LoginResponse } from "../../../../api/auth/Login";
 import ErrorMessage from "../../components/ErrorMessaage/ErrorMessage";
+import { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
+import { AuthenticationTokens } from "../../../../models/AuthenticationTokens";
+import { Login, LoginPayload } from "../../../../api/auth/Login";
 
 export default function LogInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,17 +20,25 @@ export default function LogInForm() {
 
   const authContext = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   async function handleLogin() {
     setIsLoading(true);
 
     const response = await executeLogin();
 
-    handleResponse(response);
+    handleLoginResponse(response);
 
     setIsLoading(false);
+
+    if (response.status == 200) {
+      navigate("/user");
+    }
   }
 
-  async function executeLogin(): Promise<string | LoginResponse> {
+  async function executeLogin(): Promise<
+    AxiosResponse<AuthenticationTokens, any>
+  > {
     let payload: LoginPayload = {
       userCreditionals: {
         login: email.value,
@@ -39,13 +50,16 @@ export default function LogInForm() {
     return result;
   }
 
-  function handleResponse(response: string | LoginResponse) {
-    if (typeof response == "string") {
-      setServerErrorMessage(response);
-    } else {
+  function handleLoginResponse(
+    response: AxiosResponse<AuthenticationTokens, any>
+  ) {
+    if (response.status == 400) {
+      let data = response.data as any;
+      setServerErrorMessage(data.NotFound[0]);
+    } else if (response.status == 200) {
       authContext.setAuth({
-        accessToken: response.jwtToken,
-        refreshToken: "",
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
       });
 
       setServerErrorMessage("");

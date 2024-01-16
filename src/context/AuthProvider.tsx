@@ -5,16 +5,11 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { User } from "../models/User";
-
-interface Authentication {
-  accessToken: string;
-  refreshToken: string;
-}
+import { AuthenticationTokens } from "../models/AuthenticationTokens";
 
 interface AuthContextProps {
-  auth?: Authentication;
-  setAuth: Dispatch<SetStateAction<Authentication | undefined>>;
+  auth?: AuthenticationTokens;
+  setAuth: Dispatch<SetStateAction<AuthenticationTokens | undefined>>;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -26,7 +21,7 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [auth, setAuth] = useState<Authentication>();
+  const [auth, setAuth] = useState<AuthenticationTokens>();
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}

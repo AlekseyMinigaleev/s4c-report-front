@@ -1,6 +1,5 @@
-import { AxiosResponse } from "axios";
 import axios from "../axios";
-import { UserCreditionals } from "./UserCreditionals";
+import { UserCreditionals } from "./models/UserCreditionals";
 
 export interface CreateAccountPayload {
   credentionals: UserCreditionals;
