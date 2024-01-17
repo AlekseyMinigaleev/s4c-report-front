@@ -24,8 +24,12 @@ export async function createAccount(
 ): Promise<ErrorMessages> {
   const response = await axios.post(
     "authentication/createAccount",
-    JSON.stringify(payload)
+    JSON.stringify(payload),
+    {
+      withCredentials: true,
+    }
   );
+  debugger
 
   const errorMessages: ErrorMessages = {
     login: response.data?.login || [],

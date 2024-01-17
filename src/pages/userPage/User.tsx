@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { GetUser, GetUserRsponse } from "../../api/User/GetUser";
+import React, { useEffect, useRef, useState } from "react";
+import { GetUserRsponse } from "../../api/User/GetUser";
+import useApiPrivate from "../../hooks/useApiPrivate";
 
 export default function User() {
   const [userFields, setUserFields] = useState<GetUserRsponse>();
+  const apiPrivate = useApiPrivate();
 
   useEffect(() => {
-    GetUser().then((response) => {
-      setUserFields(response);
-    });
+    apiPrivate
+      .get<GetUserRsponse>("User/getUser", {
+        withCredentials: true,
+      })
+      .then((response) => setUserFields(response.data));
   }, []);
 
   return (
     <>
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <label>почта</label>
         <input
           type="text"

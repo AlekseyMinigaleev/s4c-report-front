@@ -1,14 +1,10 @@
 import axios, { AxiosError } from "axios";
-const api = axios.create({
-  baseURL: "http://localhost:5041/api/",
-});
 
-api.interceptors.request.use((config) => {
-  // config.headers["Authorization"] = `Bearer ${authorizationContext?.auth}`;
-  if (!config.headers["Content-Type"]) {
-    config.headers["Content-Type"] = "application/json";
-  }
-  return config;
+const BASE_URL = "http://localhost:5041/api/";
+
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
 });
 
 api.interceptors.response.use(
@@ -19,3 +15,10 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+export const apiPrivate = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});

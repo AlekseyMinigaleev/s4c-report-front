@@ -7,15 +7,14 @@ import {
 } from "react";
 import { AuthenticationTokens } from "../models/AuthenticationTokens";
 
-interface AuthContextProps {
+interface AuthentificationContextProps {
   auth?: AuthenticationTokens;
   setAuth: Dispatch<SetStateAction<AuthenticationTokens | undefined>>;
 }
 
-const AuthContext = createContext<AuthContextProps>({
+const AuthentificationContext = createContext<AuthentificationContextProps>({
   auth: {
     accessToken: "",
-    refreshToken: "",
   },
   setAuth: () => {},
 });
@@ -23,10 +22,10 @@ const AuthContext = createContext<AuthContextProps>({
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [auth, setAuth] = useState<AuthenticationTokens>();
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthentificationContext.Provider value={{ auth, setAuth }}>
       {children}
-    </AuthContext.Provider>
+    </AuthentificationContext.Provider>
   );
 }
 
-export default AuthContext;
+export default AuthentificationContext;

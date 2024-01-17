@@ -12,7 +12,10 @@ export async function Login(
 ): Promise<AxiosResponse<AuthenticationTokens, any>> {
   const response = await api.post<AuthenticationTokens>(
     "authentication/login",
-    JSON.stringify(payload)
+    JSON.stringify(payload),
+    {
+      withCredentials: true,
+    }
   );
 
   return response;

@@ -57,9 +57,10 @@ export default function LogInForm() {
       let data = response.data as any;
       setServerErrorMessage(data.NotFound[0]);
     } else if (response.status == 200) {
+      console.log(response.data);
+
       authContext.setAuth({
         accessToken: response.data.accessToken,
-        refreshToken: response.data.refreshToken,
       });
 
       setServerErrorMessage("");

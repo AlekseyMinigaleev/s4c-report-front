@@ -1,4 +1,4 @@
-import api from "../axios";
+import useApiPrivate from "../../hooks/useApiPrivate";
 
 export interface GetUserRsponse {
   email: string;
@@ -7,11 +7,8 @@ export interface GetUserRsponse {
 }
 
 export async function GetUser(): Promise<GetUserRsponse> {
-  api.interceptors.request.use((config) => {
-    return config;
-  });
-
-  const response = await api.get<GetUserRsponse>("User/getUser");
+  const apiPrivate = useApiPrivate();
+  const response = await apiPrivate.get<GetUserRsponse>("User/getUser");
 
   return response.data;
 }
