@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { GetUserRsponse } from "../../api/User/GetUser";
 import useApiPrivate from "../../hooks/useApiPrivate";
+import useFetchUser, {
+  FetchUserRsponse,
+} from "../../hooks/requests/useFetchUser";
 
 export default function User() {
-  const [userFields, setUserFields] = useState<GetUserRsponse>();
-  const apiPrivate = useApiPrivate();
+  const [userFields, setUserFields] = useState<FetchUserRsponse>();
+
+  const api = useApiPrivate();
+
+  const fetchUser = useFetchUser();
 
   useEffect(() => {
-    apiPrivate
-      .get<GetUserRsponse>("User/getUser", {
-        withCredentials: true,
-      })
-      .then((response) => setUserFields(response.data));
+    fetchUser().then((user) => setUserFields(user));
   }, []);
 
   return (

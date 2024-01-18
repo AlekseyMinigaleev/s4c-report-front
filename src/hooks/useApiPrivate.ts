@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuthentification from "./userAuthentificationt";
-import { apiPrivate } from "../api/axios";
+import { authorizedApi } from "../api/authorizedApi";
 
 export default function useApiPrivate() {
   const refresh = useRefreshToken();
   const authentificationContext = useAuthentification();
 
   useEffect(() => {
-    const requestIntercept = apiPrivate.interceptors.request.use(
+    const requestIntercept = authorizedApi.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
           const token = authentificationContext?.auth?.accessToken;
@@ -21,7 +21,7 @@ export default function useApiPrivate() {
       (error) => Promise.reject(error)
     );
 
-    const responseIntercept = apiPrivate.interceptors.response.use(
+    const responseIntercept = authorizedApi.interceptors.response.use(
       (response) => {
         return response;
       },
@@ -33,7 +33,7 @@ export default function useApiPrivate() {
             originalRequest.headers[
               "Authorization"
             ] = `Bearer ${newAccessToken}`;
-            return apiPrivate(originalRequest);
+            return authorizedApi(originalRequest);
           }
         }
 
@@ -42,10 +42,10 @@ export default function useApiPrivate() {
     );
 
     return () => {
-      apiPrivate.interceptors.request.eject(requestIntercept);
-      apiPrivate.interceptors.response.eject(responseIntercept);
+      authorizedApi.interceptors.request.eject(requestIntercept);
+      authorizedApi.interceptors.response.eject(responseIntercept);
     };
   }, [authentificationContext, refresh]);
 
-  return apiPrivate;
+  return authorizedApi;
 }

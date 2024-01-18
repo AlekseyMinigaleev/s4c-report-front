@@ -1,4 +1,4 @@
-import { UserCreditionals } from "../api/auth/models/UserCreditionals";
+import { UserCreditionals } from "./UserCreditionals";
 
 export interface User{
   creditionals: UserCreditionals;

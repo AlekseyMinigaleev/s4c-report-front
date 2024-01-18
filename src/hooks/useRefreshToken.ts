@@ -1,12 +1,13 @@
 import useAuthentification from "./userAuthentificationt";
-import api from "../api/axios";
+
 import { AuthenticationTokens } from "../models/AuthenticationTokens";
+import anonymousApi from "../api/anonymousApi";
 
 export default function useRefreshToken() {
   const authContext = useAuthentification();
 
   async function refresh() {
-    const response = await api.get<AuthenticationTokens>(
+    const response = await anonymousApi.get<AuthenticationTokens>(
       "Authentication/refresh",
       {
         withCredentials: true,

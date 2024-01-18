@@ -9,7 +9,7 @@ import ErrorMessage from "../../components/ErrorMessaage/ErrorMessage";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthenticationTokens } from "../../../../models/AuthenticationTokens";
-import { Login, LoginPayload } from "../../../../api/auth/Login";
+import useLogin, { LoginPayload } from "../../../../hooks/requests/useLogin";
 
 export default function LogInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,6 +19,8 @@ export default function LogInForm() {
   const password = useFormField<string>("", validatePassword);
 
   const authContext = useContext(AuthContext);
+
+  const login = useLogin();
 
   const navigate = useNavigate();
 
@@ -45,7 +47,7 @@ export default function LogInForm() {
         password: password.value,
       },
     };
-    const result = await Login(payload);
+    const result = await login(payload);
 
     return result;
   }
