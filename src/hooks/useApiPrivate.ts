@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import useRefreshToken from "./useRefreshToken";
 import useAuthentification from "./userAuthentificationt";
 import { authorizedApi } from "../api/authorizedApi";
+import useRefreshToken from "./requests/useRefreshToken";
 
 export default function useApiPrivate() {
   const refresh = useRefreshToken();

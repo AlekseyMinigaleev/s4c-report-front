@@ -5,7 +5,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Welcome from "./pages/Welcome";
+import Welcome from "./pages/welcomePage/Welcome";
 import Auth from "./pages/authPages/Auth";
 import Footer from "./components/common/Footer";
 import User from "./pages/userPage/User";

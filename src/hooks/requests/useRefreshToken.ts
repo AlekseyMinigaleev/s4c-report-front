@@ -1,22 +1,22 @@
-import api from "../../api/anonymousApi";
-import { useContext } from "react";
-import AuthentificationContext from "../../context/AuthProvider";
+import anonymousApi from "../../api/anonymousApi";
 import { AuthenticationTokens } from "../../models/AuthenticationTokens";
+import useAuthentification from "../userAuthentificationt";
+
 
 export default function useRefreshToken() {
-  const authContext = useContext(AuthentificationContext);
+  const authContext = useAuthentification();
 
   async function refresh() {
-    const response = await api.get<AuthenticationTokens>(
+    const response = await anonymousApi.get<AuthenticationTokens>(
       "Authentication/refresh",
       {
         withCredentials: true,
       }
     );
-
-    authContext.setAuth(response.data);
-
-    return response.data;
+    authContext.setAuth({
+      accessToken: response.data.accessToken,
+    });
+    return response.data.accessToken;
   }
 
   return refresh;

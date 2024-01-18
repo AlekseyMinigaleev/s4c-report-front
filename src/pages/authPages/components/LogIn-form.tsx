@@ -1,15 +1,15 @@
 import React, { useContext, useState } from "react";
-import InputField from "../../components/InputField/InputField";
+import InputField from "./InputField/InputField";
 import classes from "./Form.module.css";
-import Button from "../../components/Button/Button";
+import Button from "./Button/Button";
 import { validateLogin, validatePassword } from "../helpers/validations";
-import { useFormField } from "../../../../hooks/useFormField";
-import AuthContext from "../../../../context/AuthProvider";
-import ErrorMessage from "../../components/ErrorMessaage/ErrorMessage";
+import { useFormField } from "../../../hooks/useFormField";
+import AuthContext from "../../../context/AuthProvider";
+import ErrorMessage from "./ErrorMessaage/ErrorMessage";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthenticationTokens } from "../../../../models/AuthenticationTokens";
-import useLogin, { LoginPayload } from "../../../../hooks/requests/useLogin";
+import { AuthenticationTokens } from "../../../models/AuthenticationTokens";
+import useLogin, { LoginPayload } from "../../../hooks/requests/useLogin";
 
 export default function LogInForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
