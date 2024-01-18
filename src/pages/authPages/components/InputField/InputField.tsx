@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from "./InputField.module.css";
+import ErrorMessage from "../ErrorMessaage/ErrorMessage";
 
 interface InputFieldProps {
   type: string;
@@ -20,7 +21,7 @@ export default function InputField(props: InputFieldProps) {
         required={require == null ? false : props.required}
         onChange={(e) => props.onChange(e.target.value)}
       />
-      {!props.isValid ? <span>{props.errorMessage}</span> : null}
+      {!props.isValid ? <ErrorMessage text={props.errorMessage} /> : null}
     </div>
   );
 }

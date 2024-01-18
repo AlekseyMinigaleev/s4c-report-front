@@ -1,12 +1,6 @@
-import React, { useState } from "react";
-import InputField from "../../components/InputField/InputField";
-import Button from "../../components/Button/Button";
-import {
-  CreateAccountPayload,
-  ErrorMessages,
-  createAccount,
-  DEFAULT_ERROR_MESSAGES,
-} from "../../../../api/auth/CreateAccount";
+import React, { useContext, useState } from "react";
+import InputField from "./InputField/InputField";
+import Button from "./Button/Button";
 import {
   validateLogin,
   validateDeveloperPageUrl,
@@ -14,8 +8,10 @@ import {
   validatePassword,
   validateRepeatPassword,
 } from "../helpers/validations";
-import { useFormField } from "../../../../hooks/useFormField";
+import { useFormField } from "../../../hooks/useFormField";
 import { getErrorMessage } from "../helpers/utils";
+import AuthContext from "../../../context/AuthProvider";
+import useCreateAccount, { CreateAccountPayload, DEFAULT_ERROR_MESSAGES, ErrorMessages } from "../../../hooks/requests/useCreaeteAccount";
 
 const defaultErrorMessages = {
   email: "Некорректный формат электронной почты",
@@ -24,6 +20,8 @@ const defaultErrorMessages = {
 };
 
 export default function SignUpForm() {
+  const authContext = useContext(AuthContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
     DEFAULT_ERROR_MESSAGES
@@ -37,6 +35,8 @@ export default function SignUpForm() {
     validateRsyaAuthorizationToken
   );
   const repeatPassword = useFormField<string>("", validateRepeatPassword);
+
+  const createAccount = useCreateAccount();
 
   async function handleCreateAccount() {
     setIsLoading(true);

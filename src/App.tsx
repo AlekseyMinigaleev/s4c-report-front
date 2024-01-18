@@ -5,10 +5,10 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Welcome from "./pages/Welcome";
+import Welcome from "./pages/welcomePage/Welcome";
 import Auth from "./pages/authPages/Auth";
 import Footer from "./components/common/Footer";
-
+import User from "./pages/userPage/User";
 
 function App() {
   return (
@@ -16,7 +16,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/welcome" element={<Welcome />} />
-          <Route path="/auth/*" element={<Auth/>} />
+          <Route path="/auth/*" element={<Auth />} />
+          <Route path="/user/" element={<User />} />
         </Routes>
       </Router>
       <Footer />

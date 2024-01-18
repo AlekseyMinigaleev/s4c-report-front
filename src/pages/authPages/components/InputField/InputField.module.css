@@ -16,10 +16,3 @@ input {
 input.invalid{
   border:1px solid red;
 }
-
-span {
-  font-size: 18px;
-  padding-top: 0.5rem;
-  color: red;
-  width: 20rem;
-}
