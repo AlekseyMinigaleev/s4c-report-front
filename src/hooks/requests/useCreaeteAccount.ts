@@ -1,4 +1,4 @@
-import { authorizedApi } from "../../api/authorizedApi";
+import anonymousApi from "../../api/anonymousApi";
 import { UserCreditionals } from "../../models/UserCreditionals";
 
 export interface CreateAccountPayload {
@@ -23,7 +23,7 @@ export default function useCreateAccount() {
   async function createAccount(
     payload: CreateAccountPayload
   ): Promise<ErrorMessages> {
-    const response = await authorizedApi.post(
+    const response = await anonymousApi.post(
       "authentication/createAccount",
       JSON.stringify(payload),
       {
@@ -36,6 +36,7 @@ export default function useCreateAccount() {
       developerPageUrl: response.data?.developerPageUrl || [],
       rsyaAuthorizationToken: response?.data.rsyaAuthorizationToken || [],
     };
+
     return errorMessages;
   }
 
