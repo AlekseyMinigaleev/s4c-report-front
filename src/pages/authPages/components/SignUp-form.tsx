@@ -10,8 +10,12 @@ import {
 } from "../helpers/validations";
 import { useFormField } from "../../../hooks/useFormField";
 import { getErrorMessage } from "../helpers/utils";
-import AuthContext from "../../../context/AuthProvider";
-import useCreateAccount, { CreateAccountPayload, DEFAULT_ERROR_MESSAGES, ErrorMessages } from "../../../hooks/requests/useCreaeteAccount";
+import useCreateAccount, {
+  CreateAccountPayload,
+  DEFAULT_ERROR_MESSAGES,
+  ErrorMessages,
+} from "../../../hooks/requests/useCreaeteAccount";
+import useLoading from "../../../hooks/useLoading";
 
 const defaultErrorMessages = {
   email: "Некорректный формат электронной почты",
@@ -20,9 +24,6 @@ const defaultErrorMessages = {
 };
 
 export default function SignUpForm() {
-  const authContext = useContext(AuthContext);
-
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
     DEFAULT_ERROR_MESSAGES
   );
@@ -36,10 +37,9 @@ export default function SignUpForm() {
   );
   const repeatPassword = useFormField<string>("", validateRepeatPassword);
 
-  const createAccount = useCreateAccount();
+  const { isLoading, executeRequest } = useLoading(useCreateAccount);
 
   async function handleCreateAccount() {
-    setIsLoading(true);
     const payload: CreateAccountPayload = {
       credentionals: {
         login: email.value,
@@ -49,13 +49,11 @@ export default function SignUpForm() {
       rsyaAuthorizationToken: rsyaAuthorizationToken.value,
     };
 
-    const errorMessages = await createAccount(payload);
+    const errorMessages = await executeRequest(payload);
 
     setErrorMessages(errorMessages);
 
     setValidationStates(errorMessages);
-
-    setIsLoading(false);
   }
 
   function setValidationStates(errorMessages: ErrorMessages) {

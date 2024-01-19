@@ -1,18 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import useApiPrivate from "../../hooks/useApiPrivate";
+import React, { useEffect, useState } from "react";
 import useFetchUser, {
   FetchUserRsponse,
 } from "../../hooks/requests/useFetchUser";
+import useLoading from "../../hooks/useLoading";
 
 export default function User() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
 
-  const api = useApiPrivate();
-
-  const fetchUser = useFetchUser();
+  const { isLoading, executeRequest } = useLoading(useFetchUser);
 
   useEffect(() => {
-    fetchUser().then((user) => setUserFields(user));
+    // TODO: я не понмиаю как сделать перегрузку для этого случая
+    executeRequest(undefined).then((user) => setUserFields(user));
   }, []);
 
   return (

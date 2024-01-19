@@ -10,9 +10,9 @@ import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthenticationTokens } from "../../../models/AuthenticationTokens";
 import useLogin, { LoginPayload } from "../../../hooks/requests/useLogin";
+import useLoading from "../../../hooks/useLoading";
 
 export default function LogInForm() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
 
   const email = useFormField<string>("", validateLogin);
@@ -20,36 +20,24 @@ export default function LogInForm() {
 
   const authContext = useContext(AuthContext);
 
-  const login = useLogin();
+  const { isLoading, executeRequest } = useLoading(useLogin);
 
   const navigate = useNavigate();
 
   async function handleLogin() {
-    setIsLoading(true);
-
-    const response = await executeLogin();
-
-    handleLoginResponse(response);
-
-    setIsLoading(false);
-
-    if (response.status == 200) {
-      navigate("/user");
-    }
-  }
-
-  async function executeLogin(): Promise<
-    AxiosResponse<AuthenticationTokens, any>
-  > {
     let payload: LoginPayload = {
       userCreditionals: {
         login: email.value,
         password: password.value,
       },
     };
-    const result = await login(payload);
+    const response = await executeRequest(payload);
 
-    return result;
+    handleLoginResponse(response);
+
+    if (response.status == 200) {
+      navigate("/user");
+    }
   }
 
   function handleLoginResponse(
