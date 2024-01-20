@@ -1,0 +1,14 @@
+.profile-image-container {
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+table,
+tr,
+td {
+  border: 1px solid yellow;
+  width: 100%;
+  height: 100%;
+}

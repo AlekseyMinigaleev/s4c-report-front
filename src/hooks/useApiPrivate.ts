@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useAuthentification from "./userAuthentificationt";
+import useAuthentification from "./useAuthentificationt";
 import { authorizedApi } from "../api/authorizedApi";
 import useRefreshToken from "./requests/useRefreshToken";
 

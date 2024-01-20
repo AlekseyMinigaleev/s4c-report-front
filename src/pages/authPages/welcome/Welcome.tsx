@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import classes from "../AuthPages.module.css";
-import Button from "../components/Button/Button";
+import Button from "../../../components/Button/Button";
 import LogInForm from "../components/LogIn-form";
 import SignUpForm from "../components/SignUp-form";
 
