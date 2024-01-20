@@ -7,13 +7,18 @@ import {
 } from "react-router-dom";
 import Welcome from "./pages/welcomePage/Welcome";
 import Auth from "./pages/authPages/Auth";
-import Footer from "./components/common/Footer";
 import User from "./pages/userPage/User";
+import Footer from "./components/Footer";
+import Header from "./components/Header/Header";
+import useAuthentification from "./hooks/useAuthentificationt";
 
 function App() {
+  const authContext = useAuthentification();
   return (
     <>
       <Router>
+        {/* TODO: надо сделать состояние isAuth */}
+        {authContext.auth?.accessToken == null ? null : <Header />}
         <Routes>
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/auth/*" element={<Auth />} />

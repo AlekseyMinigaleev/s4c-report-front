@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import InputField from "./InputField/InputField";
 import classes from "./Form.module.css";
-import Button from "./Button/Button";
+import Button from "../../../components/Button/Button";
 import { validateLogin, validatePassword } from "../helpers/validations";
 import { useFormField } from "../../../hooks/useFormField";
 import AuthContext from "../../../context/AuthProvider";
@@ -36,7 +36,7 @@ export default function LogInForm() {
     handleLoginResponse(response);
 
     if (response.status == 200) {
-      navigate("/user");
+      navigate("/welcome");
     }
   }
 

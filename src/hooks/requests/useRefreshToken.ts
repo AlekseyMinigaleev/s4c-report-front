@@ -1,6 +1,6 @@
 import anonymousApi from "../../api/anonymousApi";
 import { AuthenticationTokens } from "../../models/AuthenticationTokens";
-import useAuthentification from "../userAuthentificationt";
+import useAuthentification from "../useAuthentificationt";
 
 
 export default function useRefreshToken() {

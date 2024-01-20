@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import InputField from "./InputField/InputField";
-import Button from "./Button/Button";
+import Button from "../../../components/Button/Button";
 import {
   validateLogin,
   validateDeveloperPageUrl,
