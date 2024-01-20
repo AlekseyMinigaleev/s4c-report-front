@@ -16,8 +16,9 @@ function App() {
   const authContext = useAuthentification();
   return (
     <>
-      {authContext.auth?.accessToken == null ? null : <Header />}
       <Router>
+        {/* TODO: надо сделать состояние isAuth */}
+        {authContext.auth?.accessToken == null ? null : <Header />}
         <Routes>
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/auth/*" element={<Auth />} />

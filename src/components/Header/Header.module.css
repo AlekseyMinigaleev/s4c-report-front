@@ -1,14 +1,12 @@
-.profile-image-container {
-  width: 3rem;
-  height: 3rem;
-  text-align: center;
-  cursor: pointer;
+.logo-section {
+  padding-right: 1rem;
+  width: auto;
 }
 
-table,
-tr,
-td {
-  border: 1px solid yellow;
+.navigation-section {
   width: 100%;
-  height: 100%;
+}
+
+.profile-section {
+  width: 100%;
 }

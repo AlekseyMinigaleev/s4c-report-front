@@ -36,7 +36,7 @@ export default function LogInForm() {
     handleLoginResponse(response);
 
     if (response.status == 200) {
-      navigate("/user");
+      navigate("/welcome");
     }
   }
 

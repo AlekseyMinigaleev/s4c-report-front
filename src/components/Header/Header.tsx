@@ -1,31 +1,53 @@
-import React from "react";
-import classes from "./Header.module.css";
 import Button from "../Button/Button";
-import profileIcon from "../../images/profile-icon.png";
+import "../../index.css";
+import ProfileMenu from "./ProfileMenu/ProfileMenu";
+import logo from "../../images/forHeader.png";
+import { useNavigate } from "react-router-dom";
+import classes from "./Header.module.css";
 
 export default function Footer() {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <header>
-        <table>
+    <header>
+      <table>
+        <tbody>
           <tr>
-            <td>
-              <Button onClick={() => {}} isActive={false}>
+            <td className={classes["logo-section"]}>
+              <img height={50} src={logo} alt="" />
+            </td>
+            <td className={classes["navigation-section"]}>
+              <Button
+                onClick={() => {
+                  navigate("/welcome");
+                }}
+                isActive={false}
+              >
+                Главная
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate("/welcome");
+                }}
+                isActive={false}
+              >
+                Главная
+              </Button>
+              <Button
+                onClick={() => {
+                  navigate("/welcome");
+                }}
+                isActive={false}
+              >
                 Главная
               </Button>
             </td>
-            <td>
-              <div className={classes["profile-image-container"]}>
-                <img
-                  onClick={() => console.log("jopa")}
-                  src={profileIcon}
-                  width={50}
-                />
-              </div>
+            <td className={classes["profile-section"]}>
+              <ProfileMenu />
             </td>
           </tr>
-        </table>
-      </header>
-    </>
+        </tbody>
+      </table>
+    </header>
   );
 }
