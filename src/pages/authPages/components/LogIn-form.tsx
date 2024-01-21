@@ -34,10 +34,6 @@ export default function LogInForm() {
     const response = await executeRequest(payload);
 
     handleLoginResponse(response);
-
-    if (response.status == 200) {
-      navigate("/welcome");
-    }
   }
 
   function handleLoginResponse(
@@ -45,15 +41,13 @@ export default function LogInForm() {
   ) {
     if (response.status == 400) {
       let data = response.data as any;
-      setServerErrorMessage(data.NotFound[0]);
+      setServerErrorMessage(data.NotFound[0]); // TODO: читать все ошибки а не только первую.
     } else if (response.status == 200) {
-      console.log(response.data);
-
       authContext.setAuth({
         accessToken: response.data.accessToken,
       });
-
       setServerErrorMessage("");
+      navigate("/welcome");
     }
   }
 

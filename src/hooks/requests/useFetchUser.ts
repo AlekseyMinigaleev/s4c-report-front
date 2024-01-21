@@ -1,4 +1,4 @@
-import useApiPrivate from "../useApiPrivate";
+import useApiPrivate from "../useAuthorizedApi";
 
 export interface FetchUserRsponse {
   email: string;

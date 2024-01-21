@@ -3,7 +3,7 @@ import useAuthentification from "./useAuthentificationt";
 import { authorizedApi } from "../api/authorizedApi";
 import useRefreshToken from "./requests/useRefreshToken";
 
-export default function useApiPrivate() {
+export default function useAuthorizedApi() {
   const refresh = useRefreshToken();
   const authentificationContext = useAuthentification();
 

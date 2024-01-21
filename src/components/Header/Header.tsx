@@ -4,8 +4,11 @@ import ProfileMenu from "./ProfileMenu/ProfileMenu";
 import logo from "../../images/forHeader.png";
 import { useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
+import useAuthentification from "../../hooks/useAuthentificationt";
 
 export default function Footer() {
+  const auth = useAuthentification();
+  console.log(auth);
   const navigate = useNavigate();
 
   return (
