@@ -8,6 +8,8 @@ import {
 import profileIcon from "../../../images/profile-icon.png";
 import classes from "./ProfileMenu.module.css";
 import { useNavigate } from "react-router-dom";
+import useLogout from "../../../hooks/requests/useLogout";
+import useAuthentification from "../../../hooks/useAuthentificationt";
 
 const MenuItem = (props: JSX.IntrinsicAttributes & MenuItemProps) => {
   return <MenuItemInner {...props} className={classes["menuitem"]} />;
@@ -27,6 +29,8 @@ function ProfileSection() {
 
 export default function ProfileMenu() {
   const navigate = useNavigate();
+  const logout = useLogout();
+  const authContext = useAuthentification();
 
   return (
     <Menu
@@ -48,7 +52,14 @@ export default function ProfileMenu() {
 
       <MenuDivider />
 
-      <MenuItem children={"Выход"} />
+      <MenuItem
+        onClick={async () => {
+          await logout();
+          authContext.setAuth(undefined);
+          navigate("/auth");
+        }}
+        children={"Выход"}
+      />
     </Menu>
   );
 }
