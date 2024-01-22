@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import classes from "../AuthPages.module.css";
 import Button from "../../../components/Button/Button";
 import LogInForm from "../components/LogIn-form";
 import SignUpForm from "../components/SignUp-form";
 
-
 type FromVariant = "LogIn" | "SignUp";
 
-export default function Welcome() {
+export default function AuthPage() {
   const [formVariant, setFormVaiant] = useState<FromVariant>("LogIn");
 
   return (

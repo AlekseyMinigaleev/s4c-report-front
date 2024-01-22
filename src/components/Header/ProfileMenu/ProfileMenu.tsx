@@ -9,7 +9,7 @@ import profileIcon from "../../../images/profile-icon.png";
 import classes from "./ProfileMenu.module.css";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../../../hooks/requests/useLogout";
-import useAuthentification from "../../../hooks/useAuthentificationt";
+import useAuthentification from "../../../hooks/useAuthContext";
 
 const MenuItem = (props: JSX.IntrinsicAttributes & MenuItemProps) => {
   return <MenuItemInner {...props} className={classes["menuitem"]} />;

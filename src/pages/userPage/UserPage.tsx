@@ -4,10 +4,10 @@ import useFetchUser, {
 } from "../../hooks/requests/useFetchUser";
 import useLoading from "../../hooks/useLoading";
 
-export default function User() {
+export default function UserPage() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
 
-  const { isLoading, executeRequest } = useLoading(useFetchUser);
+  const { executeRequest } = useLoading(useFetchUser);
 
   useEffect(() => {
     // TODO: я не понмиаю как сделать перегрузку для этого случая
