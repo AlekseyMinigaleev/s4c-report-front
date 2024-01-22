@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import useAuthentification from "./useAuthentificationt";
+import { useEffect } from "react";
 import { authorizedApi } from "../api/authorizedApi";
 import useRefreshToken from "./requests/useRefreshToken";
+import useAuthContext from "./useAuthContext";
 
 export default function useAuthorizedApi() {
   const refresh = useRefreshToken();
-  const authentificationContext = useAuthentification();
+  const authContext = useAuthContext();
 
   useEffect(() => {
     const requestIntercept = authorizedApi.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {
-          const token = authentificationContext?.auth?.accessToken;
+          const token = authContext?.auth?.accessToken;
           if (token) {
             config.headers["Authorization"] = `Bearer ${token}`;
           }
@@ -45,7 +45,7 @@ export default function useAuthorizedApi() {
       authorizedApi.interceptors.request.eject(requestIntercept);
       authorizedApi.interceptors.response.eject(responseIntercept);
     };
-  }, [authentificationContext, refresh]);
+  }, [authContext, refresh]);
 
   return authorizedApi;
 }

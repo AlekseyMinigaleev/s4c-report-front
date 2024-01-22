@@ -1,33 +1,26 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
-import Welcome from "./pages/welcomePage/Welcome";
-import Auth from "./pages/authPages/Auth";
-import User from "./pages/userPage/User";
-import Footer from "./components/Footer";
-import Header from "./components/Header/Header";
-import useAuthentification from "./hooks/useAuthentificationt";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Welcome from "./pages/welcomePage/WelcomePage";
+import UserPage from "./pages/userPage/UserPage";
+import AuthPage from "./pages/authPages/authPage/AuthPage";
+import RequireAuthLayout from "./components/RequireAuthLayout";
+import AppLayout from "./components/AppLayout";
 
-function App() {
-  const authContext = useAuthentification();
+export default function App() {
   return (
-    <>
-      <Router>
-        {/* TODO: надо сделать состояние isAuth */}
-        {authContext.auth?.accessToken == null ? null : <Header />}
-        <Routes>
+    <Routes>
+      <Route path="/" element={<AppLayout />}>
+        {/* public */}
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/*" element={<Navigate to="/auth" replace />} />
+
+        {/* private */}
+        <Route element={<RequireAuthLayout />}>
           <Route path="/welcome" element={<Welcome />} />
-          <Route path="/auth/*" element={<Auth />} />
-          <Route path="/user/" element={<User />} />
-        </Routes>
-      </Router>
-      <Footer />
-    </>
+          <Route path="/user" element={<UserPage />} />
+        </Route>
+
+        {/* catch all */}
+      </Route>
+    </Routes>
   );
 }
-
-export default App;

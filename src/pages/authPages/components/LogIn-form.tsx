@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import InputField from "./InputField/InputField";
 import classes from "./Form.module.css";
 import Button from "../../../components/Button/Button";
