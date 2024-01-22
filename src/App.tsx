@@ -4,6 +4,7 @@ import UserPage from "./pages/userPage/UserPage";
 import AuthPage from "./pages/authPages/authPage/AuthPage";
 import RequireAuthLayout from "./components/RequireAuthLayout";
 import AppLayout from "./components/AppLayout";
+import PersistLogin from "./components/PersistLogin";
 
 export default function App() {
   return (
@@ -14,9 +15,11 @@ export default function App() {
         <Route path="/auth/*" element={<Navigate to="/auth" replace />} />
 
         {/* private */}
-        <Route element={<RequireAuthLayout />}>
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/user" element={<UserPage />} />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuthLayout />}>
+            <Route path="/welcome" element={<Welcome />} />
+            <Route path="/user" element={<UserPage />} />
+          </Route>
         </Route>
 
         {/* catch all */}

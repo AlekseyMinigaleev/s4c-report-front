@@ -9,7 +9,7 @@ interface LoadingHook<TPayload, TResponse> {
 export default function useLoading<TPayload, TResponse>(
   useRequest: () => (payload: TPayload) => Promise<TResponse>
 ): LoadingHook<TPayload, TResponse> {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const request = useRequest();
 
