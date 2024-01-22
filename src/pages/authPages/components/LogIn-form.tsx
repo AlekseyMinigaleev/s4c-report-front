@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import InputField from "./InputField/InputField";
 import classes from "./Form.module.css";
 import Button from "../../../components/Button/Button";
@@ -23,6 +23,10 @@ export default function LogInForm() {
   const { isLoading, executeRequest } = useLoading(useLogin);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("persist", `${authContext.isPersist}`);
+  }, [authContext.isPersist]);
 
   async function handleLogin() {
     let payload: LoginPayload = {
@@ -77,6 +81,17 @@ export default function LogInForm() {
       <div className={`${classes["forgor-password-section"]}`}>
         <label>Забыли пароль?</label>
         <button>Восстановить</button>
+      </div>
+      <div>
+        <input
+          type={"checkbox"}
+          id="persist"
+          onChange={() => {
+            authContext.setIsPersist((prev) => !prev);
+          }}
+          checked={authContext.isPersist}
+        />
+        <label htmlFor="persist">Запомнить это устройство</label>
       </div>
       <Button
         onClick={handleLogin}
