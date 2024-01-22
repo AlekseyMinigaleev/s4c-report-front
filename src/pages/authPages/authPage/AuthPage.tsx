@@ -11,7 +11,7 @@ export default function AuthPage() {
 
   return (
     <div className={"center"}>
-      <div className={`${classes["form-container"]}`}>
+      <div className={`${classes["auth-page-font"]}  ${classes["form-container"]}`}>
         <div className={`${classes["input-container"]}`}>
           <Button
             onClick={() => setFormVaiant("LogIn")}

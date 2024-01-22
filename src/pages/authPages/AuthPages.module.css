@@ -1,3 +1,7 @@
+.auth-page-font {
+  --font-size: 19px;
+}
+
 .form-container {
   border: 1px solid black;
   border-radius: 25px;
@@ -13,4 +17,10 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.auth-page-font button,
+.auth-page-font input,
+.auth-page-font form {
+  font-size: var(--font-size);
 }

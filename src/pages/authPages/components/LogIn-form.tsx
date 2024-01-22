@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import InputField from "./InputField/InputField";
-import classes from "./Form.module.css";
 import Button from "../../../components/Button/Button";
 import { validateLogin, validatePassword } from "../helpers/validations";
 import { useFormField } from "../../../hooks/useFormField";
@@ -11,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { AuthenticationTokens } from "../../../models/AuthenticationTokens";
 import useLogin, { LoginPayload } from "../../../hooks/requests/useLogin";
 import useLoading from "../../../hooks/useLoading";
+import RememberMe from "./RememberMe/RememberMe";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
+import classes from "./Form.module.css";
 
 export default function LogInForm() {
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
@@ -23,10 +25,6 @@ export default function LogInForm() {
   const { isLoading, executeRequest } = useLoading(useLogin);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem("persist", `${authContext.isPersist}`);
-  }, [authContext.isPersist]);
 
   async function handleLogin() {
     let payload: LoginPayload = {
@@ -68,6 +66,7 @@ export default function LogInForm() {
         isValid={email.isValid}
         errorMessage={"Некорректный формат электронной почты"}
       />
+
       <InputField
         type="password"
         placeholderText="Пароль"
@@ -78,21 +77,9 @@ export default function LogInForm() {
           "Минимальная длина пароля - 8 символов, пароль должен содержать хотя бы одну: заглавную букву, строчную букву, цифру"
         }
       />
-      <div className={`${classes["forgor-password-section"]}`}>
-        <label>Забыли пароль?</label>
-        <button>Восстановить</button>
-      </div>
-      <div>
-        <input
-          type={"checkbox"}
-          id="persist"
-          onChange={() => {
-            authContext.setIsPersist((prev) => !prev);
-          }}
-          checked={authContext.isPersist}
-        />
-        <label htmlFor="persist">Запомнить это устройство</label>
-      </div>
+
+      <RememberMe />
+
       <Button
         onClick={handleLogin}
         isActive={isValidFormForRequest}
@@ -102,9 +89,12 @@ export default function LogInForm() {
       </Button>
 
       {serverErrorMessage == "" ? null : (
-        <div style={{ marginTop: "1rem" }}>
-          <ErrorMessage text={serverErrorMessage} />
-        </div>
+        <>
+          <div className={classes["section"]}>
+            <ErrorMessage text={serverErrorMessage} />
+          </div>
+          <ForgotPassword />
+        </>
       )}
     </form>
   );

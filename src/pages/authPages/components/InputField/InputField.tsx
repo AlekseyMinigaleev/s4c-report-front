@@ -1,5 +1,7 @@
 import classes from "./InputField.module.css";
+import formClasses from "../Form.module.css";
 import ErrorMessage from "../ErrorMessaage/ErrorMessage";
+
 
 interface InputFieldProps {
   type: string;
@@ -11,10 +13,14 @@ interface InputFieldProps {
 }
 
 export default function InputField(props: InputFieldProps) {
+  const inputClasses = `${classes["input-field"]} ${
+    !props.isValid ? `${classes["invalid"]}` : ""
+  }`;
+
   return (
-    <div className={`${classes["input-container"]}`}>
+    <div className={`${classes["input-container"]} ${formClasses["section"]}`}>
       <input
-        className={!props.isValid ? `${classes["invalid"]}` : ""}
+        className={inputClasses}
         type={`${props.type}`}
         placeholder={`${props.placeholderText}`}
         required={require == null ? false : props.required}
