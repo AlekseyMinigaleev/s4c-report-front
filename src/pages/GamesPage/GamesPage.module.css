@@ -2,20 +2,26 @@
   padding-bottom: 2rem;
 }
 
-.tabe {
+.games-tabel {
   margin: 0 auto;
   width: 80%;
   border-collapse: collapse;
-  table-layout: fixed;
+  margin-bottom: 2rem;
 }
 
-.tr {
+.games-tabel tr {
   border: 1px solid black;
 }
 
-.th,
-.td {
+.games-tabel th,
+.games-tabel td {
   border-bottom: 1px solid black;
   padding: 1rem;
   text-align: left;
+}
+
+.name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
