@@ -16,21 +16,6 @@ body {
   flex: 1 0 auto;
 }
 
-footer {
-  flex: 0 0 auto;
-  text-align: center;
-  color: gray;
-}
-
-header {
-  background-color: gray;
-  width: auto;
-  height: auto;
-  height: auto;
-  display: flex;
-  padding: 0 1rem 0 1rem;
-}
-
 .center {
   display: flex;
   flex-direction: column;

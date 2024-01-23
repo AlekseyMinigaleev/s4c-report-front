@@ -1,0 +1,21 @@
+.h1 {
+  padding-bottom: 2rem;
+}
+
+.tabe {
+  margin: 0 auto;
+  width: 80%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.tr {
+  border: 1px solid black;
+}
+
+.th,
+.td {
+  border-bottom: 1px solid black;
+  padding: 1rem;
+  text-align: left;
+}

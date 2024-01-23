@@ -10,3 +10,12 @@
 .profile-section {
   width: 100%;
 }
+
+.header {
+  background-color: gray;
+  width: auto;
+  height: auto;
+  height: auto;
+  display: flex;
+  padding: 0 1rem 0 1rem;
+}

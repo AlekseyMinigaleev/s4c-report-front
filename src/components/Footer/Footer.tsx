@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom";
+import classes from "./Footer.module.css";
 
 export default function Footer() {
   const rootElement = document.getElementById("root");
@@ -7,5 +8,8 @@ export default function Footer() {
     return null;
   }
 
-  return createPortal(<footer>footer</footer>, rootElement);
+  return createPortal(
+    <footer className={classes["footer"]}>footer</footer>,
+    rootElement
+  );
 }
