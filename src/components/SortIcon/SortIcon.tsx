@@ -1,4 +1,4 @@
-import { SortType } from "../../models/Sort";
+import { SortType } from "../../models/Filter";
 import sortIcon from "../../images/sort-icon.png";
 import classes from "./SortIcon.module.css";
 

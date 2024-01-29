@@ -7,15 +7,17 @@ import { Sort, SortType } from "../../models/Filter";
 import { paginate } from "../../Utils/FilterUtils";
 import SortIcon from "../../components/SortIcon/SortIcon";
 import ValueWithProgress from "./components/ValueWithGrowth/ValueWithProgress";
+import lodash, { words } from "lodash";
+import { locale } from "yargs";
 
-const GAMES_PER_PAGE = 15;
+const GAMES_PER_PAGE = 11;
 
 interface paginationProps {
   selected: number;
 }
 
 interface tableHeader {
-  key: string;
+  key: keyof Game;
   label: string;
 }
 
@@ -38,7 +40,7 @@ export default function GamesPage() {
       label: "Дата публикации",
     },
     {
-      key: "cashIcnomeWithProgress",
+      key: "cashIncomeWithProgress",
       label: "Прибыль (RUB)",
     },
   ];
@@ -46,13 +48,18 @@ export default function GamesPage() {
   const [pageCount, setPageCount] = useState<number>(1);
   const [games, setGames] = useState<Game[]>([]);
   const [paginatedGames, setPaginatedGames] = useState<Game[]>([]);
-  const [sort, setSort] = useState<Sort>({
-    fieldName: "playersCountWithProgress",
-    sortType: SortType.descending,
-  });
+
+  const [sort, setSort] = useState<Sort>(
+    localStorage.getItem("sort")
+      ? JSON.parse(localStorage.getItem("sort")!)
+      : {
+          fieldName: "playersCountWithProgress",
+          sortType: SortType.descending,
+        }
+  );
 
   useEffect(() => {
-    getGames().then((response) => {
+    getGames(sort).then((response) => {
       setGames(response);
       setPageCount(Math.ceil(response.length / GAMES_PER_PAGE));
     });
@@ -60,7 +67,6 @@ export default function GamesPage() {
 
   useEffect(() => {
     paginateAndSetPaginatedGems(1);
-    console.log("games was changed");
   }, [games]);
 
   const getGames = useGetGames();
@@ -71,34 +77,19 @@ export default function GamesPage() {
   }
 
   function handleHeaderClick(tableHeader: tableHeader) {
-    games.sort((a, b) => {
-      const aValue = a[tableHeader.key as keyof Game];
-      const bValue = b[tableHeader.key as keyof Game];
+    let a =
+      sort.sortType === SortType.ascending
+        ? SortType.descending
+        : SortType.ascending;
 
-      if (typeof aValue === "undefined" || typeof bValue === "undefined") {
-        return 0;
-      }
-
-      if (aValue < bValue) {
-        return -1;
-      }
-
-      if (aValue > bValue) {
-        return 1;
-      }
-
-      return 0;
-    });
-
-    setGames(games);
-
-    setSort({
+    const sort1: Sort = {
       fieldName: tableHeader.key,
-      sortType:
-        sort.sortType === SortType.ascending
-          ? SortType.descending
-          : SortType.ascending,
-    });
+      sortType: a,
+    };
+
+    localStorage.setItem("sort", JSON.stringify(sort1));
+
+    window.location.reload();
   }
 
   return (
@@ -151,9 +142,9 @@ export default function GamesPage() {
         nextLabel=">"
         previousLabel="<"
         breakLabel=""
-        onPageChange={(props: paginationProps) =>
-          paginateAndSetPaginatedGems(props.selected + 1)
-        }
+        onPageChange={(props: paginationProps) => {
+          paginateAndSetPaginatedGems(props.selected + 1);
+        }}
         pageCount={pageCount}
         pageRangeDisplayed={1}
         marginPagesDisplayed={1}
