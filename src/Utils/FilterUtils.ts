@@ -4,7 +4,7 @@ export function paginate<T>(
   itemsPerPage: number
 ): T[] {
 
-  const startIndex = (page - 1) * itemsPerPage;
+  const startIndex = (page) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedData = data.slice(startIndex, endIndex);
 

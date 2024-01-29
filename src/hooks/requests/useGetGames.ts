@@ -6,7 +6,7 @@ export interface Game {
   name: string;
   evaluation: number;
   publicationDate: Date;
-  playersCountWithProgress: ValueWithProgressModel<number>;
+  playersCountWithProgress?: ValueWithProgressModel<number>;
   cashIncomeWithProgress?: ValueWithProgressModel<number>;
 }
 

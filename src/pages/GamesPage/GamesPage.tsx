@@ -7,8 +7,6 @@ import { Sort, SortType } from "../../models/Filter";
 import { paginate } from "../../Utils/FilterUtils";
 import SortIcon from "../../components/SortIcon/SortIcon";
 import ValueWithProgress from "./components/ValueWithGrowth/ValueWithProgress";
-import lodash, { words } from "lodash";
-import { locale } from "yargs";
 
 const GAMES_PER_PAGE = 11;
 
@@ -48,25 +46,21 @@ export default function GamesPage() {
   const [pageCount, setPageCount] = useState<number>(1);
   const [games, setGames] = useState<Game[]>([]);
   const [paginatedGames, setPaginatedGames] = useState<Game[]>([]);
-
-  const [sort, setSort] = useState<Sort>(
-    localStorage.getItem("sort")
-      ? JSON.parse(localStorage.getItem("sort")!)
-      : {
-          fieldName: "playersCountWithProgress",
-          sortType: SortType.descending,
-        }
-  );
+  const [currentPage, setCurrentPage] = useState(0);
+  const [sort, setSort] = useState<Sort>({
+    fieldName: "playersCountWithProgress",
+    sortType: SortType.descending,
+  });
 
   useEffect(() => {
     getGames(sort).then((response) => {
       setGames(response);
       setPageCount(Math.ceil(response.length / GAMES_PER_PAGE));
     });
-  }, []);
+  }, [sort]);
 
   useEffect(() => {
-    paginateAndSetPaginatedGems(1);
+    paginateAndSetPaginatedGems(currentPage);
   }, [games]);
 
   const getGames = useGetGames();
@@ -76,25 +70,26 @@ export default function GamesPage() {
     setPaginatedGames(paginatedGames);
   }
 
+  function onPageCkick(props: paginationProps) {
+    const pageNumber = props.selected;
+    setCurrentPage(pageNumber);
+    paginateAndSetPaginatedGems(pageNumber);
+  }
+
   function handleHeaderClick(tableHeader: tableHeader) {
-    let a =
-      sort.sortType === SortType.ascending
-        ? SortType.descending
-        : SortType.ascending;
-
-    const sort1: Sort = {
+    setSort({
       fieldName: tableHeader.key,
-      sortType: a,
-    };
-
-    localStorage.setItem("sort", JSON.stringify(sort1));
-
-    window.location.reload();
+      sortType:
+        sort.sortType === SortType.ascending
+          ? SortType.descending
+          : SortType.ascending,
+    });
   }
 
   return (
     <>
       <h1 className={classes["h1"]}>Все игры</h1>
+
       <table className={classes["games-tabel"]}>
         <thead>
           <tr>
@@ -116,10 +111,12 @@ export default function GamesPage() {
             <tr key={index}>
               <td>{`${x.name}`}</td>
               <td>
-                <ValueWithProgress
-                  valueWithProgress={x.playersCountWithProgress}
-                  growthClassName={classes["growth"]}
-                />
+                {x.playersCountWithProgress ? (
+                  <ValueWithProgress
+                    valueWithProgress={x.playersCountWithProgress}
+                    growthClassName={classes["growth"]}
+                  />
+                ) : "-"}
               </td>
               <td>{x.evaluation}</td>
               <td>{new Date(x.publicationDate).toLocaleDateString()}</td>
@@ -129,9 +126,7 @@ export default function GamesPage() {
                     valueWithProgress={x.cashIncomeWithProgress}
                     growthClassName={classes["growth"]}
                   />
-                ) : (
-                  "-"
-                )}
+                ) : "-"}
               </td>
             </tr>
           ))}
@@ -142,10 +137,9 @@ export default function GamesPage() {
         nextLabel=">"
         previousLabel="<"
         breakLabel=""
-        onPageChange={(props: paginationProps) => {
-          paginateAndSetPaginatedGems(props.selected + 1);
-        }}
+        onPageChange={onPageCkick}
         pageCount={pageCount}
+        forcePage={currentPage}
         pageRangeDisplayed={1}
         marginPagesDisplayed={1}
         containerClassName={paginationClasses["pagination"]}
