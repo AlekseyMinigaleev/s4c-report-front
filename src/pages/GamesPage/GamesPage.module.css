@@ -25,3 +25,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.growth {
+  color: hsl(120, 95%, 42%);
+  padding-left: 0.3rem;
+}

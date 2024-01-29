@@ -1,0 +1,7 @@
+.ascending {
+  transform: scaleY(-1);
+}
+
+.descengin {
+  transform: scaleY(1);
+}

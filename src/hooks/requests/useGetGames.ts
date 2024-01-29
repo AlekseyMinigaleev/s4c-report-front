@@ -1,26 +1,19 @@
-import { Paginate } from "../../models/Paginate";
+import { ValueWithProgressModel } from "../../models/ValueWithProgress";
 import useAuthorizedApi from "../useAuthorizedApi";
-
-export interface GetGamesResponse {
-  games: Game[];
-  totalGamesCount: number;
-}
 
 export interface Game {
   name: string;
-  playersCount: number;
   evaluation: number;
   publicationDate: Date;
-  totalCashIncome: number;
-  dailyCashIncome: number;
+  playersCountWithProgress: ValueWithProgressModel<number>;
+  cashIncomeWithProgress?: ValueWithProgressModel<number>;
 }
 
 export default function useGetGames() {
   const api = useAuthorizedApi();
 
-  async function getGames(queryParams: Paginate) {
-    const params = `?Paginate.ItemsPerPage=${queryParams.itemsPerPage}&Paginate.Page=${queryParams.page}`;
-    const response = await api.get<GetGamesResponse>("Game/GetGames" + params);
+  async function getGames() {
+    const response = await api.get<Game[]>("game/get-games");
     return response.data;
   }
 

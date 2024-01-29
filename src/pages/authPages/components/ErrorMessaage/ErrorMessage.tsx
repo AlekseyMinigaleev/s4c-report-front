@@ -1,4 +1,5 @@
-import "./ErrorMessage.module.css";
+import classes from "./ErrorMessage.module.css";
+
 interface ErrorMessaageProps {
   text: string;
 }
@@ -6,7 +7,7 @@ interface ErrorMessaageProps {
 export default function ErrorMessage(props: ErrorMessaageProps) {
   return (
     <>
-      <span>{props.text}</span>
+      <span className={classes["span"]}>{props.text}</span>
     </>
   );
 }
