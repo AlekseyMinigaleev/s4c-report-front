@@ -7,6 +7,7 @@ import { Sort, SortType } from "../../models/Filter";
 import { paginate } from "../../Utils/FilterUtils";
 import SortIcon from "../../components/SortIcon/SortIcon";
 import ValueWithProgress from "./components/ValueWithGrowth/ValueWithProgress";
+import lodash from "lodash";
 
 const GAMES_PER_PAGE = 11;
 
@@ -53,11 +54,11 @@ export default function GamesPage() {
   });
 
   useEffect(() => {
-    getGames(sort).then((response) => {
+    getGames().then((response) => {
       setGames(response);
       setPageCount(Math.ceil(response.length / GAMES_PER_PAGE));
     });
-  }, [sort]);
+  }, []);
 
   useEffect(() => {
     paginateAndSetPaginatedGems(currentPage);
@@ -77,14 +78,27 @@ export default function GamesPage() {
   }
 
   function handleHeaderClick(key: keyof Game) {
+    let sortedGames: Game[] = [];
+    const sortType =
+      key == sort.fieldName
+        ? sort.sortType === SortType.ascending
+          ? SortType.descending
+          : SortType.ascending
+        : SortType.descending;
+    const sortTypeString = sortType == SortType.ascending ? "asc" : "desc";
+    
+    if (key == "cashIncomeWithProgress" || key == "playersCountWithProgress") {
+      sortedGames = lodash.orderBy(games, (x) => x[key]?.actualValue, [
+        sortTypeString,
+      ]);
+    } else {
+      sortedGames = lodash.orderBy(games, [key], [sortTypeString]);
+    }
+
+    setGames(sortedGames);
     setSort({
       fieldName: key,
-      sortType:
-        key == sort.fieldName
-          ? sort.sortType === SortType.ascending
-            ? SortType.descending
-            : SortType.ascending
-          : SortType.descending,
+      sortType: sortType,
     });
   }
 
@@ -95,18 +109,18 @@ export default function GamesPage() {
       <table className={classes["table"]}>
         <thead>
           <tr>
-            {tableHeaders.map((x, index) => (
+            {tableHeaders.map((tableHeader, index) => (
               <th
                 className=""
                 key={index}
                 onClick={() => {
-                  handleHeaderClick(x.key);
+                  handleHeaderClick(tableHeader.key);
                 }}
               >
                 <div className={classes["header-container"]}>
-                  <span>{x.label}</span>
+                  <span>{tableHeader.label}</span>
 
-                  {x.key == sort.fieldName && (
+                  {tableHeader.key == sort.fieldName && (
                     <SortIcon sortType={sort.sortType} />
                   )}
                 </div>
@@ -115,25 +129,25 @@ export default function GamesPage() {
           </tr>
         </thead>
         <tbody>
-          {paginatedGames.map((x, index) => (
+          {paginatedGames.map((game, index) => (
             <tr key={index}>
-              <td>{`${x.name}`}</td>
+              <td>{`${game.name}`}</td>
               <td>
-                {x.playersCountWithProgress ? (
+                {game.playersCountWithProgress ? (
                   <ValueWithProgress
-                    valueWithProgress={x.playersCountWithProgress}
+                    valueWithProgress={game.playersCountWithProgress}
                     growthClassName={classes["growth"]}
                   />
                 ) : (
                   "-"
                 )}
               </td>
-              <td>{x.evaluation}</td>
-              <td>{new Date(x.publicationDate).toLocaleDateString()}</td>
+              <td>{game.evaluation}</td>
+              <td>{new Date(game.publicationDate).toLocaleDateString()}</td>
               <td>
-                {x.cashIncomeWithProgress ? (
+                {game.cashIncomeWithProgress ? (
                   <ValueWithProgress
-                    valueWithProgress={x.cashIncomeWithProgress}
+                    valueWithProgress={game.cashIncomeWithProgress}
                     growthClassName={classes["growth"]}
                   />
                 ) : (

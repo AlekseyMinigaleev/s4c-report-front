@@ -1,4 +1,3 @@
-import { Sort } from "../../models/Filter";
 import { ValueWithProgressModel } from "../../models/ValueWithProgress";
 import useAuthorizedApi from "../useAuthorizedApi";
 
@@ -13,14 +12,8 @@ export interface Game {
 export default function useGetGames() {
   const api = useAuthorizedApi();
 
-  async function getGames(sort: Sort) {
-    const params = {
-      "Sort.FieldName": sort.fieldName,
-      "Sort.SortType": sort.sortType,
-    };
-    const response = await api.get<Game[]>("game/get-games", {
-      params,
-    });
+  async function getGames() {
+    const response = await api.get<Game[]>("game/get-games");
     return response.data;
   }
 
