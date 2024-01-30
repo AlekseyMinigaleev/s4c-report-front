@@ -76,13 +76,15 @@ export default function GamesPage() {
     paginateAndSetPaginatedGems(pageNumber);
   }
 
-  function handleHeaderClick(tableHeader: tableHeader) {
+  function handleHeaderClick(key: keyof Game) {
     setSort({
-      fieldName: tableHeader.key,
+      fieldName: key,
       sortType:
-        sort.sortType === SortType.ascending
-          ? SortType.descending
-          : SortType.ascending,
+        key == sort.fieldName
+          ? sort.sortType === SortType.ascending
+            ? SortType.descending
+            : SortType.ascending
+          : SortType.descending,
     });
   }
 
@@ -90,18 +92,24 @@ export default function GamesPage() {
     <>
       <h1 className={classes["h1"]}>Все игры</h1>
 
-      <table className={classes["games-tabel"]}>
+      <table className={classes["table"]}>
         <thead>
           <tr>
             {tableHeaders.map((x, index) => (
               <th
+                className=""
                 key={index}
                 onClick={() => {
-                  handleHeaderClick(x);
+                  handleHeaderClick(x.key);
                 }}
               >
-                <span>{x.label}</span>
-                <SortIcon sortType={sort.sortType} />
+                <div className={classes["header-container"]}>
+                  <span>{x.label}</span>
+
+                  {x.key == sort.fieldName && (
+                    <SortIcon sortType={sort.sortType} />
+                  )}
+                </div>
               </th>
             ))}
           </tr>
@@ -116,7 +124,9 @@ export default function GamesPage() {
                     valueWithProgress={x.playersCountWithProgress}
                     growthClassName={classes["growth"]}
                   />
-                ) : "-"}
+                ) : (
+                  "-"
+                )}
               </td>
               <td>{x.evaluation}</td>
               <td>{new Date(x.publicationDate).toLocaleDateString()}</td>
@@ -126,7 +136,9 @@ export default function GamesPage() {
                     valueWithProgress={x.cashIncomeWithProgress}
                     growthClassName={classes["growth"]}
                   />
-                ) : "-"}
+                ) : (
+                  "-"
+                )}
               </td>
             </tr>
           ))}

@@ -7,14 +7,16 @@ interface SortIconProps {
 }
 
 export default function SortIcon({ sortType }: SortIconProps) {
+  const directionClassName = sortType == SortType.ascending
+  ? classes["ascending"]
+  : classes["descengin"];
+  const className = classes["img"];
+
   return (
     <img
-      className={
-        sortType == SortType.ascending
-          ? classes["ascending"]
-          : classes["descengin"]
-      }
+      className={`${className} ${directionClassName}`}
+        
       src={sortIcon}
     />
-  );
+  )
 }

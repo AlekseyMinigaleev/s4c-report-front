@@ -1,3 +1,7 @@
+.img {
+  max-width: 2rem;
+}
+
 .ascending {
   transform: scaleY(-1);
 }
