@@ -1,22 +1,13 @@
-import { SortType } from "../../models/Filter";
 import sortIcon from "../../images/sort-icon.png";
+import { sortType } from "../../models/Filter";
 import classes from "./SortIcon.module.css";
 
 interface SortIconProps {
-  sortType: SortType;
+  sortType: sortType;
 }
 
 export default function SortIcon({ sortType }: SortIconProps) {
-  const directionClassName = sortType == SortType.ascending
-  ? classes["ascending"]
-  : classes["descengin"];
   const className = classes["img"];
 
-  return (
-    <img
-      className={`${className} ${directionClassName}`}
-        
-      src={sortIcon}
-    />
-  )
+  return <img className={`${className} ${classes[sortType]}`} src={sortIcon} />;
 }

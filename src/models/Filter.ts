@@ -3,12 +3,9 @@ export interface Paginate {
   pageNumber: number;
 }
 
-export interface Sort {
-  fieldName: string;
-  sortType: SortType;
+export interface Sort<T> {
+  key: T;
+  sortType: sortType;
 }
 
-export enum SortType {
-  ascending = 0,
-  descending = 1,
-}
+export type sortType = "asc" | "desc";

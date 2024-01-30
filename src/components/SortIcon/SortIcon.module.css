@@ -2,10 +2,10 @@
   max-width: 2rem;
 }
 
-.ascending {
+.asc {
   transform: scaleY(-1);
 }
 
-.descengin {
+.desc {
   transform: scaleY(1);
 }
