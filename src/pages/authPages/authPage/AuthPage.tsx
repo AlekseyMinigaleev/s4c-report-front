@@ -10,7 +10,7 @@ export default function AuthPage() {
   const [formVariant, setFormVaiant] = useState<FromVariant>("LogIn");
 
   return (
-    <div className={"center"}>
+    <div className={classes["center"]}>
       <div className={`${classes["auth-page-font"]}  ${classes["form-container"]}`}>
         <div className={`${classes["input-container"]}`}>
           <Button

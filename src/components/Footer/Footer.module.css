@@ -1,6 +1,6 @@
 .footer {
-  flex: 0 0 auto;
   text-align: center;
   color: gray;
-  padding-top: 5rem;
+  padding-top: 2rem;
+  margin-top: auto;
 }
