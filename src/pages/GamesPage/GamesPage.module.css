@@ -1,16 +1,13 @@
 .h1 {
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
 }
 
 .table {
-  margin: 0 auto;
   border: 1px solid black;
   border-bottom: none;
   border-collapse: separate;
   border-radius: 4px;
   border-spacing: 0px;
-  overflow: hidden;
-  width: auto;
   margin-bottom: 2rem;
 }
 
@@ -21,13 +18,15 @@
   border: 1px solid black;
 }
 
+.table th {
+  background-color: #A6A6A6;
+  line-height: 2;
+  vertical-align: middle;
+}
+
 .table td {
   background-color: #DDDDDD;
   border-bottom: 1px solid black;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
 }
 .table th {
   border-bottom: 1px solid black;

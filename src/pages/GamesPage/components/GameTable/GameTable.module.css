@@ -1,13 +1,8 @@
 .table {
-  margin: 0 auto;
-  border: 1px solid black;
-  border-bottom: none;
-  border-collapse: separate;
-  border-radius: 4px;
-  border-spacing: 0px;
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
   width: 80%;
-  margin-bottom: 2rem;
 }
 
 .table thead {
@@ -16,17 +11,6 @@
   border-collapse: separate;
 }
 
-.table tr {
-  display: table-row;
-  vertical-align: inherit;
-  border-color: inherit;
-}
-
-.table th {
-  background-color: #A6A6A6;
-  line-height: 2;
-  vertical-align: middle;
-}
 .table th:nth-child(1) {
   width: 30%;
 }
@@ -55,13 +39,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 150px;
-}
-
-.table th,
-.table td {
-  padding: 1rem 1rem;
-  text-align: left;
-  vertical-align: top;
 }
 
 .header-container {

@@ -7,7 +7,9 @@ import ValueWithProgress from "../ValueWithGrowth/ValueWithProgress";
 import { Game, sortGames } from "../../../../models/GameModel";
 import { paginate } from "../../../../Utils/FilterUtils";
 import ReactPaginate from "react-paginate";
-const GAMES_PER_PAGE = 11;
+import { Total } from "../../../../hooks/requests/useGetGames";
+
+const GAMES_PER_PAGE = 10;
 
 interface paginationProps {
   selected: number;
@@ -20,6 +22,8 @@ interface tableHeader {
 
 interface GameTableProps {
   games: Game[];
+  total: Total;
+  classes: string;
 }
 
 export default function GameTable(props: GameTableProps) {
@@ -29,16 +33,16 @@ export default function GameTable(props: GameTableProps) {
       label: "Название",
     },
     {
-      key: "playersCount",
-      label: "Количество игроков",
+      key: "publicationDate",
+      label: "Дата публикации",
     },
     {
       key: "evaluation",
       label: "Оценка",
     },
     {
-      key: "publicationDate",
-      label: "Дата публикации",
+      key: "playersCount",
+      label: "Количество игроков",
     },
     {
       key: "cashIncome",
@@ -84,7 +88,7 @@ export default function GameTable(props: GameTableProps) {
 
   return (
     <>
-      <table className={classes["table"]}>
+      <table className={`${classes["table"]} ${props.classes}`}>
         <thead>
           <tr>
             {tableHeaders.map((tableHeader, index) => (
@@ -158,5 +162,6 @@ export default function GameTable(props: GameTableProps) {
         activeLinkClassName={paginationClasses["active"]}
       />
     </>
+
   );
 }
