@@ -9,7 +9,7 @@ export default function Footer() {
   const navigate = useNavigate();
 
   return (
-    <header>
+    <header className={classes["header"]}>
       <table>
         <tbody>
           <tr>

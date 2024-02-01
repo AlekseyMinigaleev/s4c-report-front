@@ -4,10 +4,7 @@ form {
   align-items: center;
 }
 
-label{
-  margin: 1rem;
-}
-
-.forgor-password-section{
-  margin: 1rem;
+.section {
+  padding: 1rem;
+  width: 22rem;
 }
