@@ -1,19 +1,21 @@
-import { ValueWithProgressModel } from "../../models/ValueWithProgress";
+import { Game } from "../../models/GameModel";
 import useAuthorizedApi from "../useAuthorizedApi";
 
-export interface Game {
-  name: string;
-  evaluation: number;
-  publicationDate: Date;
-  playersCountWithProgress?: ValueWithProgressModel<number>;
-  cashIncomeWithProgress?: ValueWithProgressModel<number>;
+export interface GetGamesResponse {
+  games: Game[];
+  total: Total;
+}
+
+export interface Total {
+  playersCount: number;
+  cashIncome?: number;
 }
 
 export default function useGetGames() {
   const api = useAuthorizedApi();
 
   async function getGames() {
-    const response = await api.get<Game[]>("game/get-games");
+    const response = await api.get<GetGamesResponse>("game/get-games");
     return response.data;
   }
 

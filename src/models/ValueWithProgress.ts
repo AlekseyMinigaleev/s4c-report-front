@@ -1,4 +1,4 @@
-export interface ValueWithProgressModel<T> {
-  actualValue: T;
-  lastProgressValue: T;
+export interface ValueWithProgressModel {
+  actualValue: number;
+  lastProgressValue: number;
 }

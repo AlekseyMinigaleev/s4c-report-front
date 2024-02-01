@@ -1,181 +1,57 @@
-  import ReactPaginate from "react-paginate";
-  import classes from "./GamesPage.module.css";
-  import paginationClasses from "./Pagination.module.css";
-  import { useEffect, useState } from "react";
-  import useGetGames, { Game } from "../../hooks/requests/useGetGames";
-  import { Sort } from "../../models/Filter";
-  import { paginate } from "../../Utils/FilterUtils";
-  import SortIcon from "../../components/SortIcon/SortIcon";
-  import ValueWithProgress from "./components/ValueWithGrowth/ValueWithProgress";
-  import lodash from "lodash";
+import classes from "./GamesPage.module.css";
+import GameTable from "./components/GameTable/GameTable";
+import { useEffect, useState } from "react";
+import { Game } from "../../models/GameModel";
+import useGetGames, { Total } from "../../hooks/requests/useGetGames";
 
-  const GAMES_PER_PAGE = 11;
+export default function GamesPage() {
+  
+  const [total, setTotal] = useState<Total>({
+    cashIncome: undefined,
+    playersCount:0,
+  })
 
-  interface paginationProps {
-    selected: number;
-  }
+  const [games, setGames] = useState<Game[]>([]);
 
-  interface tableHeader {
-    key: keyof Game;
-    label: string;
-  }
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  export default function GamesPage() {
-    const tableHeaders: tableHeader[] = [
-      {
-        key: "name",
-        label: "Название",
-      },
-      {
-        key: "playersCountWithProgress",
-        label: "Количество игроков",
-      },
-      {
-        key: "evaluation",
-        label: "Оценка",
-      },
-      {
-        key: "publicationDate",
-        label: "Дата публикации",
-      },
-      {
-        key: "cashIncomeWithProgress",
-        label: "Прибыль (RUB)",
-      },
-    ];
+  const getGames = useGetGames();
 
-    const [pageCount, setPageCount] = useState<number>(1);
-    const [games, setGames] = useState<Game[]>([]);
-    const [paginatedGames, setPaginatedGames] = useState<Game[]>([]);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [sort, setSort] = useState<Sort<keyof Game>>({
-      key: "playersCountWithProgress",
-      sortType: "desc",
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getGames();
+      setGames(response.games);
+      setTotal(response.total);
+      setIsLoading(false);
+    };
 
-    useEffect(() => {
-      getGames().then((response) => {
-        const sortedGames = sortGames(response, sort);
-        setGames(sortedGames);
+    fetchData();
+  }, []);
 
-        setPageCount(Math.ceil(response.length / GAMES_PER_PAGE));
-      });
-    }, []);
-
-    useEffect(() => {
-      const paginatedGames = paginate(games, currentPage, GAMES_PER_PAGE);
-      setPaginatedGames(paginatedGames);
-    }, [games]);
-
-    const getGames = useGetGames();
-
-    function onPageCkick(props: paginationProps) {
-      const pageNumber = props.selected;
-      setCurrentPage(pageNumber);
-
-      const paginatedGames = paginate(games, pageNumber, GAMES_PER_PAGE);
-      setPaginatedGames(paginatedGames);
-    }
-
-    function sortGames(games: Game[], sort: Sort<keyof Game>): Game[] {
-      let sortedGames: Game[] = [];
-      const key = sort.key;
-
-      if (key == "cashIncomeWithProgress" || key == "playersCountWithProgress") {
-        sortedGames = lodash.orderBy(games, (x) => x[key]?.actualValue, [
-          sort.sortType,
-        ]);
-      } else {
-        sortedGames = lodash.orderBy(games, [sort.key], [sort.sortType]);
-      }
-
-      return sortedGames;
-    }
-
-    function handleHeaderClick(key: keyof Game) {
-      const newSort: Sort<keyof Game> = {
-        key: key,
-        sortType:
-          key == sort.key ? (sort.sortType === "asc" ? "desc" : "asc") : "desc",
-      };
-      setSort(newSort);
-
-      const sortedGames = sortGames(games, newSort);
-      setGames(sortedGames);
-    }
-
-    return (
-      <>
-        <h1 className={classes["h1"]}>Все игры</h1>
-
+  return (
+    <>
+      <section>
+        <h1 className={classes["h1"]}>Общая статистика</h1>
         <table className={classes["table"]}>
           <thead>
             <tr>
-              {tableHeaders.map((tableHeader, index) => (
-                <th
-                  className=""
-                  key={index}
-                  onClick={() => {
-                    handleHeaderClick(tableHeader.key);
-                  }}
-                >
-                  <div className={classes["header-container"]}>
-                    <span>{tableHeader.label}</span>
-
-                    {tableHeader.key == sort.key && (
-                      <SortIcon sortType={sort.sortType} />
-                    )}
-                  </div>
-                </th>
-              ))}
+              <th>Количество игроков:</th>
+              <td>{total.playersCount.toLocaleString()}</td>
             </tr>
           </thead>
           <tbody>
-            {paginatedGames.map((game, index) => (
-              <tr key={index}>
-                <td>{`${game.name}`}</td>
-                <td>
-                  {game.playersCountWithProgress ? (
-                    <ValueWithProgress
-                      valueWithProgress={game.playersCountWithProgress}
-                      growthClassName={classes["growth"]}
-                    />
-                  ) : (
-                    "-"
-                  )}
-                </td>
-                <td>{game.evaluation}</td>
-                <td>{new Date(game.publicationDate).toLocaleDateString()}</td>
-                <td>
-                  {game.cashIncomeWithProgress ? (
-                    <ValueWithProgress
-                      valueWithProgress={game.cashIncomeWithProgress}
-                      growthClassName={classes["growth"]}
-                    />
-                  ) : (
-                    "-"
-                  )}
-                </td>
-              </tr>
-            ))}
+            <tr>
+              <th>Прибыль (RUB):</th>
+              <td>{total.cashIncome ? total.cashIncome.toLocaleString() : "-"}</td>
+            </tr>
           </tbody>
         </table>
+      </section>
 
-        <ReactPaginate
-          nextLabel=">"
-          previousLabel="<"
-          breakLabel=""
-          onPageChange={onPageCkick}
-          pageCount={pageCount}
-          forcePage={currentPage}
-          pageRangeDisplayed={1}
-          marginPagesDisplayed={1}
-          containerClassName={paginationClasses["pagination"]}
-          pageLinkClassName={paginationClasses["page-num"]}
-          previousLinkClassName={paginationClasses["page-num"]}
-          nextLinkClassName={paginationClasses["page-num"]}
-          activeLinkClassName={paginationClasses["active"]}
-        />
-      </>
-    );
-  }
+      <section>
+        <h1 className={classes["h1"]}>Все игры</h1>
+        {isLoading ? <p>Загрузка...</p> : <GameTable games={games} />}
+      </section>
+    </>
+  );
+}
