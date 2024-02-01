@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import classes from "./Button.module.css";
 
 interface ButtonProps {
@@ -6,16 +6,16 @@ interface ButtonProps {
   children: ReactNode;
   isActive: boolean;
   disabled?: boolean;
+
+  className?: string;
 }
 
 export default function Button(props: ButtonProps) {
+  const activeClass = `${props.isActive ? `${classes.button} ${classes.active}` : `${classes.button}`}`
+  const className = `${props.className}`;
   return (
     <button
-      className={
-        props.isActive
-          ? `${classes.button} ${classes.active}`
-          : `${classes.button}`
-      }
+      className={`${className} ${activeClass} `}
       onClick={props.onClick}
       disabled={props.disabled}
     >

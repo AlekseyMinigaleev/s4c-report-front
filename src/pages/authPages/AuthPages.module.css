@@ -24,3 +24,11 @@ h1 {
 .auth-page-font form {
   font-size: var(--font-size);
 }
+
+.center {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 10rem;
+  padding-bottom: 3rem;
+}

@@ -10,44 +10,52 @@ export default function Footer() {
 
   return (
     <header className={classes["header"]}>
-      <table>
-        <tbody>
-          <tr>
-            <td className={classes["logo-section"]}>
-              <img height={50} src={logo} alt="" />
-            </td>
-            <td className={classes["navigation-section"]}>
-              <Button
-                onClick={() => {
-                  navigate("/welcome");
-                }}
-                isActive={false}
-              >
-                Главная
-              </Button>
-              <Button
-                onClick={() => {
-                  navigate("/welcome");
-                }}
-                isActive={false}
-              >
-                Главная
-              </Button>
-              <Button
-                onClick={() => {
-                  navigate("/welcome");
-                }}
-                isActive={false}
-              >
-                Главная
-              </Button>
-            </td>
-            <td className={classes["profile-section"]}>
-              <ProfileMenu />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className={classes["header-container"]}>
+        <div
+          className={classes["logo-section"]}
+          onClick={() => {
+            navigate("/welcome");
+          }}
+        >
+          <img height={50} src={logo} alt="" />
+        </div>
+
+        <div className={classes["navigation-container"]}>
+          {/* <div className={classes["navigation-section"]}>
+            <Button
+              onClick={() => {
+                navigate("/welcome");
+              }}
+              isActive={false}
+              className={classes["padding-right"]}
+            >
+              Главная
+            </Button>
+
+            <Button
+              onClick={() => {
+                navigate("/welcome");
+              }}
+              isActive={false}
+              className={classes["padding-right"]}
+            >
+              Главная
+            </Button>
+
+            <Button
+              onClick={() => {
+                navigate("/welcome");
+              }}
+              isActive={false}
+            >
+              Главная
+            </Button>
+          </div> */}
+        </div>
+        <div className={classes["profile-section"]}>
+          <ProfileMenu />
+        </div>
+      </div>
     </header>
   );
 }

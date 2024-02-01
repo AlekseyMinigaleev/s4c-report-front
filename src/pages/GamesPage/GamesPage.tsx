@@ -9,10 +9,10 @@ import TotalTable from "./components/TotalTable/TotalTable";
 export default function GamesPage() {
   const [response, setResponse] = useState<GetGamesResponse>({
     games: [],
-    total:{
+    total: {
       playersCount: 0,
-      cashIncome: undefined
-    }
+      cashIncome: undefined,
+    },
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -34,17 +34,20 @@ export default function GamesPage() {
       {isLoading ? (
         <p>Загрузка...</p>
       ) : (
-        <div style={{width:"100%", height:"100%"}}>
-          <section>
-            <h1 className={classes["h1"]}>Все игры</h1>
-            <GameTable games={response.games} total={response.total} classes={classes["table"]} />
-          </section>
-
-          <section>
+        <>
+          <section className={classes["section"]}>
+            <h1 className={classes["h1"]}>Общая статистика</h1>
             <TotalTable total={response.total} classes={classes["table"]} />
           </section>
-        </div>
-
+          <section>
+            <h1 className={classes["h1"]}>Все игры</h1>
+            <GameTable
+              games={response.games}
+              total={response.total}
+              classes={classes["table"]}
+            />
+          </section>
+        </>
       )}
     </>
   );
