@@ -93,7 +93,7 @@ export default function GameTable(props: GameTableProps) {
           <tr>
             {tableHeaders.map((tableHeader, index) => (
               <th
-                colSpan={index === 3 || index === 4 ? 2 : 1}
+                colSpan={index === 0 || index === 3 || index === 4 ? 2 : 1}
                 key={index}
                 onClick={() => {
                   handleHeaderClick(tableHeader.key);
@@ -113,6 +113,7 @@ export default function GameTable(props: GameTableProps) {
         <tbody>
           {paginatedGames.map((game, index) => (
             <tr key={index}>
+              <td>{index + 1 + currentPage * 10}</td>
               <td>{`${game.name}`}</td>
               <td>
                 {game.publicationDate &&
