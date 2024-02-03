@@ -5,8 +5,8 @@ import {
   MenuItem as MenuItemInner,
   MenuItemProps,
 } from "@szhsin/react-menu";
-import profileIcon from "../../../images/profile-icon.png";
-import classes from "./ProfileMenu.module.css";
+import menuBarLogo from "../../../images/menu-bar.png";
+import classes from "./UserMenu.module.css";
 import { useNavigate } from "react-router-dom";
 import useLogout from "../../../hooks/requests/useLogout";
 import useAuthentification from "../../../hooks/useAuthContext";
@@ -22,12 +22,12 @@ const MenuDivider = (props: JSX.IntrinsicAttributes & MenuItemProps) => {
 function ProfileSection() {
   return (
     <div onClick={() => {}} className={classes["profile-image-container"]}>
-      <img src={profileIcon} width={50} />
+      <img src={menuBarLogo} width={50} />
     </div>
   );
 }
 
-export default function ProfileMenu() {
+export default function UserMenu() {
   const navigate = useNavigate();
   const logout = useLogout();
   const authContext = useAuthentification();

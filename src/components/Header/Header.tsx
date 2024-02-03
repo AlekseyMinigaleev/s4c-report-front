@@ -1,12 +1,14 @@
 import Button from "../Button/Button";
 import "../../index.css";
-import ProfileMenu from "./ProfileMenu/ProfileMenu";
+import UserMenu from "./UserMenu/UserMenu";
 import logo from "../../images/forHeader.png";
 import { useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
+import useAuthContext from "../../hooks/useAuthContext";
 
 export default function Footer() {
   const navigate = useNavigate();
+  const authContext = useAuthContext();
 
   return (
     <header className={classes["header"]}>
@@ -52,8 +54,9 @@ export default function Footer() {
             </Button>
           </div> */}
         </div>
-        <div className={classes["profile-section"]}>
-          <ProfileMenu />
+        <div className={classes["user-settings-section"]}>
+          <p className={classes["developer-name"]}>{authContext.developerName}</p>
+          <UserMenu />
         </div>
       </div>
     </header>

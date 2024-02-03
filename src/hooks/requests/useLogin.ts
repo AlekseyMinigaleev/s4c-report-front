@@ -7,11 +7,16 @@ export interface LoginPayload {
   userCreditionals: UserCreditionals;
 }
 
+export interface LoginResponse {
+  authorizationTokens: AuthenticationTokens;
+  developerName: string;
+}
+
 export default function useLogin() {
   async function login(
     payload: LoginPayload
-  ): Promise<AxiosResponse<AuthenticationTokens, any>> {
-    const response = await anonymousApi.post<AuthenticationTokens>(
+  ): Promise<AxiosResponse<LoginResponse, any>> {
+    const response = await anonymousApi.post<LoginResponse>(
       "authentication/login",
       JSON.stringify(payload),
       {
