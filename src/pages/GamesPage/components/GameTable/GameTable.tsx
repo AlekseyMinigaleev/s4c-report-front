@@ -137,7 +137,9 @@ export default function GameTable(props: GameTableProps) {
                 )}
               </td>
               <td>
-                {game.cashIncome?.percentage ? (
+                {game.cashIncome?.valueWithProgress?.actualValue == 0 ? (
+                  <>{game.cashIncome.percentage}%</>
+                ) : game.cashIncome?.percentage ? (
                   <>{game.cashIncome.percentage}%</>
                 ) : null}
               </td>
