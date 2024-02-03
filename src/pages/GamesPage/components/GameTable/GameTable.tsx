@@ -93,14 +93,14 @@ export default function GameTable(props: GameTableProps) {
           <tr>
             {tableHeaders.map((tableHeader, index) => (
               <th
-                colSpan={index === 1 || index === 4 ? 2 : 1}
+                colSpan={index === 3 || index === 4 ? 2 : 1}
                 key={index}
                 onClick={() => {
                   handleHeaderClick(tableHeader.key);
                 }}
               >
                 <div className={classes["header-container"]}>
-                  <span>{tableHeader.label}</span>
+                  <span className={classes["span"]}>{tableHeader.label}</span>
 
                   {tableHeader.key == sort.key && (
                     <SortIcon sortType={sort.sortType} />
@@ -115,17 +115,17 @@ export default function GameTable(props: GameTableProps) {
             <tr key={index}>
               <td>{`${game.name}`}</td>
               <td>
+                {game.publicationDate &&
+                  new Date(game.publicationDate).toLocaleDateString()}
+              </td>
+              <td>{game.evaluation}</td>
+              <td>
                 <ValueWithProgress
                   valueWithProgress={game.playersCount.valueWithProgress}
                   growthClassName={classes["growth"]}
                 />
               </td>
               <td>{game.playersCount.percentage}%</td>
-              <td>{game.evaluation}</td>
-              <td>
-                {game.publicationDate &&
-                  new Date(game.publicationDate).toLocaleDateString()}
-              </td>
               <td>
                 {game.cashIncome?.valueWithProgress ? (
                   <ValueWithProgress
@@ -137,7 +137,9 @@ export default function GameTable(props: GameTableProps) {
                 )}
               </td>
               <td>
-                {game.cashIncome?.percentage ? (
+                {game.cashIncome?.valueWithProgress?.actualValue == 0 ? (
+                  <>{game.cashIncome.percentage}%</>
+                ) : game.cashIncome?.percentage ? (
                   <>{game.cashIncome.percentage}%</>
                 ) : null}
               </td>
@@ -162,6 +164,5 @@ export default function GameTable(props: GameTableProps) {
         activeLinkClassName={paginationClasses["active"]}
       />
     </>
-
   );
 }
