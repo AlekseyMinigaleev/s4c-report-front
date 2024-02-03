@@ -1,4 +1,4 @@
-.header-container{
+.header-container {
   display: flex;
   flex-grow: 1;
 }
@@ -19,8 +19,17 @@
   justify-content: space-between;
 }
 
-.profile-section {
+.user-settings-section {
+  display: flex;
   width: auto;
+  align-items: center;
+}
+
+.developer-name {
+  margin-right: 3rem;
+  font-weight: bolder;
+  /* font-family: ; TODO: жду ответа*/ 
+  font-size: 24pt;
 }
 
 .header {
@@ -31,6 +40,7 @@
   padding-bottom: 0.4rem;
   padding-left: 10%;
   padding-right: 10%;
+  margin-bottom: 1rem;
 }
 
 .padding-right {

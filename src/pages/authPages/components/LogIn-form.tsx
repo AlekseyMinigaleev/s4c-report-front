@@ -7,8 +7,10 @@ import AuthContext from "../../../context/AuthProvider";
 import ErrorMessage from "./ErrorMessaage/ErrorMessage";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthenticationTokens } from "../../../models/AuthenticationTokens";
-import useLogin, { LoginPayload } from "../../../hooks/requests/useLogin";
+import useLogin, {
+  LoginPayload,
+  LoginResponse,
+} from "../../../hooks/requests/useLogin";
 import useLoading from "../../../hooks/useLoading";
 import RememberMe from "./RememberMe/RememberMe";
 import ForgotPassword from "./ForgotPassword/ForgotPassword";
@@ -38,16 +40,15 @@ export default function LogInForm() {
     handleLoginResponse(response);
   }
 
-  function handleLoginResponse(
-    response: AxiosResponse<AuthenticationTokens, any>
-  ) {
+  function handleLoginResponse(response: AxiosResponse<LoginResponse, any>) {
     if (response.status == 400) {
       let data = response.data as any;
       setServerErrorMessage(data.NotFound[0]); // TODO: читать все ошибки а не только первую.
     } else if (response.status == 200) {
       authContext.setAuth({
-        accessToken: response.data.accessToken,
+        accessToken: response.data.authorizationTokens.accessToken,
       });
+      authContext.setDeveloperName(response.data.developerName);
       setServerErrorMessage("");
       navigate("/welcome");
     }
