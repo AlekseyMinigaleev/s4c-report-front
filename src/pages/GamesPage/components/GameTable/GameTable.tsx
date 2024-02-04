@@ -8,6 +8,7 @@ import { Game, sortGames } from "../../../../models/GameModel";
 import { paginate } from "../../../../Utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import { Total } from "../../../../hooks/requests/useGetGames";
+import Modal from "../../../../components/Modal/Modal";
 
 const GAMES_PER_PAGE = 10;
 
@@ -60,6 +61,7 @@ export default function GameTable(props: GameTableProps) {
   const [paginatedGames, setPaginatedGames] = useState<Game[]>(
     paginate(games, currentPage, GAMES_PER_PAGE)
   );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const paginatedGames = paginate(games, currentPage, GAMES_PER_PAGE);
@@ -88,6 +90,19 @@ export default function GameTable(props: GameTableProps) {
 
   return (
     <>
+      <Modal
+        isOpen={isModalOpen}
+        title={"jopa"}
+        onClose={() => setIsModalOpen(false)}
+      >
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
+          debitis itaque obcaecati distinctio, quis officia quaerat
+          necessitatibus veritatis dolorem aperiam earum. Recusandae, vel et
+          perspiciatis dolor voluptas possimus temporibus quo.
+        </p>
+      </Modal>
+
       <table className={`${classes["table"]} ${props.classes}`}>
         <thead>
           <tr>
@@ -112,7 +127,12 @@ export default function GameTable(props: GameTableProps) {
         </thead>
         <tbody>
           {paginatedGames.map((game, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
               <td>{index + 1 + currentPage * 10}</td>
               <td>{`${game.name}`}</td>
               <td>
