@@ -1,3 +1,5 @@
+@import "../../fonts.css";
+
 .header-container {
   display: flex;
   flex-grow: 1;
@@ -28,8 +30,11 @@
 .developer-name {
   margin-right: 3rem;
   font-weight: bolder;
-  /* font-family: ; TODO: жду ответа*/ 
-  font-size: 24pt;
+  font-family: "CyrillicRound", sans-serif;
+  font-size: 32pt;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .header {

@@ -13,9 +13,6 @@ interface AuthentificationContextProps {
   
   isPersist: boolean;
   setIsPersist: Dispatch<SetStateAction<boolean>>;
-
-  developerName: string;
-  setDeveloperName:  Dispatch<SetStateAction<string>>;
 }
 
 const AuthentificationContext = createContext<AuthentificationContextProps>({
@@ -25,13 +22,10 @@ const AuthentificationContext = createContext<AuthentificationContextProps>({
   setAuth: () => {},
   isPersist: false,
   setIsPersist: () => {},
-  developerName: "C4S.SHA",
-  setDeveloperName: ()=>{},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [auth, setAuth] = useState<AuthenticationTokens>();
-  const [developerName, setDeveloperName] = useState<string>("");
 
   const persistValue = localStorage.getItem("persist");
   const [isPersist, setIsPersist] = useState<boolean>(
@@ -45,8 +39,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setAuth,
         isPersist,
         setIsPersist,
-        developerName,
-        setDeveloperName
       }}
     >
       {children}

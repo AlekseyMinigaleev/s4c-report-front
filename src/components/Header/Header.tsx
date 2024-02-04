@@ -1,14 +1,24 @@
 import Button from "../Button/Button";
 import "../../index.css";
 import UserMenu from "./UserMenu/UserMenu";
-import logo from "../../images/forHeader.png";
+import logo from "../../images/logo.png";
 import { useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
-import useAuthContext from "../../hooks/useAuthContext";
+import { useEffect, useState } from "react";
+import { DeveloperInfo } from "../../models/DeveloperInfo";
 
-export default function Footer() {
+export default function Header() {
   const navigate = useNavigate();
-  const authContext = useAuthContext();
+  const [developerInfo, setDeveloperInfo] = useState<DeveloperInfo>({
+    developerName: "",
+    developerPageUrl: "",
+  });
+
+  useEffect(() => {
+    const developerInfoString = localStorage.getItem("developerInfo");
+    const developerInfo: DeveloperInfo = JSON.parse(developerInfoString!);
+    setDeveloperInfo(developerInfo);
+  }, []);
 
   return (
     <header className={classes["header"]}>
@@ -19,7 +29,7 @@ export default function Footer() {
             navigate("/welcome");
           }}
         >
-          <img height={50} src={logo} alt="" />
+          <img height={75} src={logo} alt="" />
         </div>
 
         <div className={classes["navigation-container"]}>
@@ -55,7 +65,12 @@ export default function Footer() {
           </div> */}
         </div>
         <div className={classes["user-settings-section"]}>
-          <p className={classes["developer-name"]}>{authContext.developerName}</p>
+          <a
+            className={classes["developer-name"]}
+            href={developerInfo.developerPageUrl}
+          >
+            {developerInfo.developerName}
+          </a>
           <UserMenu />
         </div>
       </div>

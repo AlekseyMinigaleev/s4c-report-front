@@ -48,7 +48,10 @@ export default function LogInForm() {
       authContext.setAuth({
         accessToken: response.data.authorizationTokens.accessToken,
       });
-      authContext.setDeveloperName(response.data.developerName);
+      localStorage.setItem(
+        "developerInfo",
+        JSON.stringify(response.data.developerInfo)
+      );
       setServerErrorMessage("");
       navigate("/welcome");
     }
