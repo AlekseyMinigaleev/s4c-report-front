@@ -8,7 +8,7 @@
   justify-content: center;
 }
 .profile-image-container:hover {
-  background-color: lightblue;
+  background-color: lightgray;
 }
 
 /* для @szhsin/react-menu необходимо чтобы элемент был кнопкой, поэтому сделан стиль кнопки в ввиде дива */
