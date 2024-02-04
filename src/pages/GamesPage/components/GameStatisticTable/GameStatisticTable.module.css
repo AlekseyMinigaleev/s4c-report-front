@@ -1,0 +1,32 @@
+.container {
+  overflow-y: auto;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.table {
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.download-more {
+  margin: auto;
+}
+
+.download-more-button {
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  font-size: 14pt;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.download-more-button:hover {
+  background: #e7e8e9;
+  color: #9fa3a9;
+}
+
+.download-more-button:disabled {
+  background: #e7e8e9;
+}

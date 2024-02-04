@@ -1,6 +1,7 @@
 import { createPortal } from "react-dom";
 import { useRef, useEffect, ReactNode, DialogHTMLAttributes } from "react";
 import classes from "./Modal.module.css";
+import closeIcon from "../../images/close-icon.png";
 
 interface ModalProps extends DialogHTMLAttributes<HTMLDialogElement> {
   title: string;
@@ -29,7 +30,7 @@ export default function Modal(props: ModalProps) {
           className={classes["close-button"]}
           onClick={() => props.onClose()}
         >
-          <img src={""} alt="Закрыть"></img>
+          <img src={closeIcon} width={25} alt="Закрыть"></img>
         </div>
 
         <p className={classes["title"]}>{props.title}</p>

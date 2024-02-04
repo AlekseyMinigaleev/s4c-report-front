@@ -9,6 +9,7 @@ import { paginate } from "../../../../Utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import { Total } from "../../../../hooks/requests/useGetGames";
 import Modal from "../../../../components/Modal/Modal";
+import GameStatisticTable from "../GameStatisticTable/GameStatisticTable";
 
 const GAMES_PER_PAGE = 10;
 
@@ -25,6 +26,11 @@ interface GameTableProps {
   games: Game[];
   total: Total;
   classes: string;
+}
+
+interface ClickedGame {
+  gameName: string;
+  id: string;
 }
 
 export default function GameTable(props: GameTableProps) {
@@ -62,6 +68,10 @@ export default function GameTable(props: GameTableProps) {
     paginate(games, currentPage, GAMES_PER_PAGE)
   );
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [clickedGame, setClickedGame] = useState<ClickedGame>({
+    gameName: "",
+    id: "",
+  });
 
   useEffect(() => {
     const paginatedGames = paginate(games, currentPage, GAMES_PER_PAGE);
@@ -88,19 +98,22 @@ export default function GameTable(props: GameTableProps) {
     setGames(sortedGames);
   }
 
+  function gameClickHandler(game: Game) {
+    setIsModalOpen(true);
+    setClickedGame({
+      gameName: game.name,
+      id: "",
+    });
+  }
+
   return (
     <>
       <Modal
         isOpen={isModalOpen}
-        title={"jopa"}
+        title={clickedGame.gameName}
         onClose={() => setIsModalOpen(false)}
       >
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-          debitis itaque obcaecati distinctio, quis officia quaerat
-          necessitatibus veritatis dolorem aperiam earum. Recusandae, vel et
-          perspiciatis dolor voluptas possimus temporibus quo.
-        </p>
+        <GameStatisticTable gameId={""} classes={props.classes} />
       </Modal>
 
       <table className={`${classes["table"]} ${props.classes}`}>
@@ -130,7 +143,7 @@ export default function GameTable(props: GameTableProps) {
             <tr
               key={index}
               onClick={() => {
-                setIsModalOpen(true);
+                gameClickHandler(game);
               }}
             >
               <td>{index + 1 + currentPage * 10}</td>
