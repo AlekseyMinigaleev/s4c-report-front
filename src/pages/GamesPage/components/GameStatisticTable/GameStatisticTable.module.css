@@ -1,12 +1,11 @@
 .container {
-  overflow-y: auto;
-  max-height: 400px;
   display: flex;
   flex-direction: column;
 }
 
 .table {
   margin: auto;
+  width: 100%;
   margin-bottom: 1rem;
 }
 

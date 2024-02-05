@@ -1,42 +1,140 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classes from "./GameStatisticTable.module.css";
+import gamePageclasses from "../../GamesPage.module.css";
 import LoadingButton from "../../../../components/LoadingButton/LoadingButton";
+import useGetGameStatisticByGame, {
+  GetGameStatisticByGamePayload,
+} from "../../../../hooks/requests/useGetGameStatisticByGame";
+import { Sort, SortType } from "../../../../models/Filter";
+import TableHeader from "../../../../components/TableHeader";
+import { TableHeaderModel } from "../GameTable/GameTable";
+import { getNewSort } from "../../../../Utils/FilterUtils";
+import { GameStatisticModel } from "../../../../models/GameStatisticModel";
 
 interface GameStatisticTableProps {
   gameId: string;
   classes: string;
 }
 
+const GAMES_PER_PAGE = 1;
+
 export default function GameStatisticTable(props: GameStatisticTableProps) {
+  const tableHeaders: TableHeaderModel<GameStatisticModel>[] = [
+    {
+      key: "lastSynchroDate",
+      label: "Дата синхронизации",
+    },
+    {
+      key: "evaluation",
+      label: "Оценка",
+    },
+    {
+      key: "playersCount",
+      label: "Количество игроков",
+    },
+    {
+      key: "cashIncome",
+      label: "Прибыль (RUB)",
+    },
+  ];
+
+  const [sort, setSort] = useState<Sort<GameStatisticModel>>({
+    key: "lastSynchroDate",
+    sortType: SortType.desc,
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [gameStatistics, setGameStatistics] = useState<GameStatisticModel[]>(
+    []
+  );
+  const [remainingCount, setRemainingCount] = useState<number>();
+  const [payload, setPayload] = useState<GetGameStatisticByGamePayload>({
+    GameId: props.gameId,
+    paginate: {
+      itemsPerPage: GAMES_PER_PAGE,
+      pageNumber: currentPage,
+    },
+    sort: sort,
+  });
+
+  const getGameStatisticByGame = useGetGameStatisticByGame();
+
+  useEffect(() => {
+    getGameStatisticByGame(payload).then((response) => {
+      setGameStatistics(response.gameStatistics);
+      setRemainingCount(response.remainingCount);
+    });
+  }, []);
+
+  function handleHeaderClick() {
+    const newSort = getNewSort(sort);
+    setSort(newSort);
+  }
+
+  async function downloadMoreHandler() {
+    setIsLoading(true);
+
+    const newCurrentPage = currentPage + 1;
+    setCurrentPage(newCurrentPage);
+
+    const newPayload: GetGameStatisticByGamePayload = {
+      paginate: {
+        pageNumber: newCurrentPage,
+        itemsPerPage: GAMES_PER_PAGE,
+      },
+      sort: sort,
+      GameId: props.gameId,
+    };
+    const response = await getGameStatisticByGame(newPayload);
+
+    const newGameStatistics: GameStatisticModel[] = [
+      ...gameStatistics,
+      ...response.gameStatistics,
+    ];
+    setGameStatistics(newGameStatistics);
+
+    setRemainingCount(response.remainingCount);
+
+    setIsLoading(false);
+  }
 
   return (
     <>
       <div className={classes["container"]}>
         <table className={`${props.classes} ${classes["table"]}`}>
-          <thead>
-            <th>Дата синхронизации</th>
-            <th>Оценка</th>
-            <th>Количество игроков</th>
-            <th>Прибыль(RUB)</th>
-          </thead>
+          <TableHeader<GameStatisticModel>
+            sort={sort}
+            tableHeaders={tableHeaders}
+            containerClass={gamePageclasses["header-container"]}
+            textClass={gamePageclasses["th-label"]}
+            onClick={handleHeaderClick}
+          />
           <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+            {gameStatistics.map((gameStatistic, index) => (
+              <tr key={index}>
+                <td>
+                  {gameStatistic.lastSynchroDate &&
+                    new Date(
+                      gameStatistic.lastSynchroDate
+                    ).toLocaleDateString()}
+                </td>
+                <td>{gameStatistic.evaluation}</td>
+                <td>{gameStatistic.playersCount}</td>
+                <td>{gameStatistic.cashIncome}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
-        <div className={classes["download-more"]}>
-          <LoadingButton
-            classes={classes["download-more-button"]}
-            text={"Загрузить еще"}
-            onClick={()=>{setIsLoading(true)}}
-            isLoading={isLoading}
-          />
-        </div>
+        {remainingCount != 0 ? (
+          <div className={classes["download-more"]}>
+            <LoadingButton
+              classes={classes["download-more-button"]}
+              text={"Загрузить еще"}
+              onClick={downloadMoreHandler}
+              isLoading={isLoading}
+            />
+          </div>
+        ) : null}
       </div>
     </>
   );

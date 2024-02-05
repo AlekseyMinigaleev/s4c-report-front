@@ -15,8 +15,8 @@ export default function Modal(props: ModalProps) {
 
   useEffect(() => {
     if (props.isOpen && dialog.current) {
-      dialog.current.showModal();
       document.body.classList.add(classes["modal-open"]);
+      dialog.current.showModal();
     } else if (dialog.current) {
       document.body.classList.remove(classes["modal-open"]);
       dialog.current.close();

@@ -3,14 +3,13 @@ body.modal-open {
 }
 
 .dialog {
-  width: 60%;
+  width: 80%;
   height: auto;
   margin: 10rem auto;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 10px;
   z-index: 100;
-  overflow: hidden;
 }
 
 .header {
