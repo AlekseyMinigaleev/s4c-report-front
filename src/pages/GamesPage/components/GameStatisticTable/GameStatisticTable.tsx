@@ -73,7 +73,6 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
 
   useEffect(() => {
     getGameStatisticByGame(payload).then((response) => {
-      setIsLoading(true); 
       setGameStatisticsHandler(response.gameStatistics);
       setRemainingCount(response.remainingCount);
       setIsLoading(false);
@@ -89,6 +88,8 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
   }
 
   function changeSort(sort: Sort<GameStatisticModel>) {
+    setIsLoading(true);
+
     setPayload((prev) => ({
       ...prev,
       GameId: props.gameId,
@@ -101,6 +102,8 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
   }
 
   function changePageNumber(pageNumber: number) {
+    setIsLoading(true);
+
     setPayload((prev) => ({
       ...prev,
       paginate: {

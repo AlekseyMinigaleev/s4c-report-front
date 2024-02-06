@@ -26,7 +26,7 @@ export default function Modal(props: ModalProps) {
   return (
     <>
       {createPortal(
-        <dialog className={classes["dialog"]} ref={dialog} {...props}>
+        <dialog className={classes["dialog"]} ref={dialog}>
           <div className={classes["header"]}>
             <div
               className={classes["close-button"]}

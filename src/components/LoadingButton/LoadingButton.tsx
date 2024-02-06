@@ -1,4 +1,4 @@
-import { SyncLoader } from "react-spinners";
+import { BarLoader, PacmanLoader, SyncLoader } from "react-spinners";
 import classes from "./LoadingButton.module.css";
 
 interface LoadingButtonProps {
@@ -16,7 +16,7 @@ export default function LoadingButton(props: LoadingButtonProps) {
         onClick={props.onClick}
         disabled={props.isLoading}
       >
-        {!props.isLoading ? props.text : <SyncLoader size={10} />}
+        {!props.isLoading ? props.text : <BarLoader />}
       </button>
     </>
   );
