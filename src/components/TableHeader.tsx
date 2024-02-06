@@ -6,7 +6,7 @@ import SortIcon from "./SortIcon/SortIcon";
 interface TableHeaderProps<T> {
   sort: Sort<T>;
   tableHeaders: TableHeaderModel<T>[];
-  onClick?: () => void;
+  onClick?: (tableHeader: TableHeaderModel<T>) => void;
 
   children?: ReactNode;
 
@@ -24,7 +24,7 @@ export default function TableHeader<T>(props: TableHeaderProps<T>) {
             colSpan={tableHeader.colSpan ?? 0}
             onClick={() => {
               if (props.onClick !== undefined) {
-                props.onClick();
+                props.onClick(tableHeader);
               }
             }}
           >

@@ -1,4 +1,5 @@
 import { Sort, SortType } from "../models/Filter";
+import { TableHeaderModel } from "../pages/GamesPage/components/GameTable/GameTable";
 
 export function paginate<T>(
   data: T[],
@@ -12,11 +13,11 @@ export function paginate<T>(
   return paginatedData;
 }
 
-export function getNewSort<T>(sort: Sort<T>): Sort<T> {
+export function getNewSort<T>(tableHeader:TableHeaderModel<T>,sort: Sort<T>): Sort<T> {
   const newSort: Sort<T> = {
-    key: sort.key,
+    key: tableHeader.key,
     sortType:
-      sort.key == sort.key
+      sort.key == tableHeader.key
         ? sort.sortType === SortType.asc
           ? SortType.desc
           : SortType.asc

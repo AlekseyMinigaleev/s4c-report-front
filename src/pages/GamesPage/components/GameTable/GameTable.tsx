@@ -91,8 +91,8 @@ export default function GameTable(props: GameTableProps) {
     setPaginatedGames(paginatedGames);
   }
 
-  function handleHeaderClick() {
-    const newSort = getNewSort(sort);
+  function handleHeaderClick(tableHeader: TableHeaderModel<Game>) {
+    const newSort = getNewSort(tableHeader, sort);
     setSort(newSort);
 
     const sortedGames = sortGames(games, newSort);
@@ -109,6 +109,16 @@ export default function GameTable(props: GameTableProps) {
 
   return (
     <>
+      {clickedGame.id === "" ? null : (
+        <Modal
+          isOpen={isModalOpen}
+          title={clickedGame.gameName}
+          onClose={() => setIsModalOpen(false)}
+        >
+          <GameStatisticTable gameId={clickedGame.id} classes={props.classes} />
+        </Modal>
+      )}
+      
       <table className={`${classes["table"]} ${props.classes}`}>
         <TableHeader
           sort={sort}
@@ -176,15 +186,6 @@ export default function GameTable(props: GameTableProps) {
         nextLinkClassName={paginationClasses["page-num"]}
         activeLinkClassName={paginationClasses["active"]}
       />
-      {clickedGame.id === "" ? null : (
-        <Modal
-          isOpen={isModalOpen}
-          title={clickedGame.gameName}
-          onClose={() => setIsModalOpen(false)}
-        >
-          <GameStatisticTable gameId={clickedGame.id} classes={props.classes} />
-        </Modal>
-      )}
     </>
   );
 }

@@ -64,11 +64,32 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
       setGameStatistics(response.gameStatistics);
       setRemainingCount(response.remainingCount);
     });
-  }, []);
+  }, [props.gameId]);
 
-  function handleHeaderClick() {
-    const newSort = getNewSort(sort);
+  async function handleHeaderClick(
+    tableHeader: TableHeaderModel<GameStatisticModel>
+  ) {
+    setIsLoading(true);
+
+    const newSort = getNewSort(tableHeader, sort);
     setSort(newSort);
+
+    setCurrentPage(1);
+
+    const newPayload: GetGameStatisticByGamePayload = {
+      paginate: {
+        pageNumber: 1,
+        itemsPerPage: GAMES_PER_PAGE,
+      },
+      sort: newSort,
+      GameId: props.gameId,
+    };
+
+    const response = await getGameStatisticByGame(newPayload);
+    setGameStatistics(response.gameStatistics);
+    setRemainingCount(response.remainingCount);
+
+    setIsLoading(false);
   }
 
   async function downloadMoreHandler() {
@@ -118,9 +139,9 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
                       gameStatistic.lastSynchroDate
                     ).toLocaleDateString()}
                 </td>
-                <td>{gameStatistic.evaluation}</td>
-                <td>{gameStatistic.playersCount}</td>
-                <td>{gameStatistic.cashIncome}</td>
+                <td>{gameStatistic.evaluation.toLocaleString()}</td>
+                <td>{gameStatistic.playersCount.toLocaleString()}</td>
+                <td>{gameStatistic.cashIncome.toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
