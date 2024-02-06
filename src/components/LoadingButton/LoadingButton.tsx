@@ -1,4 +1,4 @@
-import loadingIcon from "../../images/loading-icon.png";
+import { SyncLoader } from "react-spinners";
 import classes from "./LoadingButton.module.css";
 
 interface LoadingButtonProps {
@@ -16,11 +16,7 @@ export default function LoadingButton(props: LoadingButtonProps) {
         onClick={props.onClick}
         disabled={props.isLoading}
       >
-        {!props.isLoading ? (
-          props.text
-        ) : (
-          <img src={loadingIcon} alt="загрузка" className={classes["spinner"]} />
-        )}
+        {!props.isLoading ? props.text : <SyncLoader size={10} />}
       </button>
     </>
   );

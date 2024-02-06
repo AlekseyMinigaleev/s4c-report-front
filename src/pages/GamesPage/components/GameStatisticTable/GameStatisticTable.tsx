@@ -4,6 +4,7 @@ import gamePageclasses from "../../GamesPage.module.css";
 import LoadingButton from "../../../../components/LoadingButton/LoadingButton";
 import useGetGameStatisticByGame, {
   GetGameStatisticByGamePayload,
+  GetGameStatisticByGameResponse,
 } from "../../../../hooks/requests/useGetGameStatisticByGame";
 import { Sort, SortType } from "../../../../models/Filter";
 import TableHeader from "../../../../components/TableHeader";
@@ -42,7 +43,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     key: "lastSynchroDate",
     sortType: SortType.desc,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [gameStatistics, setGameStatistics] = useState<GameStatisticModel[]>(
     []
@@ -63,6 +64,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     getGameStatisticByGame(payload).then((response) => {
       setGameStatistics(response.gameStatistics);
       setRemainingCount(response.remainingCount);
+      setIsLoading(false);
     });
   }, [props.gameId]);
 
@@ -76,16 +78,8 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
 
     setCurrentPage(1);
 
-    const newPayload: GetGameStatisticByGamePayload = {
-      paginate: {
-        pageNumber: 1,
-        itemsPerPage: GAMES_PER_PAGE,
-      },
-      sort: newSort,
-      GameId: props.gameId,
-    };
+    const response = await sendRequestWithNewPayload(newSort, 1);
 
-    const response = await getGameStatisticByGame(newPayload);
     setGameStatistics(response.gameStatistics);
     setRemainingCount(response.remainingCount);
 
@@ -98,15 +92,9 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     const newCurrentPage = currentPage + 1;
     setCurrentPage(newCurrentPage);
 
-    const newPayload: GetGameStatisticByGamePayload = {
-      paginate: {
-        pageNumber: newCurrentPage,
-        itemsPerPage: GAMES_PER_PAGE,
-      },
-      sort: sort,
-      GameId: props.gameId,
-    };
-    const response = await getGameStatisticByGame(newPayload);
+    const response = await sendRequestWithNewPayload(sort, newCurrentPage);
+
+    setRemainingCount(response.remainingCount);
 
     const newGameStatistics: GameStatisticModel[] = [
       ...gameStatistics,
@@ -114,9 +102,25 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     ];
     setGameStatistics(newGameStatistics);
 
-    setRemainingCount(response.remainingCount);
-
     setIsLoading(false);
+  }
+
+  async function sendRequestWithNewPayload(
+    sort: Sort<GameStatisticModel>,
+    pageNumber: number
+  ): Promise<GetGameStatisticByGameResponse> {
+    const newPayload: GetGameStatisticByGamePayload = {
+      paginate: {
+        pageNumber: pageNumber,
+        itemsPerPage: GAMES_PER_PAGE,
+      },
+      sort: sort,
+      GameId: props.gameId,
+    };
+
+    const response = await getGameStatisticByGame(newPayload);
+
+    return response;
   }
 
   return (
@@ -146,7 +150,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
             ))}
           </tbody>
         </table>
-        {remainingCount != 0 ? (
+        {remainingCount != 0 || isLoading ? (
           <div className={classes["download-more"]}>
             <LoadingButton
               classes={classes["download-more-button"]}
