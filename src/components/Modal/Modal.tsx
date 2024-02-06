@@ -24,32 +24,28 @@ export default function Modal(props: ModalProps) {
   }, [props.isOpen]);
 
   return (
-   <>
-      {props.isOpen ? (
-        <>
-          {createPortal(
-            <dialog className={classes["dialog"]} ref={dialog} {...props}>
-              <div className={classes["header"]}>
-                <div
-                  className={classes["close-button"]}
-                  onClick={() => props.onClose()}
-                >
-                  <img src={closeIcon} width={25} alt="Закрыть"></img>
-                </div>
+    <>
+      {createPortal(
+        <dialog className={classes["dialog"]} ref={dialog} {...props}>
+          <div className={classes["header"]}>
+            <div
+              className={classes["close-button"]}
+              onClick={() => props.onClose()}
+            >
+              <img src={closeIcon} width={25} alt="Закрыть"></img>
+            </div>
 
-                <p className={classes["title"]}>{props.title}</p>
+            <p className={classes["title"]}>{props.title}</p>
 
-                <div className={classes["game-link"]}>
-                  <a>Перейти</a>
-                </div>
-              </div>
+            <div className={classes["game-link"]}>
+              <a>Перейти</a>
+            </div>
+          </div>
 
-              <div className={classes["content"]}>{props.children}</div>
-            </dialog>,
-            document.getElementById("modal")!
-          )}
-        </>
-      ) : null}
+          <div className={classes["content"]}>{props.children}</div>
+        </dialog>,
+        document.getElementById("modal")!
+      )}
     </>
   );
 }

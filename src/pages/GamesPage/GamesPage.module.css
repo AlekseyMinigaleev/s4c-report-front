@@ -27,6 +27,7 @@
 .table td {
   background-color: #DDDDDD;
   border-bottom: 1px solid black;
+  cursor: pointer;
 }
 .table th {
   border-bottom: 1px solid black;
@@ -48,4 +49,5 @@
 
  .th-label{
   padding-right: 1rem;
+  cursor: pointer;
  }

@@ -9,7 +9,7 @@ import useGetGameStatisticByGame, {
 import { Sort, SortType } from "../../../../models/Filter";
 import TableHeader from "../../../../components/TableHeader";
 import { TableHeaderModel } from "../GameTable/GameTable";
-import { getNewSort } from "../../../../Utils/FilterUtils";
+import { getNewSort, paginate } from "../../../../Utils/FilterUtils";
 import { GameStatisticModel } from "../../../../models/GameStatisticModel";
 
 interface GameStatisticTableProps {
@@ -49,18 +49,19 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     []
   );
   const [remainingCount, setRemainingCount] = useState<number>();
-  const [payload, setPayload] = useState<GetGameStatisticByGamePayload>({
-    GameId: props.gameId,
-    paginate: {
-      itemsPerPage: GAMES_PER_PAGE,
-      pageNumber: currentPage,
-    },
-    sort: sort,
-  });
-
   const getGameStatisticByGame = useGetGameStatisticByGame();
 
   useEffect(() => {
+    const payload: GetGameStatisticByGamePayload = {
+      GameId: props.gameId,
+      paginate: {
+        itemsPerPage: GAMES_PER_PAGE,
+        pageNumber: 1,
+      },
+      sort: sort,
+    };
+    setCurrentPage(1);
+
     getGameStatisticByGame(payload).then((response) => {
       setGameStatistics(response.gameStatistics);
       setRemainingCount(response.remainingCount);
@@ -109,7 +110,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     sort: Sort<GameStatisticModel>,
     pageNumber: number
   ): Promise<GetGameStatisticByGameResponse> {
-    const newPayload: GetGameStatisticByGamePayload = {
+    const payload: GetGameStatisticByGamePayload = {
       paginate: {
         pageNumber: pageNumber,
         itemsPerPage: GAMES_PER_PAGE,
@@ -118,7 +119,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
       GameId: props.gameId,
     };
 
-    const response = await getGameStatisticByGame(newPayload);
+    const response = await getGameStatisticByGame(payload);
 
     return response;
   }
