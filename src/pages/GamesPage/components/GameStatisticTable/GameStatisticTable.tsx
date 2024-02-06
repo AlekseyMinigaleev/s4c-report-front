@@ -4,12 +4,11 @@ import gamePageclasses from "../../GamesPage.module.css";
 import LoadingButton from "../../../../components/LoadingButton/LoadingButton";
 import useGetGameStatisticByGame, {
   GetGameStatisticByGamePayload,
-  GetGameStatisticByGameResponse,
 } from "../../../../hooks/requests/useGetGameStatisticByGame";
 import { Sort, SortType } from "../../../../models/Filter";
 import TableHeader from "../../../../components/TableHeader";
 import { TableHeaderModel } from "../GameTable/GameTable";
-import { getNewSort, paginate } from "../../../../Utils/FilterUtils";
+import { getNewSort } from "../../../../Utils/FilterUtils";
 import { GameStatisticModel } from "../../../../models/GameStatisticModel";
 
 interface GameStatisticTableProps {
@@ -39,89 +38,87 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     },
   ];
 
-  const [sort, setSort] = useState<Sort<GameStatisticModel>>({
-    key: "lastSynchroDate",
-    sortType: SortType.desc,
-  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [payload, setPayload] = useState<GetGameStatisticByGamePayload>({
+    GameId: props.gameId,
+    paginate: {
+      itemsPerPage: GAMES_PER_PAGE,
+      pageNumber: 1,
+    },
+    sort: {
+      key: "lastSynchroDate",
+      sortType: SortType.desc,
+    },
+  });
   const [gameStatistics, setGameStatistics] = useState<GameStatisticModel[]>(
     []
   );
   const [remainingCount, setRemainingCount] = useState<number>();
+
   const getGameStatisticByGame = useGetGameStatisticByGame();
 
   useEffect(() => {
-    const payload: GetGameStatisticByGamePayload = {
-      GameId: props.gameId,
-      paginate: {
-        itemsPerPage: GAMES_PER_PAGE,
-        pageNumber: 1,
-      },
-      sort: sort,
-    };
-    setCurrentPage(1);
+    //используется просто как флаг, чтобы не выполнялся запрос 2 раза. Можно спокойно заменить на любой другой флаг
+    if (!isLoading) {
+      setPayload((prev) => ({
+        ...prev,
+        GameId: props.gameId,
+        paginate: {
+          ...prev.paginate,
+          pageNumber: 1,
+        },
+      }));
+    }
+  }, [props.gameId]);
 
+  useEffect(() => {
     getGameStatisticByGame(payload).then((response) => {
-      setGameStatistics(response.gameStatistics);
+      setIsLoading(true); 
+      setGameStatisticsHandler(response.gameStatistics);
       setRemainingCount(response.remainingCount);
       setIsLoading(false);
     });
-  }, [props.gameId]);
+  }, [payload]);
+
+  function setGameStatisticsHandler(gameStatistics: GameStatisticModel[]) {
+    if (payload.paginate.pageNumber > 1) {
+      setGameStatistics((prev) => [...prev, ...gameStatistics]);
+    } else {
+      setGameStatistics(gameStatistics);
+    }
+  }
+
+  function changeSort(sort: Sort<GameStatisticModel>) {
+    setPayload((prev) => ({
+      ...prev,
+      GameId: props.gameId,
+      paginate: {
+        ...prev.paginate,
+        pageNumber: 1,
+      },
+      sort: sort,
+    }));
+  }
+
+  function changePageNumber(pageNumber: number) {
+    setPayload((prev) => ({
+      ...prev,
+      paginate: {
+        ...prev.paginate,
+        pageNumber: pageNumber,
+      },
+    }));
+  }
 
   async function handleHeaderClick(
     tableHeader: TableHeaderModel<GameStatisticModel>
   ) {
-    setIsLoading(true);
-
-    const newSort = getNewSort(tableHeader, sort);
-    setSort(newSort);
-
-    setCurrentPage(1);
-
-    const response = await sendRequestWithNewPayload(newSort, 1);
-
-    setGameStatistics(response.gameStatistics);
-    setRemainingCount(response.remainingCount);
-
-    setIsLoading(false);
+    const newSort = getNewSort(tableHeader, payload.sort);
+    changeSort(newSort);
   }
 
   async function downloadMoreHandler() {
-    setIsLoading(true);
-
-    const newCurrentPage = currentPage + 1;
-    setCurrentPage(newCurrentPage);
-
-    const response = await sendRequestWithNewPayload(sort, newCurrentPage);
-
-    setRemainingCount(response.remainingCount);
-
-    const newGameStatistics: GameStatisticModel[] = [
-      ...gameStatistics,
-      ...response.gameStatistics,
-    ];
-    setGameStatistics(newGameStatistics);
-
-    setIsLoading(false);
-  }
-
-  async function sendRequestWithNewPayload(
-    sort: Sort<GameStatisticModel>,
-    pageNumber: number
-  ): Promise<GetGameStatisticByGameResponse> {
-    const payload: GetGameStatisticByGamePayload = {
-      paginate: {
-        pageNumber: pageNumber,
-        itemsPerPage: GAMES_PER_PAGE,
-      },
-      sort: sort,
-      GameId: props.gameId,
-    };
-
-    const response = await getGameStatisticByGame(payload);
-
-    return response;
+    changePageNumber(payload.paginate.pageNumber + 1);
   }
 
   return (
@@ -129,7 +126,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
       <div className={classes["container"]}>
         <table className={`${props.classes} ${classes["table"]}`}>
           <TableHeader<GameStatisticModel>
-            sort={sort}
+            sort={payload.sort}
             tableHeaders={tableHeaders}
             containerClass={gamePageclasses["header-container"]}
             textClass={gamePageclasses["th-label"]}
