@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { useRef, useEffect, ReactNode, DialogHTMLAttributes } from "react";
-import classes from "./Modal.module.css";
-import closeIcon from "../../images/close-icon.png";
+import classes from "./modal.module.css";
+import closeIcon from "../../resources/images/close-icon.png";
 
 interface ModalProps {
   title: string;

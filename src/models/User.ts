@@ -1,4 +1,4 @@
-import { UserCreditionals } from "./UserCreditionals";
+import { UserCreditionals } from "./userCreditionals";
 
 export interface User{
   creditionals: UserCreditionals;

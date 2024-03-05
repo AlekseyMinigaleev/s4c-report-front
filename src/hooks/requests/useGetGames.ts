@@ -1,4 +1,4 @@
-import { Game } from "../../models/GameModel";
+import { Game } from "../../models/gameModel";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export interface GetGamesResponse {

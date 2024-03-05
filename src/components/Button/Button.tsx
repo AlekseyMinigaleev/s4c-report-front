@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import classes from "./Button.module.css";
+import classes from "./button.module.css";
 
 interface ButtonProps {
   onClick: () => void;

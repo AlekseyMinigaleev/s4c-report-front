@@ -1,4 +1,4 @@
-import classes from "./ErrorMessage.module.css";
+import classes from "./errorMessage.module.css";
 
 interface ErrorMessaageProps {
   text: string;

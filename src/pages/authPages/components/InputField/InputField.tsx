@@ -1,6 +1,6 @@
-import classes from "./InputField.module.css";
-import formClasses from "../Form.module.css";
-import ErrorMessage from "../ErrorMessaage/ErrorMessage";
+import classes from "./inputField.module.css";
+import formClasses from "../form/form.module.css";
+import ErrorMessage from "../errorMessaage/ErrorMessage";
 
 
 interface InputFieldProps {

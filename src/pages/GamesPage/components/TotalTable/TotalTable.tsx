@@ -1,5 +1,5 @@
 import { Total } from "../../../../hooks/requests/useGetGames";
-import classes from "./TotalTable.module.css";
+import classes from "./totalTable.module.css";
 
 interface TotalTableProps {
   total: Total;

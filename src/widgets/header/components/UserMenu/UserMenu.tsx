@@ -5,11 +5,12 @@ import {
   MenuItem as MenuItemInner,
   MenuItemProps,
 } from "@szhsin/react-menu";
-import menuBarLogo from "../../../images/menu-bar.png";
-import classes from "./UserMenu.module.css";
+
+import menuBarLogo from "../../../../resources/images/menu-bar.png";
+import classes from "./userMenu.module.css";
 import { useNavigate } from "react-router-dom";
-import useLogout from "../../../hooks/requests/useLogout";
-import useAuthentification from "../../../hooks/useAuthContext";
+import useLogout from "../../../../hooks/requests/useLogout";
+import useAuthentification from "../../../../hooks/useAuthContext";
 
 const MenuItem = (props: JSX.IntrinsicAttributes & MenuItemProps) => {
   return <MenuItemInner {...props} className={classes["menuitem"]} />;

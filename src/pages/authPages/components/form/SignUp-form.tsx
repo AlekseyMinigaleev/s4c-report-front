@@ -1,21 +1,21 @@
 import React, { useContext, useState } from "react";
-import InputField from "./InputField/InputField";
-import Button from "../../../components/Button/Button";
+import InputField from "../inputField/InputField";
+import Button from "../../../../components/button/Button";
 import {
   validateLogin,
   validateDeveloperPageUrl,
   validateRsyaAuthorizationToken,
   validatePassword,
   validateRepeatPassword,
-} from "../helpers/validations";
-import { useFormField } from "../../../hooks/useFormField";
-import { getErrorMessage } from "../helpers/utils";
+} from "../../helpers/validations";
+import { useFormField } from "../../../../hooks/useFormField";
+import { getErrorMessage } from "../../helpers/utils";
 import useCreateAccount, {
   CreateAccountPayload,
   DEFAULT_ERROR_MESSAGES,
   ErrorMessages,
-} from "../../../hooks/requests/useCreaeteAccount";
-import useLoading from "../../../hooks/useLoading";
+} from "../../../../hooks/requests/useCreaeteAccount";
+import useLoading from "../../../../hooks/useLoading";
 
 const defaultErrorMessages = {
   email: "Некорректный формат электронной почты",

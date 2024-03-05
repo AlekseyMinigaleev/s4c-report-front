@@ -1,10 +1,10 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import GamesPage from "./pages/GamesPage/GamesPage";
+import GamesPage from "./pages/gamesPage/GamesPage";
 import UserPage from "./pages/userPage/UserPage";
-import AuthPage from "./pages/authPages/authPage/AuthPage";
-import RequireAuthLayout from "./components/RequireAuthLayout";
-import AppLayout from "./components/AppLayout";
-import PersistLogin from "./components/PersistLogin";
+import AuthPage from "./pages/authPages/AuthPage";
+import RequireAuthLayout from "./layouts/RequireAuthLayout";
+import AppLayout from "./layouts/AppLayout";
+import PersistLoginLayout from "./layouts/PersistLoginLayout";
 
 export default function App() {
   return (
@@ -15,7 +15,7 @@ export default function App() {
         <Route path="/auth/*" element={<Navigate to="/auth" replace />} />
 
         {/* private */}
-        <Route element={<PersistLogin />}>
+        <Route element={<PersistLoginLayout />}>
           <Route element={<RequireAuthLayout />}>
             <Route path="/welcome" element={<GamesPage />} />
             <Route path="/user" element={<UserPage />} />

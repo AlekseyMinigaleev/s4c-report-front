@@ -1,20 +1,20 @@
 import { useContext, useState } from "react";
-import InputField from "./InputField/InputField";
-import Button from "../../../components/Button/Button";
-import { validateLogin, validatePassword } from "../helpers/validations";
-import { useFormField } from "../../../hooks/useFormField";
-import AuthContext from "../../../context/AuthProvider";
-import ErrorMessage from "./ErrorMessaage/ErrorMessage";
+import InputField from "../inputField/InputField";
+import Button from "../../../../components/button/Button";
+import { validateLogin, validatePassword } from "../../helpers/validations";
+import { useFormField } from "../../../../hooks/useFormField";
+import AuthContext from "../../../../context/AuthProvider";
+import ErrorMessage from "../errorMessaage/ErrorMessage";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import useLogin, {
   LoginPayload,
   LoginResponse,
-} from "../../../hooks/requests/useLogin";
-import useLoading from "../../../hooks/useLoading";
-import RememberMe from "./RememberMe/RememberMe";
-import ForgotPassword from "./ForgotPassword/ForgotPassword";
-import classes from "./Form.module.css";
+} from "../../../../hooks/requests/useLogin";
+import useLoading from "../../../../hooks/useLoading";
+import RememberMe from "../rememberMe/RememberMe";
+import ForgotPassword from "../forgotPassword/ForgotPassword";
+import classes from "./form.module.css";
 
 export default function LogInForm() {
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
