@@ -1,8 +1,8 @@
 import { useState } from "react";
 import classes from "../authPages/authPages.module.css";
 import Button from "../../components/button/Button";
-import LogInForm from "./components/form/LogIn-form";
-import SignUpForm from "./components/form/SignUp-form";
+import LogInForm from "./widgets/LogIn-form"
+import SignUpForm from "./widgets/SignUp-form";
 
 type FromVariant = "LogIn" | "SignUp";
 

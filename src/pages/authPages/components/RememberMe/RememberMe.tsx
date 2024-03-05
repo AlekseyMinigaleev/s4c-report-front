@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import AuthContext from "../../../../context/AuthProvider";
-import formClasses from "../form/form.module.css";
+import formClasses from "../../widgets/form.module.css";
 import classes from "./rememberMe.module.css";
 
 export default function RememberMe() {

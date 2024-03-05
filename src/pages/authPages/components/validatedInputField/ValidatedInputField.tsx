@@ -1,9 +1,8 @@
-import classes from "./inputField.module.css";
-import formClasses from "../form/form.module.css";
+import classes from "./validatedInputField.module.css";
+import formClasses from "../../widgets/form.module.css";
 import ErrorMessage from "../errorMessaage/ErrorMessage";
 
-
-interface InputFieldProps {
+interface ValidatedInputFieldProps {
   type: string;
   placeholderText: string;
   required?: boolean;
@@ -12,7 +11,7 @@ interface InputFieldProps {
   onChange: (value: string) => void;
 }
 
-export default function InputField(props: InputFieldProps) {
+export default function ValidatedInputField(props: ValidatedInputFieldProps) {
   const inputClasses = `${classes["input-field"]} ${
     !props.isValid ? `${classes["invalid"]}` : ""
   }`;

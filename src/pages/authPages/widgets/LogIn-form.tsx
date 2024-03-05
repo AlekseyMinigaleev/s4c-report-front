@@ -1,19 +1,19 @@
 import { useContext, useState } from "react";
-import InputField from "../inputField/InputField";
-import Button from "../../../../components/button/Button";
-import { validateLogin, validatePassword } from "../../helpers/validations";
-import { useFormField } from "../../../../hooks/useFormField";
-import AuthContext from "../../../../context/AuthProvider";
-import ErrorMessage from "../errorMessaage/ErrorMessage";
+import ValidatedInputField from "../components/validatedInputField/ValidatedInputField";
+import Button from "../../../components/button/Button";
+import { validateLogin, validatePassword } from "../helpers/validations";
+import { useFormField } from "../../../hooks/useFormField";
+import AuthContext from "../../../context/AuthProvider";
+import ErrorMessage from "../components/errorMessaage/ErrorMessage";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import useLogin, {
   LoginPayload,
   LoginResponse,
-} from "../../../../hooks/requests/useLogin";
-import useLoading from "../../../../hooks/useLoading";
-import RememberMe from "../rememberMe/RememberMe";
-import ForgotPassword from "../forgotPassword/ForgotPassword";
+} from "../../../hooks/requests/useLogin";
+import useLoading from "../../../hooks/useLoading";
+import RememberMe from "../components/rememberMe/RememberMe";
+import ForgotPassword from "../components/forgotPassword/ForgotPassword";
 import classes from "./form.module.css";
 
 export default function LogInForm() {
@@ -62,7 +62,7 @@ export default function LogInForm() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()} noValidate>
-      <InputField
+      <ValidatedInputField
         type="text"
         placeholderText="Почта"
         required={true}
@@ -71,7 +71,7 @@ export default function LogInForm() {
         errorMessage={"Некорректный формат электронной почты"}
       />
 
-      <InputField
+      <ValidatedInputField
         type="password"
         placeholderText="Пароль"
         required={true}

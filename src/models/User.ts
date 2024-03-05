@@ -1,7 +1,7 @@
-import { UserCreditionals } from "./userCreditionals";
+import { userCreditionals } from "./userCreditionals";
 
 export interface User{
-  creditionals: UserCreditionals;
+  creditionals: userCreditionals;
   developerPageUrl: string,
   rsyaAuthorizationToken: string;
 }

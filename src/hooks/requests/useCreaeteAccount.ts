@@ -1,8 +1,8 @@
 import anonymousApi from "../../api/anonymousApi";
-import { UserCreditionals } from "../../models/userCreditionals";
+import { userCreditionals } from "../../models/userCreditionals";
 
 export interface CreateAccountPayload {
-  credentionals: UserCreditionals;
+  credentionals: userCreditionals;
   developerPageUrl: string;
   rsyaAuthorizationToken: string;
 }

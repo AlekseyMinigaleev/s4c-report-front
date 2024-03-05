@@ -5,18 +5,18 @@ import logo from "../../resources/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import classes from "./header.module.css";
 import { useEffect, useState } from "react";
-import { DeveloperInfo } from "../../models/developerInfo";
+import { developerInfo } from "../../models/developerInfo";
 
 export default function Header() {
   const navigate = useNavigate();
-  const [developerInfo, setDeveloperInfo] = useState<DeveloperInfo>({
+  const [developerInfo, setDeveloperInfo] = useState<developerInfo>({
     developerName: "",
     developerPageUrl: "",
   });
 
   useEffect(() => {
     const developerInfoString = localStorage.getItem("developerInfo");
-    const developerInfo: DeveloperInfo = JSON.parse(developerInfoString!);
+    const developerInfo: developerInfo = JSON.parse(developerInfoString!);
     setDeveloperInfo(developerInfo);
   }, []);
 

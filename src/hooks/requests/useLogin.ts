@@ -1,16 +1,16 @@
 import { AxiosResponse } from "axios";
-import { UserCreditionals } from "../../models/userCreditionals";
+import { userCreditionals } from "../../models/userCreditionals";
 import anonymousApi from "../../api/anonymousApi";
 import { AuthenticationTokens } from "../../models/authenticationTokens";
-import { DeveloperInfo } from "../../models/developerInfo";
+import {developerInfo } from "../../models/developerInfo";
 
 export interface LoginPayload {
-  userCreditionals: UserCreditionals;
+  userCreditionals: userCreditionals;
 }
 
 export interface LoginResponse {
   authorizationTokens: AuthenticationTokens;
-  developerInfo: DeveloperInfo;
+  developerInfo: developerInfo;
 }
 
 export default function useLogin() {
