@@ -1,13 +1,18 @@
 import sortIcon from "../../images/sort-icon.png";
-import { sortType } from "../../models/Filter";
+import { SortType } from "../../models/Filter";
 import classes from "./SortIcon.module.css";
 
 interface SortIconProps {
-  sortType: sortType;
+  sortType: SortType;
 }
 
 export default function SortIcon({ sortType }: SortIconProps) {
   const className = classes["img"];
 
-  return <img className={`${className} ${classes[sortType]}`} src={sortIcon} />;
+  return (
+    <img
+      className={`${className} ${classes[SortType[sortType]]}`}
+      src={sortIcon}
+    />
+  );
 }

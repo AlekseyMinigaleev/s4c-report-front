@@ -4,8 +4,11 @@ export interface Paginate {
 }
 
 export interface Sort<T> {
-  key: T;
-  sortType: sortType;
+  key: keyof T;
+  sortType: SortType;
 }
 
-export type sortType = "asc" | "desc";
+export enum SortType {
+  "asc" = 0,
+  "desc" = 1,
+}

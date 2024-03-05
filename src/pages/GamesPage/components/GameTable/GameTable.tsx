@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { Sort } from "../../../../models/Filter";
+import { Sort, SortType } from "../../../../models/Filter";
 import classes from "./GameTable.module.css";
 import paginationClasses from "../../Pagination.module.css";
-import SortIcon from "../../../../components/SortIcon/SortIcon";
+import gamePageClasses from "../../GamesPage.module.css";
 import ValueWithProgress from "../ValueWithGrowth/ValueWithProgress";
 import { Game, sortGames } from "../../../../models/GameModel";
-import { paginate } from "../../../../Utils/FilterUtils";
+import { getNewSort, paginate } from "../../../../Utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import { Total } from "../../../../hooks/requests/useGetGames";
+import Modal from "../../../../components/Modal/Modal";
+import GameStatisticTable from "../GameStatisticTable/GameStatisticTable";
+import TableHeader from "../../../../components/TableHeader";
 
 const GAMES_PER_PAGE = 10;
 
@@ -15,9 +18,10 @@ interface paginationProps {
   selected: number;
 }
 
-interface tableHeader {
-  key: keyof Game;
+export interface TableHeaderModel<T> {
+  key: keyof T;
   label: string;
+  colSpan?: number;
 }
 
 interface GameTableProps {
@@ -26,11 +30,17 @@ interface GameTableProps {
   classes: string;
 }
 
+interface ClickedGame {
+  gameName: string;
+  id: string;
+}
+
 export default function GameTable(props: GameTableProps) {
-  const tableHeaders: tableHeader[] = [
+  const tableHeaders: TableHeaderModel<Game>[] = [
     {
       key: "name",
       label: "Название",
+      colSpan: 2,
     },
     {
       key: "publicationDate",
@@ -43,23 +53,30 @@ export default function GameTable(props: GameTableProps) {
     {
       key: "playersCount",
       label: "Количество игроков",
+      colSpan: 2,
     },
     {
       key: "cashIncome",
       label: "Прибыль (RUB)",
+      colSpan: 2,
     },
   ];
   const pageCount = Math.ceil(props.games.length / GAMES_PER_PAGE);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [sort, setSort] = useState<Sort<keyof Game>>({
+  const [sort, setSort] = useState<Sort<Game>>({
     key: "playersCount",
-    sortType: "desc",
+    sortType: SortType.desc,
   });
   const [games, setGames] = useState<Game[]>(sortGames(props.games, sort));
   const [paginatedGames, setPaginatedGames] = useState<Game[]>(
     paginate(games, currentPage, GAMES_PER_PAGE)
   );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [clickedGame, setClickedGame] = useState<ClickedGame>({
+    gameName: "",
+    id: "",
+  });
 
   useEffect(() => {
     const paginatedGames = paginate(games, currentPage, GAMES_PER_PAGE);
@@ -74,45 +91,50 @@ export default function GameTable(props: GameTableProps) {
     setPaginatedGames(paginatedGames);
   }
 
-  function handleHeaderClick(key: keyof Game) {
-    const newSort: Sort<keyof Game> = {
-      key: key,
-      sortType:
-        key == sort.key ? (sort.sortType === "asc" ? "desc" : "asc") : "desc",
-    };
+  function handleHeaderClick(tableHeader: TableHeaderModel<Game>) {
+    const newSort = getNewSort(tableHeader, sort);
     setSort(newSort);
 
     const sortedGames = sortGames(games, newSort);
     setGames(sortedGames);
   }
 
+  function gameClickHandler(game: Game) {
+    setClickedGame({
+      gameName: game.name,
+      id: game.id,
+    });
+    setIsModalOpen(true);
+  }
+
   return (
     <>
+      {clickedGame.id === "" ? null : (
+        <Modal
+          isOpen={isModalOpen}
+          title={clickedGame.gameName}
+          onClose={() => setIsModalOpen(false)}
+        >
+          <GameStatisticTable gameId={clickedGame.id} classes={props.classes} />
+        </Modal>
+      )}
+      
       <table className={`${classes["table"]} ${props.classes}`}>
-        <thead>
-          <tr>
-            {tableHeaders.map((tableHeader, index) => (
-              <th
-                colSpan={index === 0 || index === 3 || index === 4 ? 2 : 1}
-                key={index}
-                onClick={() => {
-                  handleHeaderClick(tableHeader.key);
-                }}
-              >
-                <div className={classes["header-container"]}>
-                  <span className={classes["span"]}>{tableHeader.label}</span>
-
-                  {tableHeader.key == sort.key && (
-                    <SortIcon sortType={sort.sortType} />
-                  )}
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
+        <TableHeader
+          sort={sort}
+          tableHeaders={tableHeaders}
+          containerClass={gamePageClasses["header-container"]}
+          textClass={gamePageClasses["th-label"]}
+          onClick={handleHeaderClick}
+        />
         <tbody>
           {paginatedGames.map((game, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              onClick={() => {
+                gameClickHandler(game);
+              }}
+            >
               <td>{index + 1 + currentPage * 10}</td>
               <td>{`${game.name}`}</td>
               <td>

@@ -1,12 +1,13 @@
 import lodash from "lodash";
-import { Sort } from "./Filter";
+import { Sort, SortType } from "./Filter";
 import { ValueWithProgressModel } from "./ValueWithProgress";
 
 export interface Game {
+  id: string;
   name: string;
   publicationDate: Date;
   evaluation: number;
-  cashIncome:cashIncome
+  cashIncome: cashIncome;
   playersCount: playersCount;
 }
 
@@ -20,18 +21,20 @@ export interface playersCount {
   percentage: number;
 }
 
-export function sortGames(games: Game[], sort: Sort<keyof Game>): Game[] {
+export function sortGames(games: Game[], sort: Sort<Game>): Game[] {
   let sortedGames: Game[] = [];
   const key = sort.key;
+
+  const sortType = SortType[sort.sortType] as "asc" | "desc";
 
   if (key == "cashIncome" || key == "playersCount") {
     sortedGames = lodash.orderBy(
       games,
       (x) => x[key]?.valueWithProgress?.actualValue,
-      [sort.sortType]
+      [sortType]
     );
   } else {
-    sortedGames = lodash.orderBy(games, [sort.key], [sort.sortType]);
+    sortedGames = lodash.orderBy(games, [sort.key], [sortType]);
   }
 
   return sortedGames;

@@ -1,0 +1,15 @@
+.submit-btn {
+  font-family: 'Anek Malayalam', sans-serif;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  outline: none;
+  min-width: 200px;
+  min-height: 36px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.submit-btn:disabled {
+  cursor: not-allowed;
+}
