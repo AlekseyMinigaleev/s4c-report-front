@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { Sort, SortType } from "../../../../models/Filter";
-import classes from "./GameTable.module.css";
-import paginationClasses from "../../Pagination.module.css";
-import gamePageClasses from "../../GamesPage.module.css";
-import ValueWithProgress from "../ValueWithGrowth/ValueWithProgress";
-import { Game, sortGames } from "../../../../models/GameModel";
-import { getNewSort, paginate } from "../../../../Utils/FilterUtils";
+import { Sort, SortType } from "../../../../models/filter";
+import classes from "./gameTable.module.css";
+import paginationClasses from "../../pagination.module.css";
+import gamePageClasses from "../../gamesPage.module.css";
+import ValueWithProgress from "../../components/valueWithProgress/ValueWithProgress";
+import { Game, sortGames } from "../../../../models/gameModel";
+import { getNewSort, paginate } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import { Total } from "../../../../hooks/requests/useGetGames";
-import Modal from "../../../../components/Modal/Modal";
-import GameStatisticTable from "../GameStatisticTable/GameStatisticTable";
-import TableHeader from "../../../../components/TableHeader";
+import Modal from "../../../../components/modal/Modal";
+import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
+import SortedTableHeader from "../../../../widgets/SortedTableHeader";
 
 const GAMES_PER_PAGE = 10;
 
@@ -120,7 +120,7 @@ export default function GameTable(props: GameTableProps) {
       )}
       
       <table className={`${classes["table"]} ${props.classes}`}>
-        <TableHeader
+        <SortedTableHeader
           sort={sort}
           tableHeaders={tableHeaders}
           containerClass={gamePageClasses["header-container"]}

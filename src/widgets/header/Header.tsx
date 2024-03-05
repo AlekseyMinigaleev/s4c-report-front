@@ -1,22 +1,22 @@
-import Button from "../Button/Button";
+import Button from "../../components/button/Button";
 import "../../index.css";
-import UserMenu from "./UserMenu/UserMenu";
-import logo from "../../images/logo.png";
+import UserMenu from "./components/UserMenu/UserMenu";
+import logo from "../../resources/images/logo.png";
 import { useNavigate } from "react-router-dom";
-import classes from "./Header.module.css";
+import classes from "./header.module.css";
 import { useEffect, useState } from "react";
-import { DeveloperInfo } from "../../models/DeveloperInfo";
+import { developerInfo } from "../../models/developerInfo";
 
 export default function Header() {
   const navigate = useNavigate();
-  const [developerInfo, setDeveloperInfo] = useState<DeveloperInfo>({
+  const [developerInfo, setDeveloperInfo] = useState<developerInfo>({
     developerName: "",
     developerPageUrl: "",
   });
 
   useEffect(() => {
     const developerInfoString = localStorage.getItem("developerInfo");
-    const developerInfo: DeveloperInfo = JSON.parse(developerInfoString!);
+    const developerInfo: developerInfo = JSON.parse(developerInfoString!);
     setDeveloperInfo(developerInfo);
   }, []);
 

@@ -1,10 +1,10 @@
-import classes from "./GamesPage.module.css";
-import GameTable from "./components/GameTable/GameTable";
+import classes from "./gamesPage.module.css";
+import GameTable from "./widgets/gameTable/GameTable";
 import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
-import TotalTable from "./components/TotalTable/TotalTable";
+import TotalTable from "./components/totalTable/TotalTable";
 
 export default function GamesPage() {
   const [response, setResponse] = useState<GetGamesResponse>({

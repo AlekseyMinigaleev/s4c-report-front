@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import InputField from "./InputField/InputField";
-import Button from "../../../components/Button/Button";
+import ValidatedInputField from "../components/validatedInputField/ValidatedInputField";
+import Button from "../../../components/button/Button";
 import {
   validateLogin,
   validateDeveloperPageUrl,
@@ -73,7 +73,7 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <InputField
+      <ValidatedInputField
         type="email"
         required={true}
         placeholderText="Почта"
@@ -85,7 +85,7 @@ export default function SignUpForm() {
         )}
       />
 
-      <InputField
+      <ValidatedInputField
         type="text"
         required={true}
         placeholderText="Ссылка на страницу разработчика"
@@ -97,7 +97,7 @@ export default function SignUpForm() {
         )}
       />
 
-      <InputField
+      <ValidatedInputField
         type="text"
         required={false}
         placeholderText="Токен авторизации РСЯ"
@@ -109,7 +109,7 @@ export default function SignUpForm() {
         )}
       />
 
-      <InputField
+      <ValidatedInputField
         type="password"
         required={true}
         placeholderText="Пароль"
@@ -120,7 +120,7 @@ export default function SignUpForm() {
         }
       />
 
-      <InputField
+      <ValidatedInputField
         type="password"
         required={true}
         placeholderText="повтор пароля"

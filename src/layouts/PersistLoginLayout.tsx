@@ -4,7 +4,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import { Outlet } from "react-router-dom";
 
 // TODO: я не понимаю почему тут не работает если убрать isLoading
-export default function PersistLogin() {
+export default function PersistLoginLayout() {
   const authContext = useAuthContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const refresh = useRefreshToken();

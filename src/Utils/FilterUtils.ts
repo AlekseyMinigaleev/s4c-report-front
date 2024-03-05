@@ -1,5 +1,5 @@
-import { Sort, SortType } from "../models/Filter";
-import { TableHeaderModel } from "../pages/GamesPage/components/GameTable/GameTable";
+import { Sort, SortType } from "../models/filter";
+import { TableHeaderModel } from "../pages/gamesPage/widgets/gameTable/GameTable";
 
 export function paginate<T>(
   data: T[],

@@ -5,7 +5,7 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { AuthenticationTokens } from "../models/AuthenticationTokens";
+import { AuthenticationTokens } from "../models/authenticationTokens";
 
 interface AuthentificationContextProps {
   auth?: AuthenticationTokens;

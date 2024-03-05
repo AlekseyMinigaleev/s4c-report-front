@@ -1,4 +1,4 @@
-export interface DeveloperInfo {
+export interface developerInfo {
   developerName: string;
   developerPageUrl: string;
 }
