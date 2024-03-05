@@ -3,13 +3,13 @@ import { Sort, SortType } from "../../../../models/filter";
 import classes from "./gameTable.module.css";
 import paginationClasses from "../../pagination.module.css";
 import gamePageClasses from "../../gamesPage.module.css";
-import ValueWithProgress from "../valueWithProgress/ValueWithProgress";
+import ValueWithProgress from "../../components/valueWithProgress/ValueWithProgress";
 import { Game, sortGames } from "../../../../models/gameModel";
 import { getNewSort, paginate } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import { Total } from "../../../../hooks/requests/useGetGames";
 import Modal from "../../../../components/modal/Modal";
-import GameStatisticTable from "../gameStatisticTable/GameStatisticTable";
+import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
 import TableHeader from "../../../../widgets/TableHeader";
 
 const GAMES_PER_PAGE = 10;

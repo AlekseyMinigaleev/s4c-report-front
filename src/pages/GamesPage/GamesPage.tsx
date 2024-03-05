@@ -1,5 +1,5 @@
 import classes from "./gamesPage.module.css";
-import GameTable from "./components/gameTable/GameTable";
+import GameTable from "./widgets/gameTable/GameTable";
 import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
