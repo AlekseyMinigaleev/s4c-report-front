@@ -3,7 +3,7 @@ import { Sort } from "../models/filter";
 import { TableHeaderModel } from "../pages/gamesPage/widgets/gameTable/GameTable";
 import SortIcon from "../components/sortIcon/SortIcon";
 
-interface TableHeaderProps<T> {
+interface SortedTableHeaderProps<T> {
   sort: Sort<T>;
   tableHeaders: TableHeaderModel<T>[];
   onClick?: (tableHeader: TableHeaderModel<T>) => void;
@@ -14,7 +14,7 @@ interface TableHeaderProps<T> {
   textClass?: string;
 }
 
-export default function TableHeader<T>(props: TableHeaderProps<T>) {
+export default function SortedTableHeader<T>(props: SortedTableHeaderProps<T>) {
   return (
     <thead>
       <tr>

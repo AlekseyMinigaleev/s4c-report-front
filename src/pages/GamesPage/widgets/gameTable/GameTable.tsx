@@ -10,7 +10,7 @@ import ReactPaginate from "react-paginate";
 import { Total } from "../../../../hooks/requests/useGetGames";
 import Modal from "../../../../components/modal/Modal";
 import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
-import TableHeader from "../../../../widgets/TableHeader";
+import SortedTableHeader from "../../../../widgets/SortedTableHeader";
 
 const GAMES_PER_PAGE = 10;
 
@@ -120,7 +120,7 @@ export default function GameTable(props: GameTableProps) {
       )}
       
       <table className={`${classes["table"]} ${props.classes}`}>
-        <TableHeader
+        <SortedTableHeader
           sort={sort}
           tableHeaders={tableHeaders}
           containerClass={gamePageClasses["header-container"]}

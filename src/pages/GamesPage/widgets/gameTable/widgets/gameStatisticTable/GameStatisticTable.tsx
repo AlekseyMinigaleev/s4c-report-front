@@ -6,7 +6,7 @@ import useGetGameStatisticByGame, {
   GetGameStatisticByGamePayload,
 } from "../../../../../../hooks/requests/useGetGameStatisticByGame";
 import { Sort, SortType } from "../../../../../../models/filter";
-import TableHeader from "../../../../../../widgets/TableHeader";
+import SortedTableHeader from "../../../../../../widgets/SortedTableHeader";
 import { TableHeaderModel } from "../../GameTable";
 import { getNewSort } from "../../../../../../utils/FilterUtils";
 import { GameStatisticModel } from "../../../../../../models/gameStatisticModel";
@@ -128,7 +128,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     <>
       <div className={classes["container"]}>
         <table className={`${props.classes} ${classes["table"]}`}>
-          <TableHeader<GameStatisticModel>
+          <SortedTableHeader<GameStatisticModel>
             sort={payload.sort}
             tableHeaders={tableHeaders}
             containerClass={gamePageclasses["header-container"]}
