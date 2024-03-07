@@ -9,13 +9,6 @@
   vertical-align: middle;
 }
 
-.table td{
-  border: 1px solid black;
-  border-left:  none;
-  border-right:  none;
-  border-top:  none;
-}
-
 .table th:nth-child(1) {
   width: 30%;
 }
@@ -36,13 +29,21 @@
 }
 
 .table td {
-  background-color:#DDDDDD;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 150px;
   cursor: pointer;
 }
+
+.table td{
+  vertical-align: middle;
+  border: 1px solid black;
+  border-left:  none;
+  border-right:  none;
+  border-top:  none;
+}
+
 
 .progress {
   color: hsl(120, 95%, 42%);
@@ -63,7 +64,7 @@
   margin: 0 auto;
   margin-bottom: 2rem;
 
-  font-size: 1.2rem;
+  font-size: 16pt;
   gap: 5px;
   height: auto;
 }
@@ -87,4 +88,12 @@
 .th-label{
   padding-right: 1rem;
   cursor: pointer;
+}
+
+.th-text-center{
+  text-align: center;
+}
+
+.rounded{
+  border-radius: 4px;
 }

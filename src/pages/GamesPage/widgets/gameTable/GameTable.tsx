@@ -26,7 +26,7 @@ interface GameTableProps {
   games: Game[];
   count: number;
   classes: string;
-  borderClasses:string;
+  borderClasses: string;
 }
 
 interface ClickedGame {
@@ -39,7 +39,7 @@ export default function GameTable(props: GameTableProps) {
     {
       key: "name",
       label: "Название",
-      colSpan: 2,
+      colSpan: 3,
     },
     {
       key: "publicationDate",
@@ -59,7 +59,7 @@ export default function GameTable(props: GameTableProps) {
       colSpan: 2,
     },
   ];
-  
+
   const pageCount = Math.ceil(props.count / GAMES_PER_PAGE);
   const getGames = useGetGames();
 
@@ -121,7 +121,9 @@ export default function GameTable(props: GameTableProps) {
         </Modal>
       )}
 
-      <table className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}>
+      <table
+        className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}
+      >
         <SortedTableHeader
           sort={sort}
           tableHeaders={tableHeaders}
@@ -138,6 +140,9 @@ export default function GameTable(props: GameTableProps) {
               }}
             >
               <td>{index + 1 + currentPage * 10}</td>
+              <td>
+                <img src={game.previewURL} width={100} height={"auto"} className={classes["rounded"]}/>
+              </td>
               <td>{`${game.name}`}</td>
               <td>
                 {game.publicationDate &&
