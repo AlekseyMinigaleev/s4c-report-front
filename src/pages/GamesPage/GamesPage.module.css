@@ -2,6 +2,14 @@
   padding-bottom: 1rem;
 }
 
+.loader-container{
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
 .table {
   border: 1px solid black;
   border-bottom: none;
@@ -27,7 +35,6 @@
 .table td {
   background-color: #DDDDDD;
   border-bottom: 1px solid black;
-  cursor: pointer;
 }
 .table th {
   border-bottom: 1px solid black;
@@ -45,9 +52,5 @@
   width: 100%;
   height: 100%;
   display: flex;
+  text-wrap: nowrap;
 }
-
- .th-label{
-  padding-right: 1rem;
-  cursor: pointer;
- }

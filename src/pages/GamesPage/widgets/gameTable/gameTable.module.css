@@ -37,9 +37,50 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 150px;
+  cursor: pointer;
 }
 
-.growth {
+.progress {
   color: hsl(120, 95%, 42%);
   padding-left: 0.3rem;
+}
+
+.regress {
+  color: hsl(0, 95%, 42%);
+  padding-left: 0.3rem;
+}
+
+.pagination {
+  flex: 0 0 auto;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+
+  font-size: 1.2rem;
+  gap: 5px;
+  height: auto;
+}
+
+.pagination .page-num {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+}
+
+.pagination .page-num:hover {
+  background-color: #5ab1bb;
+  color: #fff;
+}
+
+.pagination .active {
+  background-color: #5ab1bb;
+}
+
+.th-label{
+  padding-right: 1rem;
+  cursor: pointer;
 }

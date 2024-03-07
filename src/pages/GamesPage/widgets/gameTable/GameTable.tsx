@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
 import { Sort, SortType } from "../../../../models/filter";
-import classes from "./gameTable.module.css";
-import paginationClasses from "../../pagination.module.css";
-import gamePageClasses from "../../gamesPage.module.css";
 import ValueWithProgress from "../../components/valueWithProgress/ValueWithProgress";
 import { Game } from "../../../../models/gameModel";
-import { getNewSort, paginate } from "../../../../utils/FilterUtils";
+import { getNewSort } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
-import useGetGames, { Total } from "../../../../hooks/requests/useGetGames";
+import useGetGames from "../../../../hooks/requests/useGetGames";
 import Modal from "../../../../components/modal/Modal";
 import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";
-import { ValueWithProgressModel } from "models/valueWithProgress";
-
-const GAMES_PER_PAGE = 10;
-
-interface paginationProps {
-  selected: number;
-}
+import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
+import classes from "./gameTable.module.css";
+import gamePageClasses from "../../gamesPage.module.css";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
   label: string;
   colSpan?: number;
+}
+
+interface paginationProps {
+  selected: number;
 }
 
 interface GameTableProps {
@@ -54,7 +51,6 @@ export default function GameTable(props: GameTableProps) {
     {
       key: "rating",
       label: "Рейтинг",
-      colSpan: 2,
     },
     {
       key: "cashIncome",
@@ -62,7 +58,9 @@ export default function GameTable(props: GameTableProps) {
       colSpan: 2,
     },
   ];
+  
   const pageCount = Math.ceil(props.count / GAMES_PER_PAGE);
+  const getGames = useGetGames();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [sort, setSort] = useState<Sort<Game>>({
@@ -75,8 +73,6 @@ export default function GameTable(props: GameTableProps) {
     gameName: "",
     id: "",
   });
-
-  const getGames = useGetGames();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -151,7 +147,8 @@ export default function GameTable(props: GameTableProps) {
                 {game.rating != null ? (
                   <ValueWithProgress
                     valueWithProgress={game.rating}
-                    growthClassName={classes["growth"]}
+                    progressClassName={classes["progress"]}
+                    regressClassName={classes["regress"]}
                   />
                 ) : (
                   "-"
@@ -161,7 +158,8 @@ export default function GameTable(props: GameTableProps) {
                 {game.cashIncome != null ? (
                   <ValueWithProgress
                     valueWithProgress={game.cashIncome.valueWithProgress}
-                    growthClassName={classes["growth"]}
+                    progressClassName={classes["progress"]}
+                    regressClassName={classes["regress"]}
                   />
                 ) : (
                   "-"
@@ -188,11 +186,11 @@ export default function GameTable(props: GameTableProps) {
         forcePage={currentPage}
         pageRangeDisplayed={1}
         marginPagesDisplayed={1}
-        containerClassName={paginationClasses["pagination"]}
-        pageLinkClassName={paginationClasses["page-num"]}
-        previousLinkClassName={paginationClasses["page-num"]}
-        nextLinkClassName={paginationClasses["page-num"]}
-        activeLinkClassName={paginationClasses["active"]}
+        containerClassName={classes["pagination"]}
+        pageLinkClassName={classes["page-num"]}
+        previousLinkClassName={classes["page-num"]}
+        nextLinkClassName={classes["page-num"]}
+        activeLinkClassName={classes["active"]}
       />
     </>
   );

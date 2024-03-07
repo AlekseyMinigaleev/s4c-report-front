@@ -6,16 +6,17 @@ import useGetGames, {
 } from "../../hooks/requests/useGetGames";
 import TotalTable from "./components/totalTable/TotalTable";
 import { SortType } from "models/filter";
+import { GAMES_PER_PAGE } from "./constants";
+import { MoonLoader } from "react-spinners";
 
 export default function GamesPage() {
-  const [response, setResponse] = useState<GetGamesResponse>({
+  const [getGamesRepsponse, setGetGamesResponse] = useState<GetGamesResponse>({
     games: [],
     total: {
       cashIncome: undefined,
       count: 0,
     },
   });
-
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getGames = useGetGames();
@@ -24,7 +25,7 @@ export default function GamesPage() {
     const fetchData = async () => {
       const response = await getGames({
         paginate: {
-          itemsPerPage: 10,
+          itemsPerPage: GAMES_PER_PAGE,
           pageNumber: 1,
         },
         sort: {
@@ -33,7 +34,7 @@ export default function GamesPage() {
         },
         includeTotal: true
       });
-      setResponse(response);
+      setGetGamesResponse(response);
       setIsLoading(false);
     };
 
@@ -43,18 +44,20 @@ export default function GamesPage() {
   return (
     <>
       {isLoading ? (
-        <p>Загрузка...</p>
+        <div className={classes["loader-container"]}>
+          <MoonLoader/>
+        </div>
       ) : (
         <>
-          <section className={classes["section"]}>
+          <section>
             <h1 className={classes["h1"]}>Общая статистика</h1>
-            <TotalTable total={response.total} classes={classes["table"]} />
+            <TotalTable total={getGamesRepsponse.total} classes={classes["table"]} />
           </section>
           <section>
             <h1 className={classes["h1"]}>Все игры</h1>
             <GameTable
-              games={response.games}
-              count={response.total.count}
+              games={getGamesRepsponse.games}
+              count={getGamesRepsponse.total.count}
               classes={classes["table"]}
             />
           </section>

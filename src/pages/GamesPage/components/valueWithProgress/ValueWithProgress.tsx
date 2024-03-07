@@ -2,8 +2,8 @@ import { ValueWithProgressModel } from "../../../../models/valueWithProgress";
 
 interface ValueWithGrowthProps {
   valueWithProgress: ValueWithProgressModel;
-  growthClassName?: string;
-  reductionClassName?: string;
+  progressClassName?: string;
+  regressClassName?: string;
 }
 
 export default function ValueWithProgress(props: ValueWithGrowthProps) {
@@ -13,11 +13,11 @@ export default function ValueWithProgress(props: ValueWithGrowthProps) {
         {`${props.valueWithProgress.actualValue.toLocaleString()}`}
         {props.valueWithProgress.progressValue < 0 ? (
           <span
-            className={props.reductionClassName}
+            className={props.regressClassName}
           >{` -(${props.valueWithProgress.progressValue.toLocaleString()})`}</span>
         ) : props.valueWithProgress.progressValue > 0 ? (
           <span
-            className={props.growthClassName}
+            className={props.progressClassName}
           >{` +(${props.valueWithProgress.progressValue.toLocaleString()})`}</span>
         ) : null}
       </p>
