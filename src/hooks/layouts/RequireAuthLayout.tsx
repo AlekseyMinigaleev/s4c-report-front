@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuthContext from "../hooks/useAuthContext";
-import Header from "../widgets/header/Header";
+import useAuthContext from "../useAuthContext";
+import Header from "../../widgets/header/Header";
 
 export default function RequireAuthLayout() {
   const authContext = useAuthContext();
