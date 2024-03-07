@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
-import gamePageclasses from "../../../../gamesPage.module.css";
+import gamePageclasses from "../../../../GamesPage.module.css";
 import LoadingButton from "../../../../../../components/loadingButton/LoadingButton";
 import useGetGameStatisticByGame, {
   GetGameStatisticByGamePayload,

@@ -1,15 +1,16 @@
 import { Total } from "../../../../hooks/requests/useGetGames";
-import classes from "./totalTable.module.css";
+import classes from "./TotalTable.module.css"
 
 interface TotalTableProps {
   total: Total;
-  classes: string;
+  classes?: string;
+  borderClasses?: string,
 }
 
 export default function TotalTable(props: TotalTableProps) {
   return (
     <>
-      <table className={`${classes["table"]} ${props.classes}`}>
+      <table className={`${props.classes} ${props.borderClasses} ${classes["table"]}`}>
         <tbody>
           <tr>
             <th>Прибыль (RUB):</th>

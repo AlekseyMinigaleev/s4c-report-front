@@ -1,10 +1,10 @@
-import classes from "./gamesPage.module.css";
+import classes from "./GamesPage.module.css";
 import GameTable from "./widgets/gameTable/GameTable";
 import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
-import TotalTable from "./components/totalTable/TotalTable";
+import TotalTable from "./widgets/TotalTable/TotalTable";
 import { SortType } from "models/filter";
 import { GAMES_PER_PAGE } from "./constants";
 import { MoonLoader } from "react-spinners";
@@ -32,7 +32,7 @@ export default function GamesPage() {
           key: "rating",
           sortType: SortType.desc,
         },
-        includeTotal: true
+        includeTotal: true,
       });
       setGetGamesResponse(response);
       setIsLoading(false);
@@ -45,13 +45,17 @@ export default function GamesPage() {
     <>
       {isLoading ? (
         <div className={classes["loader-container"]}>
-          <MoonLoader/>
+          <MoonLoader />
         </div>
       ) : (
         <>
           <section>
             <h1 className={classes["h1"]}>Общая статистика</h1>
-            <TotalTable total={getGamesRepsponse.total} classes={classes["table"]} />
+            <TotalTable
+              total={getGamesRepsponse.total}
+              classes={classes["table"]}
+              borderClasses={classes["border"]}
+            />
           </section>
           <section>
             <h1 className={classes["h1"]}>Все игры</h1>
@@ -59,6 +63,7 @@ export default function GamesPage() {
               games={getGamesRepsponse.games}
               count={getGamesRepsponse.total.count}
               classes={classes["table"]}
+              borderClasses={classes["border"]}
             />
           </section>
         </>

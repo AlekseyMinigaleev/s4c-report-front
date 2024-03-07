@@ -1,4 +1,4 @@
-import { ValueWithProgressModel } from "../../../../models/valueWithProgress";
+import { ValueWithProgressModel } from "../../../models/valueWithProgress";
 
 interface ValueWithGrowthProps {
   valueWithProgress: ValueWithProgressModel;

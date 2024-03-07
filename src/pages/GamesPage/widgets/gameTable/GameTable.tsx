@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Sort, SortType } from "../../../../models/filter";
-import ValueWithProgress from "../../components/valueWithProgress/ValueWithProgress";
+import ValueWithProgress from "../../components/ValueWithProgress";
 import { Game } from "../../../../models/gameModel";
 import { getNewSort } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
@@ -10,7 +10,7 @@ import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable"
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";
 import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
 import classes from "./gameTable.module.css";
-import gamePageClasses from "../../gamesPage.module.css";
+import gamePageClasses from "../../GamesPage.module.css";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -26,6 +26,7 @@ interface GameTableProps {
   games: Game[];
   count: number;
   classes: string;
+  borderClasses:string;
 }
 
 interface ClickedGame {
@@ -120,7 +121,7 @@ export default function GameTable(props: GameTableProps) {
         </Modal>
       )}
 
-      <table className={`${classes["table"]} ${props.classes}`}>
+      <table className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}>
         <SortedTableHeader
           sort={sort}
           tableHeaders={tableHeaders}
