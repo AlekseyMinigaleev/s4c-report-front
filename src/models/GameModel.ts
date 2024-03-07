@@ -7,35 +7,14 @@ export interface Game {
   name: string;
   publicationDate: Date;
   evaluation: number;
-  cashIncome: cashIncome;
-  playersCount: playersCount;
+  url: string;
+  previewURL: string;
+  categories: string[];
+  cashIncome?: CashIncome;
+  rating?: ValueWithProgressModel;
 }
 
-export interface cashIncome {
-  valueWithProgress?: ValueWithProgressModel;
-  percentage?: number;
-}
-
-export interface playersCount {
+export interface CashIncome {
   valueWithProgress: ValueWithProgressModel;
   percentage: number;
-}
-
-export function sortGames(games: Game[], sort: Sort<Game>): Game[] {
-  let sortedGames: Game[] = [];
-  const key = sort.key;
-
-  const sortType = SortType[sort.sortType] as "asc" | "desc";
-
-  if (key == "cashIncome" || key == "playersCount") {
-    sortedGames = lodash.orderBy(
-      games,
-      (x) => x[key]?.valueWithProgress?.actualValue,
-      [sortType]
-    );
-  } else {
-    sortedGames = lodash.orderBy(games, [sort.key], [sortType]);
-  }
-
-  return sortedGames;
 }

@@ -4,13 +4,14 @@ import classes from "./gameTable.module.css";
 import paginationClasses from "../../pagination.module.css";
 import gamePageClasses from "../../gamesPage.module.css";
 import ValueWithProgress from "../../components/valueWithProgress/ValueWithProgress";
-import { Game, sortGames } from "../../../../models/gameModel";
+import { Game } from "../../../../models/gameModel";
 import { getNewSort, paginate } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
-import { Total } from "../../../../hooks/requests/useGetGames";
+import useGetGames, { Total } from "../../../../hooks/requests/useGetGames";
 import Modal from "../../../../components/modal/Modal";
 import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";
+import { ValueWithProgressModel } from "models/valueWithProgress";
 
 const GAMES_PER_PAGE = 10;
 
@@ -26,7 +27,7 @@ export interface TableHeaderModel<T> {
 
 interface GameTableProps {
   games: Game[];
-  total: Total;
+  count: number;
   classes: string;
 }
 
@@ -51,8 +52,8 @@ export default function GameTable(props: GameTableProps) {
       label: "Оценка",
     },
     {
-      key: "playersCount",
-      label: "Количество игроков",
+      key: "rating",
+      label: "Рейтинг",
       colSpan: 2,
     },
     {
@@ -61,42 +62,46 @@ export default function GameTable(props: GameTableProps) {
       colSpan: 2,
     },
   ];
-  const pageCount = Math.ceil(props.games.length / GAMES_PER_PAGE);
+  const pageCount = Math.ceil(props.count / GAMES_PER_PAGE);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [sort, setSort] = useState<Sort<Game>>({
-    key: "playersCount",
+    key: "rating",
     sortType: SortType.desc,
   });
-  const [games, setGames] = useState<Game[]>(sortGames(props.games, sort));
-  const [paginatedGames, setPaginatedGames] = useState<Game[]>(
-    paginate(games, currentPage, GAMES_PER_PAGE)
-  );
+  const [games, setGames] = useState<Game[]>(props.games);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [clickedGame, setClickedGame] = useState<ClickedGame>({
     gameName: "",
     id: "",
   });
 
-  useEffect(() => {
-    const paginatedGames = paginate(games, currentPage, GAMES_PER_PAGE);
-    setPaginatedGames(paginatedGames);
-  }, [games]);
+  const getGames = useGetGames();
 
-  function onPageCkick(props: paginationProps) {
+  useEffect(() => {
+    const fetchData = async () => {
+      const newGames = await getGames({
+        paginate: {
+          pageNumber: currentPage + 1,
+          itemsPerPage: GAMES_PER_PAGE,
+        },
+        sort: sort,
+        includeTotal: false,
+      });
+      setGames(newGames.games);
+    };
+
+    fetchData();
+  }, [currentPage, sort]);
+
+  function onPageChange(props: paginationProps) {
     const pageNumber = props.selected;
     setCurrentPage(pageNumber);
-
-    const paginatedGames = paginate(games, pageNumber, GAMES_PER_PAGE);
-    setPaginatedGames(paginatedGames);
   }
 
   function handleHeaderClick(tableHeader: TableHeaderModel<Game>) {
     const newSort = getNewSort(tableHeader, sort);
     setSort(newSort);
-
-    const sortedGames = sortGames(games, newSort);
-    setGames(sortedGames);
   }
 
   function gameClickHandler(game: Game) {
@@ -118,7 +123,7 @@ export default function GameTable(props: GameTableProps) {
           <GameStatisticTable gameId={clickedGame.id} classes={props.classes} />
         </Modal>
       )}
-      
+
       <table className={`${classes["table"]} ${props.classes}`}>
         <SortedTableHeader
           sort={sort}
@@ -128,7 +133,7 @@ export default function GameTable(props: GameTableProps) {
           onClick={handleHeaderClick}
         />
         <tbody>
-          {paginatedGames.map((game, index) => (
+          {games.map((game, index) => (
             <tr
               key={index}
               onClick={() => {
@@ -143,14 +148,17 @@ export default function GameTable(props: GameTableProps) {
               </td>
               <td>{game.evaluation}</td>
               <td>
-                <ValueWithProgress
-                  valueWithProgress={game.playersCount.valueWithProgress}
-                  growthClassName={classes["growth"]}
-                />
+                {game.rating != null ? (
+                  <ValueWithProgress
+                    valueWithProgress={game.rating}
+                    growthClassName={classes["growth"]}
+                  />
+                ) : (
+                  "-"
+                )}
               </td>
-              <td>{game.playersCount.percentage}%</td>
               <td>
-                {game.cashIncome?.valueWithProgress ? (
+                {game.cashIncome != null ? (
                   <ValueWithProgress
                     valueWithProgress={game.cashIncome.valueWithProgress}
                     growthClassName={classes["growth"]}
@@ -175,7 +183,7 @@ export default function GameTable(props: GameTableProps) {
         nextLabel=">"
         previousLabel="<"
         breakLabel=""
-        onPageChange={onPageCkick}
+        onPageChange={onPageChange}
         pageCount={pageCount}
         forcePage={currentPage}
         pageRangeDisplayed={1}

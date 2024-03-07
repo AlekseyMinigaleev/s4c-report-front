@@ -11,14 +11,14 @@ export default function ValueWithProgress(props: ValueWithGrowthProps) {
     <>
       <p>
         {`${props.valueWithProgress.actualValue.toLocaleString()}`}
-        {props.valueWithProgress.lastProgressValue < 0 ? (
+        {props.valueWithProgress.progressValue < 0 ? (
           <span
             className={props.reductionClassName}
-          >{` -(${props.valueWithProgress.lastProgressValue.toLocaleString()})`}</span>
-        ) : props.valueWithProgress.lastProgressValue > 0 ? (
+          >{` -(${props.valueWithProgress.progressValue.toLocaleString()})`}</span>
+        ) : props.valueWithProgress.progressValue > 0 ? (
           <span
             className={props.growthClassName}
-          >{` +(${props.valueWithProgress.lastProgressValue.toLocaleString()})`}</span>
+          >{` +(${props.valueWithProgress.progressValue.toLocaleString()})`}</span>
         ) : null}
       </p>
     </>

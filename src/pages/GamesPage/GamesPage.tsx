@@ -5,13 +5,14 @@ import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
 import TotalTable from "./components/totalTable/TotalTable";
+import { SortType } from "models/filter";
 
 export default function GamesPage() {
   const [response, setResponse] = useState<GetGamesResponse>({
     games: [],
     total: {
-      playersCount: 0,
       cashIncome: undefined,
+      count: 0,
     },
   });
 
@@ -21,7 +22,17 @@ export default function GamesPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getGames();
+      const response = await getGames({
+        paginate: {
+          itemsPerPage: 10,
+          pageNumber: 1,
+        },
+        sort: {
+          key: "rating",
+          sortType: SortType.desc,
+        },
+        includeTotal: true
+      });
       setResponse(response);
       setIsLoading(false);
     };
@@ -43,7 +54,7 @@ export default function GamesPage() {
             <h1 className={classes["h1"]}>Все игры</h1>
             <GameTable
               games={response.games}
-              total={response.total}
+              count={response.total.count}
               classes={classes["table"]}
             />
           </section>
