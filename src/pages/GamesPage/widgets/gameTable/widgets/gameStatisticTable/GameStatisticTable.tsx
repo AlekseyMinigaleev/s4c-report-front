@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
 import gamePageclasses from "../../../../GamesPage.module.css";
+import gameTableClasses from "../../gameTable.module.css"
 import LoadingButton from "../../../../../../components/loadingButton/LoadingButton";
 import useGetGameStatisticByGame, {
   GetGameStatisticByGamePayload,
@@ -10,6 +11,7 @@ import SortedTableHeader from "../../../../../../widgets/SortedTableHeader";
 import { TableHeaderModel } from "../../GameTable";
 import { getNewSort } from "../../../../../../utils/FilterUtils";
 import { GameStatisticModel } from "../../../../../../models/gameStatisticModel";
+import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
 
 interface GameStatisticTableProps {
   gameId: string;
@@ -29,8 +31,8 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
       label: "Оценка",
     },
     {
-      key: "playersCount",
-      label: "Количество игроков",
+      key: "rating",
+      label: "рейтинг",
     },
     {
       key: "cashIncome",
@@ -145,8 +147,28 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
                     ).toLocaleDateString()}
                 </td>
                 <td>{gameStatistic.evaluation.toLocaleString()}</td>
-                <td>{gameStatistic.playersCount.toLocaleString()}</td>
-                <td>{gameStatistic.cashIncome.toLocaleString()}</td>
+                <td>
+                  {gameStatistic.rating != null ? (
+                    <ValueWithProgress
+                      valueWithProgress={gameStatistic.rating}
+                      progressClassName={gameTableClasses["progress"]}
+                      regressClassName={gameTableClasses["regress"]}
+                    />
+                  ) : (
+                    "-"
+                  )}
+                </td>
+                <td>
+                  {gameStatistic.cashIncome != null ? (
+                    <ValueWithProgress
+                      valueWithProgress={gameStatistic.cashIncome}
+                      progressClassName={gameTableClasses["progress"]}
+                      regressClassName={gameTableClasses["regress"]}
+                    />
+                  ) : (
+                    "-"
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

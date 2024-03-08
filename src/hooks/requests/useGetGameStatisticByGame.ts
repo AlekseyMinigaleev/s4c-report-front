@@ -19,7 +19,7 @@ export default function useGetGameStatisticByGame() {
     payload: GetGameStatisticByGamePayload
   ): Promise<GetGameStatisticByGameResponse> {
     const response = await api.get<GetGameStatisticByGameResponse>(
-      "game/get-statistic-by-game",
+      "GameStatistic/get-statistic-by-game",
       {
         params: {
           gameId: payload.GameId,
