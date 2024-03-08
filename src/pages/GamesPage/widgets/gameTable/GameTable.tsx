@@ -11,7 +11,7 @@ import SortedTableHeader from "../../../../widgets/SortedTableHeader";
 import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
 import classes from "./gameTable.module.css";
 import gamePageClasses from "../../GamesPage.module.css";
-import ModalHeader from "./widgets/modalHeader/ModalHeader";
+import GameStatisticHeader from "./widgets/gameStatiscHeader/GameStatisticHeader";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -133,7 +133,7 @@ export default function GameTable(props: GameTableProps) {
             />
           }
           header={
-            <ModalHeader
+            <GameStatisticHeader
               clickedGame={clickedGame}
             />
           }

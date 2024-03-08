@@ -1,12 +1,12 @@
 import { ClickedGame } from "../../GameTable";
-import classes from "./ModalHeader.module.css";
+import classes from "./gameStatisticHeader.module.css";
 
 
-interface ModalHeaderProps {
+interface GameStatisticHeaderProps {
   clickedGame: ClickedGame;
 }
 
-export default function ModalHeader(props: ModalHeaderProps) {
+export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
   return (
     <>
       <div className={classes["preview"]}>
