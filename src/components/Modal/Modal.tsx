@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { useRef, useEffect, ReactNode, useCallback } from "react";
-import classes from "./modal.module.css";
-import closeIcon from "../../resources/images/close-icon.png";
+import classes from "./Modal.module.css";
+import closeIcon from "../../resources/images/cancel.png";
 
 interface ModalProps {
   title: string;
@@ -61,15 +61,13 @@ export default function Modal(props: ModalProps) {
     <>
       {createPortal(
         <dialog className={classes["dialog"]} ref={dialog}>
-          <div className={classes["header"]}>
-            <div
-              className={classes["close-button"]}
-              onClick={() => props.onClose()}
-            >
-              <img src={closeIcon} width={25} alt="Закрыть"></img>
-            </div>
-            {props.header}
+          <div
+            className={classes["close-button"]}
+            onClick={() => props.onClose()}
+          >
+            <img src={closeIcon} width={50} alt="Закрыть"></img>
           </div>
+          <div className={classes["header"]}>{props.header}</div>
 
           <div className={classes["content"]}>{props.content}</div>
         </dialog>,

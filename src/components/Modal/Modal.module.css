@@ -4,8 +4,8 @@ body.modal-open {
 
 .dialog {
   width: 80%;
-  height: 60%;
-  margin: 10rem auto;
+  height: 70%;
+  margin: auto;
   padding: 5rem;
   border: 1px solid #ccc;
   border-radius: 40px;
@@ -25,10 +25,11 @@ body.modal-open {
 
 .close-button {
   display: flex;
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: fixed;
+  top: 10px;
+  right: 60px;
   cursor: pointer;
+  z-index: 101; /* Находится выше модального окна */
 }
 
 .close-button:hover {
