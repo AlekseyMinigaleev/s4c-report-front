@@ -2,7 +2,7 @@
   margin-left: auto;
   margin-right: auto;
   width: 80%;
-  border-bottom: none ;
+  border-bottom: none;
 }
 
 .table thead {
@@ -28,6 +28,10 @@
   width: 24%;
 }
 
+.table th {
+  cursor: pointer;
+}
+
 .table td {
   white-space: nowrap;
   overflow: hidden;
@@ -36,19 +40,13 @@
   cursor: pointer;
 }
 
-.table td{
+.table td {
   vertical-align: middle;
   border: 1px solid black;
-  border-left:  none;
-  border-right:  none;
-  border-top:  none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
 }
-
-
-
-
-
-
 
 .progress {
   color: hsl(120, 95%, 42%);
@@ -59,17 +57,6 @@
   color: hsl(0, 95%, 42%);
   padding-left: 0.3rem;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 .pagination {
   flex: 0 0 auto;
@@ -101,28 +88,15 @@
   background-color: #5ab1bb;
 }
 
-
-
-
-
-
-
-
-
-.th-label{
+.th-label {
   padding-right: 1rem;
   cursor: pointer;
 }
 
-.th-text-center{
+.th-text-center {
   text-align: center;
 }
 
-
-.rounded{
+.rounded {
   border-radius: 4px;
 }
-
-
-
-

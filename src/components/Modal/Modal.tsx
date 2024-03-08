@@ -65,10 +65,9 @@ export default function Modal(props: ModalProps) {
             className={classes["close-button"]}
             onClick={() => props.onClose()}
           >
-            <img src={closeIcon} width={50} alt="Закрыть"></img>
+            <img src={closeIcon} width={45} alt="Закрыть" />
           </div>
           <div className={classes["header"]}>{props.header}</div>
-
           <div className={classes["content"]}>{props.content}</div>
         </dialog>,
         document.getElementById("modal")!

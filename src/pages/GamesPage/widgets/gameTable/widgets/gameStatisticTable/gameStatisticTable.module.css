@@ -16,6 +16,10 @@
   border-bottom: 1px solid black
 }
 
+.table th{
+  cursor: pointer;
+}
+
 .download-more {
   margin: auto;
 }
