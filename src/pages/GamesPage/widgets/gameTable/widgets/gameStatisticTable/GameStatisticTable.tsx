@@ -3,9 +3,9 @@ import classes from "./gameStatisticTable.module.css";
 import gamePageclasses from "../../../../GamesPage.module.css";
 import gameTableClasses from "../../gameTable.module.css"
 import LoadingButton from "../../../../../../components/loadingButton/LoadingButton";
-import useGetGameStatisticByGame, {
+import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
-} from "../../../../../../hooks/requests/useGetGameStatisticByGame";
+} from "../../../../../../hooks/requests/useGetGameStatisticById";
 import { Sort, SortType } from "../../../../../../models/filter";
 import SortedTableHeader from "../../../../../../widgets/SortedTableHeader";
 import { TableHeaderModel } from "../../GameTable";
@@ -18,7 +18,8 @@ interface GameStatisticTableProps {
   classes: string;
 }
 
-const GAMES_PER_PAGE = 1;
+
+const GAMES_PER_PAGE = 10;
 
 export default function GameStatisticTable(props: GameStatisticTableProps) {
   const tableHeaders: TableHeaderModel<GameStatisticModel>[] = [
@@ -57,7 +58,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
   );
   const [remainingCount, setRemainingCount] = useState<number>();
 
-  const getGameStatisticByGame = useGetGameStatisticByGame();
+  const getGameStatisticByGame = useGetGameStatisticById();
 
   useEffect(() => {
     //используется просто как флаг, чтобы не выполнялся запрос 2 раза. Можно спокойно заменить на любой другой флаг

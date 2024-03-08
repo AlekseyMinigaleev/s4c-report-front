@@ -11,6 +11,7 @@ import SortedTableHeader from "../../../../widgets/SortedTableHeader";
 import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
 import classes from "./gameTable.module.css";
 import gamePageClasses from "../../GamesPage.module.css";
+import ModalHeader from "./widgets/modalHeader/ModalHeader";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -29,9 +30,12 @@ interface GameTableProps {
   borderClasses: string;
 }
 
-interface ClickedGame {
-  gameName: string;
+export interface ClickedGame {
   id: string;
+  gameName: string;
+  url: string;
+  previewURL: string;
+  categories: string[];
 }
 
 export default function GameTable(props: GameTableProps) {
@@ -71,8 +75,11 @@ export default function GameTable(props: GameTableProps) {
   const [games, setGames] = useState<Game[]>(props.games);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [clickedGame, setClickedGame] = useState<ClickedGame>({
-    gameName: "",
     id: "",
+    gameName: "",
+    previewURL: "",
+    url: "",
+    categories: [],
   });
 
   useEffect(() => {
@@ -105,6 +112,9 @@ export default function GameTable(props: GameTableProps) {
     setClickedGame({
       gameName: game.name,
       id: game.id,
+      url: game.url,
+      previewURL: game.previewURL,
+      categories: game.categories,
     });
     setIsModalOpen(true);
   }
@@ -116,9 +126,18 @@ export default function GameTable(props: GameTableProps) {
           isOpen={isModalOpen}
           title={clickedGame.gameName}
           onClose={() => setIsModalOpen(false)}
-        >
-          <GameStatisticTable gameId={clickedGame.id} classes={props.classes} />
-        </Modal>
+          content={
+            <GameStatisticTable
+              gameId={clickedGame.id}
+              classes={props.classes}
+            />
+          }
+          header={
+            <ModalHeader
+              clickedGame={clickedGame}
+            />
+          }
+        />
       )}
 
       <table
@@ -141,7 +160,12 @@ export default function GameTable(props: GameTableProps) {
             >
               <td>{index + 1 + currentPage * 10}</td>
               <td>
-                <img src={game.previewURL} width={100} height={"auto"} className={classes["rounded"]}/>
+                <img
+                  src={game.previewURL}
+                  width={100}
+                  height={"auto"}
+                  className={classes["rounded"]}
+                />
               </td>
               <td>{`${game.name}`}</td>
               <td>

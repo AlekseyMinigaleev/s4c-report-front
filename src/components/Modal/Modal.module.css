@@ -4,11 +4,11 @@ body.modal-open {
 
 .dialog {
   width: 80%;
-  height: auto;
+  height: 60%;
   margin: 10rem auto;
-  padding: 1rem;
+  padding: 5rem;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 40px;
   z-index: 100;
 }
 
@@ -16,24 +16,6 @@ body.modal-open {
   display: flex;
   align-items: center;
   margin: 0;
-}
-
-.game-link {
-  height: 100%;
-  margin-left: 1rem;
-  margin-bottom: 0;
-  background-color: lightblue;
-  border-radius: 5px;
-  padding: 0.8rem;
-  cursor: pointer;
-}
-.game-link:hover {
-  background-color: blue;
-}
-
-.title {
-  font-size: 25pt;
-  text-align: center;
 }
 
 .content {

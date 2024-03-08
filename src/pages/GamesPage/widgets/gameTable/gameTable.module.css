@@ -45,6 +45,11 @@
 }
 
 
+
+
+
+
+
 .progress {
   color: hsl(120, 95%, 42%);
   padding-left: 0.3rem;
@@ -54,6 +59,17 @@
   color: hsl(0, 95%, 42%);
   padding-left: 0.3rem;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .pagination {
   flex: 0 0 auto;
@@ -85,6 +101,14 @@
   background-color: #5ab1bb;
 }
 
+
+
+
+
+
+
+
+
 .th-label{
   padding-right: 1rem;
   cursor: pointer;
@@ -94,6 +118,11 @@
   text-align: center;
 }
 
+
 .rounded{
   border-radius: 4px;
 }
+
+
+
+
