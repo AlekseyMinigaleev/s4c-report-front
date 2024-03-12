@@ -1,28 +1,40 @@
-import classes from "./gamesPage.module.css";
+import classes from "./GamesPage.module.css";
 import GameTable from "./widgets/gameTable/GameTable";
 import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
-import TotalTable from "./components/totalTable/TotalTable";
+import TotalTable from "./widgets/TotalTable/TotalTable";
+import { SortType } from "models/filter";
+import { GAMES_PER_PAGE } from "./constants";
+import { MoonLoader } from "react-spinners";
 
 export default function GamesPage() {
-  const [response, setResponse] = useState<GetGamesResponse>({
+  const [getGamesRepsponse, setGetGamesResponse] = useState<GetGamesResponse>({
     games: [],
     total: {
-      playersCount: 0,
       cashIncome: undefined,
+      count: 0,
     },
   });
-
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getGames = useGetGames();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getGames();
-      setResponse(response);
+      const response = await getGames({
+        paginate: {
+          itemsPerPage: GAMES_PER_PAGE,
+          pageNumber: 1,
+        },
+        sort: {
+          key: "rating",
+          sortType: SortType.desc,
+        },
+        includeTotal: true,
+      });
+      setGetGamesResponse(response);
       setIsLoading(false);
     };
 
@@ -32,19 +44,26 @@ export default function GamesPage() {
   return (
     <>
       {isLoading ? (
-        <p>Загрузка...</p>
+        <div className={classes["loader-container"]}>
+          <MoonLoader />
+        </div>
       ) : (
         <>
-          <section className={classes["section"]}>
+          <section>
             <h1 className={classes["h1"]}>Общая статистика</h1>
-            <TotalTable total={response.total} classes={classes["table"]} />
+            <TotalTable
+              total={getGamesRepsponse.total}
+              classes={classes["table"]}
+              borderClasses={classes["border"]}
+            />
           </section>
           <section>
             <h1 className={classes["h1"]}>Все игры</h1>
             <GameTable
-              games={response.games}
-              total={response.total}
+              games={getGamesRepsponse.games}
+              count={getGamesRepsponse.total.count}
               classes={classes["table"]}
+              borderClasses={classes["border"]}
             />
           </section>
         </>

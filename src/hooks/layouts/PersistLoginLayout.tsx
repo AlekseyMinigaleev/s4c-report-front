@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import useRefreshToken from "../hooks/requests/useRefreshToken";
-import useAuthContext from "../hooks/useAuthContext";
+import useRefreshToken from "../requests/useRefreshToken";
+import useAuthContext from "../useAuthContext";
 import { Outlet } from "react-router-dom";
 
 // TODO: я не понимаю почему тут не работает если убрать isLoading

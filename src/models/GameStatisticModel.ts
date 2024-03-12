@@ -1,7 +1,8 @@
+import { ValueWithProgressModel } from "./valueWithProgress";
 
 export interface GameStatisticModel {
   evaluation: number;
-  playersCount: number;
-  cashIncome: number;
+  rating: ValueWithProgressModel;
+  cashIncome: ValueWithProgressModel;
   lastSynchroDate: Date;
 }

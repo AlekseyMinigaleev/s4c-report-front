@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
 import { Sort, SortType } from "../../../../models/filter";
-import classes from "./gameTable.module.css";
-import paginationClasses from "../../pagination.module.css";
-import gamePageClasses from "../../gamesPage.module.css";
-import ValueWithProgress from "../../components/valueWithProgress/ValueWithProgress";
-import { Game, sortGames } from "../../../../models/gameModel";
-import { getNewSort, paginate } from "../../../../utils/FilterUtils";
+import ValueWithProgress from "../../components/ValueWithProgress";
+import { Game } from "../../../../models/gameModel";
+import { getNewSort } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
-import { Total } from "../../../../hooks/requests/useGetGames";
+import useGetGames from "../../../../hooks/requests/useGetGames";
 import Modal from "../../../../components/modal/Modal";
 import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";
-
-const GAMES_PER_PAGE = 10;
-
-interface paginationProps {
-  selected: number;
-}
+import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
+import classes from "./gameTable.module.css";
+import gamePageClasses from "../../GamesPage.module.css";
+import GameStatisticHeader from "./widgets/gameStatiscHeader/GameStatisticHeader";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -24,15 +19,23 @@ export interface TableHeaderModel<T> {
   colSpan?: number;
 }
 
-interface GameTableProps {
-  games: Game[];
-  total: Total;
-  classes: string;
+interface paginationProps {
+  selected: number;
 }
 
-interface ClickedGame {
-  gameName: string;
+interface GameTableProps {
+  games: Game[];
+  count: number;
+  classes: string;
+  borderClasses: string;
+}
+
+export interface ClickedGame {
   id: string;
+  gameName: string;
+  url: string;
+  previewURL: string;
+  categories: string[];
 }
 
 export default function GameTable(props: GameTableProps) {
@@ -40,7 +43,7 @@ export default function GameTable(props: GameTableProps) {
     {
       key: "name",
       label: "Название",
-      colSpan: 2,
+      colSpan: 3,
     },
     {
       key: "publicationDate",
@@ -51,9 +54,8 @@ export default function GameTable(props: GameTableProps) {
       label: "Оценка",
     },
     {
-      key: "playersCount",
-      label: "Количество игроков",
-      colSpan: 2,
+      key: "rating",
+      label: "Рейтинг",
     },
     {
       key: "cashIncome",
@@ -61,48 +63,58 @@ export default function GameTable(props: GameTableProps) {
       colSpan: 2,
     },
   ];
-  const pageCount = Math.ceil(props.games.length / GAMES_PER_PAGE);
+
+  const pageCount = Math.ceil(props.count / GAMES_PER_PAGE);
+  const getGames = useGetGames();
 
   const [currentPage, setCurrentPage] = useState(0);
   const [sort, setSort] = useState<Sort<Game>>({
-    key: "playersCount",
+    key: "rating",
     sortType: SortType.desc,
   });
-  const [games, setGames] = useState<Game[]>(sortGames(props.games, sort));
-  const [paginatedGames, setPaginatedGames] = useState<Game[]>(
-    paginate(games, currentPage, GAMES_PER_PAGE)
-  );
+  const [games, setGames] = useState<Game[]>(props.games);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [clickedGame, setClickedGame] = useState<ClickedGame>({
-    gameName: "",
     id: "",
+    gameName: "",
+    previewURL: "",
+    url: "",
+    categories: [],
   });
 
   useEffect(() => {
-    const paginatedGames = paginate(games, currentPage, GAMES_PER_PAGE);
-    setPaginatedGames(paginatedGames);
-  }, [games]);
+    const fetchData = async () => {
+      const newGames = await getGames({
+        paginate: {
+          pageNumber: currentPage + 1,
+          itemsPerPage: GAMES_PER_PAGE,
+        },
+        sort: sort,
+        includeTotal: false,
+      });
+      setGames(newGames.games);
+    };
 
-  function onPageCkick(props: paginationProps) {
+    fetchData();
+  }, [currentPage, sort]);
+
+  function onPageChange(props: paginationProps) {
     const pageNumber = props.selected;
     setCurrentPage(pageNumber);
-
-    const paginatedGames = paginate(games, pageNumber, GAMES_PER_PAGE);
-    setPaginatedGames(paginatedGames);
   }
 
   function handleHeaderClick(tableHeader: TableHeaderModel<Game>) {
     const newSort = getNewSort(tableHeader, sort);
     setSort(newSort);
-
-    const sortedGames = sortGames(games, newSort);
-    setGames(sortedGames);
   }
 
   function gameClickHandler(game: Game) {
     setClickedGame({
       gameName: game.name,
       id: game.id,
+      url: game.url,
+      previewURL: game.previewURL,
+      categories: game.categories,
     });
     setIsModalOpen(true);
   }
@@ -114,12 +126,23 @@ export default function GameTable(props: GameTableProps) {
           isOpen={isModalOpen}
           title={clickedGame.gameName}
           onClose={() => setIsModalOpen(false)}
-        >
-          <GameStatisticTable gameId={clickedGame.id} classes={props.classes} />
-        </Modal>
+          content={
+            <GameStatisticTable
+              gameId={clickedGame.id}
+              classes={props.classes}
+            />
+          }
+          header={
+            <GameStatisticHeader
+              clickedGame={clickedGame}
+            />
+          }
+        />
       )}
-      
-      <table className={`${classes["table"]} ${props.classes}`}>
+
+      <table
+        className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}
+      >
         <SortedTableHeader
           sort={sort}
           tableHeaders={tableHeaders}
@@ -128,7 +151,7 @@ export default function GameTable(props: GameTableProps) {
           onClick={handleHeaderClick}
         />
         <tbody>
-          {paginatedGames.map((game, index) => (
+          {games.map((game, index) => (
             <tr
               key={index}
               onClick={() => {
@@ -136,6 +159,14 @@ export default function GameTable(props: GameTableProps) {
               }}
             >
               <td>{index + 1 + currentPage * 10}</td>
+              <td>
+                <img
+                  src={game.previewURL}
+                  width={100}
+                  height={"auto"}
+                  className={classes["rounded"]}
+                />
+              </td>
               <td>{`${game.name}`}</td>
               <td>
                 {game.publicationDate &&
@@ -143,17 +174,22 @@ export default function GameTable(props: GameTableProps) {
               </td>
               <td>{game.evaluation}</td>
               <td>
-                <ValueWithProgress
-                  valueWithProgress={game.playersCount.valueWithProgress}
-                  growthClassName={classes["growth"]}
-                />
+                {game.rating != null ? (
+                  <ValueWithProgress
+                    valueWithProgress={game.rating}
+                    progressClassName={classes["progress"]}
+                    regressClassName={classes["regress"]}
+                  />
+                ) : (
+                  "-"
+                )}
               </td>
-              <td>{game.playersCount.percentage}%</td>
               <td>
-                {game.cashIncome?.valueWithProgress ? (
+                {game.cashIncome != null ? (
                   <ValueWithProgress
                     valueWithProgress={game.cashIncome.valueWithProgress}
-                    growthClassName={classes["growth"]}
+                    progressClassName={classes["progress"]}
+                    regressClassName={classes["regress"]}
                   />
                 ) : (
                   "-"
@@ -175,16 +211,16 @@ export default function GameTable(props: GameTableProps) {
         nextLabel=">"
         previousLabel="<"
         breakLabel=""
-        onPageChange={onPageCkick}
+        onPageChange={onPageChange}
         pageCount={pageCount}
         forcePage={currentPage}
         pageRangeDisplayed={1}
         marginPagesDisplayed={1}
-        containerClassName={paginationClasses["pagination"]}
-        pageLinkClassName={paginationClasses["page-num"]}
-        previousLinkClassName={paginationClasses["page-num"]}
-        nextLinkClassName={paginationClasses["page-num"]}
-        activeLinkClassName={paginationClasses["active"]}
+        containerClassName={classes["pagination"]}
+        pageLinkClassName={classes["page-num"]}
+        previousLinkClassName={classes["page-num"]}
+        nextLinkClassName={classes["page-num"]}
+        activeLinkClassName={classes["active"]}
       />
     </>
   );

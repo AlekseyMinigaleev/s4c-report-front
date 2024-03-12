@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { Sort } from "../models/filter";
 import { TableHeaderModel } from "../pages/gamesPage/widgets/gameTable/GameTable";
 import SortIcon from "../components/sortIcon/SortIcon";

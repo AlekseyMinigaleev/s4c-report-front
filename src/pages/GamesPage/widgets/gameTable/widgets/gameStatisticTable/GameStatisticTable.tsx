@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
-import gamePageclasses from "../../../../gamesPage.module.css";
+import gamePageclasses from "../../../../GamesPage.module.css";
+import gameTableClasses from "../../gameTable.module.css"
 import LoadingButton from "../../../../../../components/loadingButton/LoadingButton";
-import useGetGameStatisticByGame, {
+import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
-} from "../../../../../../hooks/requests/useGetGameStatisticByGame";
+} from "../../../../../../hooks/requests/useGetGameStatisticById";
 import { Sort, SortType } from "../../../../../../models/filter";
 import SortedTableHeader from "../../../../../../widgets/SortedTableHeader";
 import { TableHeaderModel } from "../../GameTable";
 import { getNewSort } from "../../../../../../utils/FilterUtils";
 import { GameStatisticModel } from "../../../../../../models/gameStatisticModel";
+import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
 
 interface GameStatisticTableProps {
   gameId: string;
   classes: string;
 }
 
-const GAMES_PER_PAGE = 1;
+
+const GAMES_PER_PAGE = 10;
 
 export default function GameStatisticTable(props: GameStatisticTableProps) {
   const tableHeaders: TableHeaderModel<GameStatisticModel>[] = [
@@ -29,8 +32,8 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
       label: "Оценка",
     },
     {
-      key: "playersCount",
-      label: "Количество игроков",
+      key: "rating",
+      label: "рейтинг",
     },
     {
       key: "cashIncome",
@@ -55,7 +58,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
   );
   const [remainingCount, setRemainingCount] = useState<number>();
 
-  const getGameStatisticByGame = useGetGameStatisticByGame();
+  const getGameStatisticByGame = useGetGameStatisticById();
 
   useEffect(() => {
     //используется просто как флаг, чтобы не выполнялся запрос 2 раза. Можно спокойно заменить на любой другой флаг
@@ -145,8 +148,28 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
                     ).toLocaleDateString()}
                 </td>
                 <td>{gameStatistic.evaluation.toLocaleString()}</td>
-                <td>{gameStatistic.playersCount.toLocaleString()}</td>
-                <td>{gameStatistic.cashIncome.toLocaleString()}</td>
+                <td>
+                  {gameStatistic.rating != null ? (
+                    <ValueWithProgress
+                      valueWithProgress={gameStatistic.rating}
+                      progressClassName={gameTableClasses["progress"]}
+                      regressClassName={gameTableClasses["regress"]}
+                    />
+                  ) : (
+                    "-"
+                  )}
+                </td>
+                <td>
+                  {gameStatistic.cashIncome != null ? (
+                    <ValueWithProgress
+                      valueWithProgress={gameStatistic.cashIncome}
+                      progressClassName={gameTableClasses["progress"]}
+                      regressClassName={gameTableClasses["regress"]}
+                    />
+                  ) : (
+                    "-"
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

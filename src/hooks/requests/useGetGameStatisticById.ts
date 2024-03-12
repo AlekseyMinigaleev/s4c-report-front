@@ -13,19 +13,25 @@ export interface GetGameStatisticByGameResponse {
   remainingCount: number;
 }
 
-export default function useGetGameStatisticByGame() {
+export default function useGetGameStatisticById() {
   const api = useAuthorizedApi();
   async function getGameStatisticByGame(
     payload: GetGameStatisticByGamePayload
   ): Promise<GetGameStatisticByGameResponse> {
+
+    let sort = payload.sort.key as string; 
+    if(payload.sort.key == "rating" || payload.sort.key =="cashIncome"){
+      sort = payload.sort.key +".actualValue";
+    }
+
     const response = await api.get<GetGameStatisticByGameResponse>(
-      "game/get-statistic-by-game",
+      "GameStatistic/get-statistic-by-game",
       {
         params: {
           gameId: payload.GameId,
           "Paginate.ItemsPerPage": payload.paginate.itemsPerPage,
           "Paginate.PageNumber": payload.paginate.pageNumber,
-          "Sort.FieldName": payload.sort.key,
+          "Sort.FieldName": sort, 
           "Sort.SortType": payload.sort.sortType,
         },
       }
