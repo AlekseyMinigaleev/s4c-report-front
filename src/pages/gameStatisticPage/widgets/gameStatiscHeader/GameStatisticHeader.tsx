@@ -1,9 +1,7 @@
-import { ClickedGame } from "../../GameTable";
 import classes from "./gameStatisticHeader.module.css";
 
 
 interface GameStatisticHeaderProps {
-  clickedGame: ClickedGame;
 }
 
 export default function GameStatisticHeader(props: GameStatisticHeaderProps) {

@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
 import gamePageclasses from "../../../../GamesPage.module.css";
 import gameTableClasses from "../../gameTable.module.css";
-import LoadingButton from "../../../../../../components/loadingButton/LoadingButton";
-import useGetGameStatisticById, {
-  GetGameStatisticByGamePayload,
-} from "../../../../../../hooks/requests/useGetGameStatisticById";
-import { sort, sortType } from "../../../../../../models/filter";
-import SortedTableHeader from "../../../../../../widgets/SortedTableHeader";
-import { TableHeaderModel } from "../../GameTable";
-import { getNewSort } from "../../../../../../utils/FilterUtils";
-import { gameStatisticModel } from "../../../../../../models/gameStatisticModel";
 import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
+import LoadingButton from "components/loadingButton/LoadingButton";
+import useGetGameStatisticById, {
+  GetGameStatisticByGamePayload,
+} from "hooks/requests/useGetGameStatisticById";
+import { TableHeaderModel } from "pages/gamesPage/widgets/gameTable/GameTable";
+import { gameStatisticModel } from "models/gameStatisticModel";
+import { sortType, sort } from "models/filter";
+import { getNewSort } from "utils/FilterUtils";
+
+import SortedTableHeader from "widgets/SortedTableHeader";
 
 interface GameStatisticTableProps {
   gameId: string;
