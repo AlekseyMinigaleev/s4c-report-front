@@ -12,6 +12,7 @@ import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
 import classes from "./gameTable.module.css";
 import gamePageClasses from "../../GamesPage.module.css";
 import GameStatisticHeader from "./widgets/gameStatiscHeader/GameStatisticHeader";
+import BlureContainer from "widgets/blureContainer/BlureContainer";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -74,6 +75,7 @@ export default function GameTable(props: GameTableProps) {
   });
   const [games, setGames] = useState<game[]>(props.games);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [clickedGame, setClickedGame] = useState<ClickedGame>({
     id: "",
     gameName: "",
@@ -84,6 +86,7 @@ export default function GameTable(props: GameTableProps) {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const newGames = await getGames({
         paginate: {
           pageNumber: currentPage + 1,
@@ -93,6 +96,7 @@ export default function GameTable(props: GameTableProps) {
         includeTotal: false,
       });
       setGames(newGames.games);
+      setIsLoading(false);
     };
 
     fetchData();
@@ -132,96 +136,93 @@ export default function GameTable(props: GameTableProps) {
               classes={props.classes}
             />
           }
-          header={
-            <GameStatisticHeader
-              clickedGame={clickedGame}
-            />
-          }
+          header={<GameStatisticHeader clickedGame={clickedGame} />}
         />
       )}
 
-      <table
-        className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}
-      >
-        <SortedTableHeader
-          sort={sort}
-          tableHeaders={tableHeaders}
-          containerClass={gamePageClasses["header-container"]}
-          textClass={gamePageClasses["th-label"]}
-          onClick={handleHeaderClick}
+      <BlureContainer isLoading={isLoading} blurValue={"4px"}>
+        <table
+          className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}
+        >
+          <SortedTableHeader
+            sort={sort}
+            tableHeaders={tableHeaders}
+            containerClass={gamePageClasses["header-container"]}
+            textClass={gamePageClasses["th-label"]}
+            onClick={handleHeaderClick}
+          />
+          <tbody>
+            {games.map((game, index) => (
+              <tr
+                key={index}
+                onClick={() => {
+                  gameClickHandler(game);
+                }}
+              >
+                <td>{index + 1 + currentPage * 10}</td>
+                <td>
+                  <img
+                    src={game.previewURL}
+                    width={100}
+                    height={"auto"}
+                    className={classes["rounded"]}
+                  />
+                </td>
+                <td>{`${game.name}`}</td>
+                <td>
+                  {game.publicationDate &&
+                    new Date(game.publicationDate).toLocaleDateString()}
+                </td>
+                <td>{game.evaluation}</td>
+                <td>
+                  {game.rating != null ? (
+                    <ValueWithProgress
+                      valueWithProgress={game.rating}
+                      progressClassName={classes["progress"]}
+                      regressClassName={classes["regress"]}
+                    />
+                  ) : (
+                    "-"
+                  )}
+                </td>
+                <td>
+                  {game.cashIncome != null ? (
+                    <ValueWithProgress
+                      valueWithProgress={game.cashIncome.valueWithProgress}
+                      progressClassName={classes["progress"]}
+                      regressClassName={classes["regress"]}
+                    />
+                  ) : (
+                    "-"
+                  )}
+                </td>
+                <td>
+                  {game.cashIncome?.valueWithProgress?.actualValue == 0 ? (
+                    <>{game.cashIncome.percentage}%</>
+                  ) : game.cashIncome?.percentage ? (
+                    <>{game.cashIncome.percentage}%</>
+                  ) : null}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <ReactPaginate
+          nextLabel=">"
+          previousLabel="<"
+          breakLabel=""
+          onPageChange={onPageChange}
+          pageCount={pageCount}
+          forcePage={currentPage}
+          pageRangeDisplayed={1}
+          marginPagesDisplayed={1}
+          containerClassName={classes["pagination"]}
+          pageLinkClassName={classes["page-num"]}
+          previousLinkClassName={classes["page-num"]}
+          nextLinkClassName={classes["page-num"]}
+          activeLinkClassName={classes["active"]}
         />
-        <tbody>
-          {games.map((game, index) => (
-            <tr
-              key={index}
-              onClick={() => {
-                gameClickHandler(game);
-              }}
-            >
-              <td>{index + 1 + currentPage * 10}</td>
-              <td>
-                <img
-                  src={game.previewURL}
-                  width={100}
-                  height={"auto"}
-                  className={classes["rounded"]}
-                />
-              </td>
-              <td>{`${game.name}`}</td>
-              <td>
-                {game.publicationDate &&
-                  new Date(game.publicationDate).toLocaleDateString()}
-              </td>
-              <td>{game.evaluation}</td>
-              <td>
-                {game.rating != null ? (
-                  <ValueWithProgress
-                    valueWithProgress={game.rating}
-                    progressClassName={classes["progress"]}
-                    regressClassName={classes["regress"]}
-                  />
-                ) : (
-                  "-"
-                )}
-              </td>
-              <td>
-                {game.cashIncome != null ? (
-                  <ValueWithProgress
-                    valueWithProgress={game.cashIncome.valueWithProgress}
-                    progressClassName={classes["progress"]}
-                    regressClassName={classes["regress"]}
-                  />
-                ) : (
-                  "-"
-                )}
-              </td>
-              <td>
-                {game.cashIncome?.valueWithProgress?.actualValue == 0 ? (
-                  <>{game.cashIncome.percentage}%</>
-                ) : game.cashIncome?.percentage ? (
-                  <>{game.cashIncome.percentage}%</>
-                ) : null}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <ReactPaginate
-        nextLabel=">"
-        previousLabel="<"
-        breakLabel=""
-        onPageChange={onPageChange}
-        pageCount={pageCount}
-        forcePage={currentPage}
-        pageRangeDisplayed={1}
-        marginPagesDisplayed={1}
-        containerClassName={classes["pagination"]}
-        pageLinkClassName={classes["page-num"]}
-        previousLinkClassName={classes["page-num"]}
-        nextLinkClassName={classes["page-num"]}
-        activeLinkClassName={classes["active"]}
-      />
+      </BlureContainer>
     </>
   );
 }
