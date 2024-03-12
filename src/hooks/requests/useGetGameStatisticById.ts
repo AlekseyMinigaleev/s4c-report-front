@@ -1,15 +1,15 @@
-import { Paginate, Sort } from "../../models/filter";
-import { GameStatisticModel } from "../../models/gameStatisticModel";
+import { paginate, sort } from "../../models/filter";
+import { gameStatisticModel } from "../../models/gameStatisticModel";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export interface GetGameStatisticByGamePayload {
   GameId: string;
-  paginate: Paginate;
-  sort: Sort<GameStatisticModel>;
+  paginate: paginate;
+  sort: sort<gameStatisticModel>;
 }
 
 export interface GetGameStatisticByGameResponse {
-  gameStatistics: GameStatisticModel[];
+  gameStatistics: gameStatisticModel[];
   remainingCount: number;
 }
 

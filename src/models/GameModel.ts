@@ -1,8 +1,8 @@
 import lodash from "lodash";
-import { Sort, SortType } from "./filter";
-import { ValueWithProgressModel } from "./valueWithProgress";
+import { sort, sortType } from "./filter";
+import { valueWithProgressModel as valueWithProgressModel } from "./valueWithProgress";
 
-export interface Game {
+export interface game {
   id: string;
   name: string;
   publicationDate: Date;
@@ -10,11 +10,11 @@ export interface Game {
   url: string;
   previewURL: string;
   categories: string[];
-  cashIncome?: CashIncome;
-  rating?: ValueWithProgressModel;
+  cashIncome?: cashIncome;
+  rating?: valueWithProgressModel;
 }
 
-export interface CashIncome {
-  valueWithProgress: ValueWithProgressModel;
+export interface cashIncome {
+  valueWithProgress: valueWithProgressModel;
   percentage: number;
 }

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { userCreditionals } from "../../models/userCreditionals";
 import anonymousApi from "../../api/anonymousApi";
-import { AuthenticationTokens } from "../../models/authenticationTokens";
+import { authenticationTokens } from "../../models/authenticationTokens";
 import {developerInfo } from "../../models/developerInfo";
 
 export interface LoginPayload {
@@ -9,7 +9,7 @@ export interface LoginPayload {
 }
 
 export interface LoginResponse {
-  authorizationTokens: AuthenticationTokens;
+  authorizationTokens: authenticationTokens;
   developerInfo: developerInfo;
 }
 

@@ -1,5 +1,5 @@
 import { BarLoader } from "react-spinners";
-import classes from "./loadingButton.module.css";
+import classes from "./LoadingButton.module.css";
 
 interface LoadingButtonProps {
   text: string;

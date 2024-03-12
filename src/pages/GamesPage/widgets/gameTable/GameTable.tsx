@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Sort, SortType } from "../../../../models/filter";
+import { sort, sortType } from "../../../../models/filter";
 import ValueWithProgress from "../../components/ValueWithProgress";
-import { Game } from "../../../../models/gameModel";
+import { game } from "../../../../models/gameModel";
 import { getNewSort } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import useGetGames from "../../../../hooks/requests/useGetGames";
@@ -24,7 +24,7 @@ interface paginationProps {
 }
 
 interface GameTableProps {
-  games: Game[];
+  games: game[];
   count: number;
   classes: string;
   borderClasses: string;
@@ -39,7 +39,7 @@ export interface ClickedGame {
 }
 
 export default function GameTable(props: GameTableProps) {
-  const tableHeaders: TableHeaderModel<Game>[] = [
+  const tableHeaders: TableHeaderModel<game>[] = [
     {
       key: "name",
       label: "Название",
@@ -68,11 +68,11 @@ export default function GameTable(props: GameTableProps) {
   const getGames = useGetGames();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [sort, setSort] = useState<Sort<Game>>({
+  const [sort, setSort] = useState<sort<game>>({
     key: "rating",
-    sortType: SortType.desc,
+    sortType: sortType.desc,
   });
-  const [games, setGames] = useState<Game[]>(props.games);
+  const [games, setGames] = useState<game[]>(props.games);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [clickedGame, setClickedGame] = useState<ClickedGame>({
     id: "",
@@ -103,12 +103,12 @@ export default function GameTable(props: GameTableProps) {
     setCurrentPage(pageNumber);
   }
 
-  function handleHeaderClick(tableHeader: TableHeaderModel<Game>) {
+  function handleHeaderClick(tableHeader: TableHeaderModel<game>) {
     const newSort = getNewSort(tableHeader, sort);
     setSort(newSort);
   }
 
-  function gameClickHandler(game: Game) {
+  function gameClickHandler(game: game) {
     setClickedGame({
       gameName: game.name,
       id: game.id,

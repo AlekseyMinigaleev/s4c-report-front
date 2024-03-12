@@ -1,15 +1,15 @@
-import { Paginate, Sort } from "models/filter";
-import { Game } from "../../models/gameModel";
+import { paginate, sort } from "models/filter";
+import { game } from "../../models/gameModel";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export interface GetGamesResponse {
-  games: Game[];
+  games: game[];
   total: Total;
 }
 
 export interface GetGamesPayload {
-  paginate: Paginate;
-  sort: Sort<Game>;
+  paginate: paginate;
+  sort: sort<game>;
   includeTotal: boolean,
 }
 

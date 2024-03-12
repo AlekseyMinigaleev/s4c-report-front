@@ -1,12 +1,12 @@
 import anonymousApi from "../../api/anonymousApi";
-import { AuthenticationTokens } from "../../models/authenticationTokens";
+import { authenticationTokens } from "../../models/authenticationTokens";
 import useAuthContext from "../useAuthContext";
 
 export default function useRefreshToken() {
   const authContext = useAuthContext();
 
   async function refresh() {
-    const response = await anonymousApi.get<AuthenticationTokens>(
+    const response = await anonymousApi.get<authenticationTokens>(
       "Authentication/refresh",
       {
         withCredentials: true,

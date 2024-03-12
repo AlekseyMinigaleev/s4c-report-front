@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { Sort } from "../models/filter";
+import { sort } from "../models/filter";
 import { TableHeaderModel } from "../pages/gamesPage/widgets/gameTable/GameTable";
 import SortIcon from "../components/sortIcon/SortIcon";
 
 interface SortedTableHeaderProps<T> {
-  sort: Sort<T>;
+  sort: sort<T>;
   tableHeaders: TableHeaderModel<T>[];
   onClick?: (tableHeader: TableHeaderModel<T>) => void;
 
@@ -32,7 +32,7 @@ export default function SortedTableHeader<T>(props: SortedTableHeaderProps<T>) {
               <span className={props.textClass ?? ""}>{tableHeader.label}</span>
 
               {tableHeader.key == props.sort.key && (
-                <SortIcon sortType={props.sort.sortType} />
+                <SortIcon sort={props.sort.sortType} />
               )}
             </div>
           </th>

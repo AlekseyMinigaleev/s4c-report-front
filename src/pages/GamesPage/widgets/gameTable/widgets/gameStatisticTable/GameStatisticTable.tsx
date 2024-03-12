@@ -6,11 +6,11 @@ import LoadingButton from "../../../../../../components/loadingButton/LoadingBut
 import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
 } from "../../../../../../hooks/requests/useGetGameStatisticById";
-import { Sort, SortType } from "../../../../../../models/filter";
+import { sort, sortType } from "../../../../../../models/filter";
 import SortedTableHeader from "../../../../../../widgets/SortedTableHeader";
 import { TableHeaderModel } from "../../GameTable";
 import { getNewSort } from "../../../../../../utils/FilterUtils";
-import { GameStatisticModel } from "../../../../../../models/gameStatisticModel";
+import { gameStatisticModel } from "../../../../../../models/gameStatisticModel";
 import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
 
 interface GameStatisticTableProps {
@@ -22,7 +22,7 @@ interface GameStatisticTableProps {
 const GAMES_PER_PAGE = 10;
 
 export default function GameStatisticTable(props: GameStatisticTableProps) {
-  const tableHeaders: TableHeaderModel<GameStatisticModel>[] = [
+  const tableHeaders: TableHeaderModel<gameStatisticModel>[] = [
     {
       key: "lastSynchroDate",
       label: "Дата синхронизации",
@@ -50,10 +50,10 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     },
     sort: {
       key: "lastSynchroDate",
-      sortType: SortType.desc,
+      sortType: sortType.desc,
     },
   });
-  const [gameStatistics, setGameStatistics] = useState<GameStatisticModel[]>(
+  const [gameStatistics, setGameStatistics] = useState<gameStatisticModel[]>(
     []
   );
   const [remainingCount, setRemainingCount] = useState<number>();
@@ -82,7 +82,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     });
   }, [payload]);
 
-  function setGameStatisticsHandler(gameStatistics: GameStatisticModel[]) {
+  function setGameStatisticsHandler(gameStatistics: gameStatisticModel[]) {
     if (payload.paginate.pageNumber > 1) {
       setGameStatistics((prev) => [...prev, ...gameStatistics]);
     } else {
@@ -90,7 +90,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     }
   }
 
-  function changeSort(sort: Sort<GameStatisticModel>) {
+  function changeSort(sort: sort<gameStatisticModel>) {
     setIsLoading(true);
 
     setPayload((prev) => ({
@@ -117,7 +117,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
   }
 
   async function handleHeaderClick(
-    tableHeader: TableHeaderModel<GameStatisticModel>
+    tableHeader: TableHeaderModel<gameStatisticModel>
   ) {
     const newSort = getNewSort(tableHeader, payload.sort);
     changeSort(newSort);
@@ -131,7 +131,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
     <>
       <div className={classes["container"]}>
         <table className={`${props.classes} ${classes["table"]}`}>
-          <SortedTableHeader<GameStatisticModel>
+          <SortedTableHeader<gameStatisticModel>
             sort={payload.sort}
             tableHeaders={tableHeaders}
             containerClass={gamePageclasses["header-container"]}

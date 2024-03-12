@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
-import TotalTable from "./widgets/TotalTable/TotalTable";
-import { SortType } from "models/filter";
+import TotalTable from "./widgets/totalTable/TotalTable";
+import { sortType } from "models/filter";
 import { GAMES_PER_PAGE } from "./constants";
 import { MoonLoader } from "react-spinners";
 
@@ -30,7 +30,7 @@ export default function GamesPage() {
         },
         sort: {
           key: "rating",
-          sortType: SortType.desc,
+          sortType: sortType.desc,
         },
         includeTotal: true,
       });

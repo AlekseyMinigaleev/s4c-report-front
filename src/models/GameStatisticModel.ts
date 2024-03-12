@@ -1,8 +1,8 @@
-import { ValueWithProgressModel } from "./valueWithProgress";
+import { valueWithProgressModel } from "./valueWithProgress";
 
-export interface GameStatisticModel {
+export interface gameStatisticModel {
   evaluation: number;
-  rating: ValueWithProgressModel;
-  cashIncome: ValueWithProgressModel;
+  rating: valueWithProgressModel;
+  cashIncome: valueWithProgressModel;
   lastSynchroDate: Date;
 }

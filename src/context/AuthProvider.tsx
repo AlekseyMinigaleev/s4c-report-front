@@ -5,11 +5,11 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { AuthenticationTokens } from "../models/authenticationTokens";
+import { authenticationTokens } from "../models/authenticationTokens";
 
 interface AuthentificationContextProps {
-  auth?: AuthenticationTokens;
-  setAuth: Dispatch<SetStateAction<AuthenticationTokens | undefined>>;
+  auth?: authenticationTokens;
+  setAuth: Dispatch<SetStateAction<authenticationTokens | undefined>>;
   
   isPersist: boolean;
   setIsPersist: Dispatch<SetStateAction<boolean>>;
@@ -25,7 +25,7 @@ const AuthentificationContext = createContext<AuthentificationContextProps>({
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [auth, setAuth] = useState<AuthenticationTokens>();
+  const [auth, setAuth] = useState<authenticationTokens>();
 
   const persistValue = localStorage.getItem("persist");
   const [isPersist, setIsPersist] = useState<boolean>(

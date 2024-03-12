@@ -1,14 +1,14 @@
-export interface Paginate {
+export interface paginate {
   itemsPerPage: number;
   pageNumber: number;
 }
 
-export interface Sort<T> {
+export interface sort<T> {
   key: keyof T;
-  sortType: SortType;
+  sortType: sortType;
 }
 
-export enum SortType {
+export enum sortType {
   "asc" = 0,
   "desc" = 1,
 }
