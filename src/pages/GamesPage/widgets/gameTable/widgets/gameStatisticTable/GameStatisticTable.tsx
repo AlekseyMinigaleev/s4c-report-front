@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
 import gamePageclasses from "../../../../GamesPage.module.css";
-import gameTableClasses from "../../gameTable.module.css"
+import gameTableClasses from "../../gameTable.module.css";
 import LoadingButton from "../../../../../../components/loadingButton/LoadingButton";
 import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
@@ -12,12 +12,12 @@ import { TableHeaderModel } from "../../GameTable";
 import { getNewSort } from "../../../../../../utils/FilterUtils";
 import { gameStatisticModel } from "../../../../../../models/gameStatisticModel";
 import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
+import BlureContainer from "widgets/blureContainer/BlureContainer";
 
 interface GameStatisticTableProps {
   gameId: string;
   classes: string;
 }
-
 
 const GAMES_PER_PAGE = 10;
 
@@ -76,6 +76,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
 
   useEffect(() => {
     getGameStatisticByGame(payload).then((response) => {
+      setIsLoading(true);
       setGameStatisticsHandler(response.gameStatistics);
       setRemainingCount(response.remainingCount);
       setIsLoading(false);
@@ -130,50 +131,52 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
   return (
     <>
       <div className={classes["container"]}>
-        <table className={`${props.classes} ${classes["table"]}`}>
-          <SortedTableHeader<gameStatisticModel>
-            sort={payload.sort}
-            tableHeaders={tableHeaders}
-            containerClass={gamePageclasses["header-container"]}
-            textClass={gamePageclasses["th-label"]}
-            onClick={handleHeaderClick}
-          />
-          <tbody>
-            {gameStatistics.map((gameStatistic, index) => (
-              <tr key={index}>
-                <td>
-                  {gameStatistic.lastSynchroDate &&
-                    new Date(
-                      gameStatistic.lastSynchroDate
-                    ).toLocaleDateString()}
-                </td>
-                <td>{gameStatistic.evaluation.toLocaleString()}</td>
-                <td>
-                  {gameStatistic.rating != null ? (
-                    <ValueWithProgress
-                      valueWithProgress={gameStatistic.rating}
-                      progressClassName={gameTableClasses["progress"]}
-                      regressClassName={gameTableClasses["regress"]}
-                    />
-                  ) : (
-                    "-"
-                  )}
-                </td>
-                <td>
-                  {gameStatistic.cashIncome != null ? (
-                    <ValueWithProgress
-                      valueWithProgress={gameStatistic.cashIncome}
-                      progressClassName={gameTableClasses["progress"]}
-                      regressClassName={gameTableClasses["regress"]}
-                    />
-                  ) : (
-                    "-"
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <BlureContainer isLoading={isLoading} blurValue={"4px"}>
+          <table className={`${props.classes} ${classes["table"]}`}>
+            <SortedTableHeader<gameStatisticModel>
+              sort={payload.sort}
+              tableHeaders={tableHeaders}
+              containerClass={gamePageclasses["header-container"]}
+              textClass={gamePageclasses["th-label"]}
+              onClick={handleHeaderClick}
+            />
+            <tbody>
+              {gameStatistics.map((gameStatistic, index) => (
+                <tr key={index}>
+                  <td>
+                    {gameStatistic.lastSynchroDate &&
+                      new Date(
+                        gameStatistic.lastSynchroDate
+                      ).toLocaleDateString()}
+                  </td>
+                  <td>{gameStatistic.evaluation.toLocaleString()}</td>
+                  <td>
+                    {gameStatistic.rating != null ? (
+                      <ValueWithProgress
+                        valueWithProgress={gameStatistic.rating}
+                        progressClassName={gameTableClasses["progress"]}
+                        regressClassName={gameTableClasses["regress"]}
+                      />
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                  <td>
+                    {gameStatistic.cashIncome != null ? (
+                      <ValueWithProgress
+                        valueWithProgress={gameStatistic.cashIncome}
+                        progressClassName={gameTableClasses["progress"]}
+                        regressClassName={gameTableClasses["regress"]}
+                      />
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </BlureContainer>
         {remainingCount != 0 || isLoading ? (
           <div className={classes["download-more"]}>
             <LoadingButton
