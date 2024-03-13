@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
-import gamePageclasses from "../../../../GamesPage.module.css";
-import gameTableClasses from "../../gameTable.module.css";
+import gamePageclasses from "../../../gamesPage/GamesPage.module.css";
+import gameTableClasses from "../../../gamesPage/widgets/gameTable/gameTable.module.css";
 import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
-import LoadingButton from "components/loadingButton/LoadingButton";
 import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
 } from "hooks/requests/useGetGameStatisticById";
@@ -14,6 +13,7 @@ import { sortType, sort } from "models/filter";
 import { getNewSort } from "utils/FilterUtils";
 
 import SortedTableHeader from "widgets/SortedTableHeader";
+import LoadingButton from "components/loadingButton/LoadingButton";
 
 interface GameStatisticTableProps {
   gameId: string;

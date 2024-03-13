@@ -1,7 +1,8 @@
+import { getGameByIdResponse } from "hooks/requests/useGetGameById";
 import classes from "./gameStatisticHeader.module.css";
 
-
 interface GameStatisticHeaderProps {
+  game: getGameByIdResponse;
 }
 
 export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
@@ -10,17 +11,17 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
       <div className={classes["preview"]}>
         <img
           className={classes["img"]}
-          src={props.clickedGame.previewURL}
+          src={props.game.previewURL}
           width={275}
           height={175}
         />
       </div>
 
       <div>
-        <p className={classes["title"]}>{props.clickedGame.gameName}</p>
+        <p className={classes["title"]}>{props.game.name}</p>
 
         <div className={classes["categories"]}>
-          {props.clickedGame.categories.map((category, index) => (
+          {props.game.categories.map((category, index) => (
             <span className={classes["category"]} key={index}>
               {category}
             </span>
@@ -29,9 +30,9 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
 
         <div
           className={classes["game-link"]}
-          onClick={() => (window.location.href = props.clickedGame.url)}
+          onClick={() => (window.location.href = props.game.url)}
         >
-          <a href={props.clickedGame.url} className={classes["link"]}>
+          <a href={props.game.url} className={classes["link"]}>
             Перейти
           </a>
         </div>
