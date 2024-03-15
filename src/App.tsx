@@ -5,6 +5,7 @@ import AuthPage from "./pages/authPages/AuthPage";
 import RequireAuthLayout from "./hooks/layouts/RequireAuthLayout";
 import AppLayout from "./hooks/layouts/AppLayout";
 import PersistLoginLayout from "./hooks/layouts/PersistLoginLayout";
+import GameStatistics from "pages/gameStatisticPage/GameStatistics";
 
 export default function App() {
   return (
@@ -17,7 +18,8 @@ export default function App() {
         {/* private */}
         <Route element={<PersistLoginLayout />}>
           <Route element={<RequireAuthLayout />}>
-            <Route path="/welcome" element={<GamesPage />} />
+            <Route path="/games" element={<GamesPage />} />
+            <Route path="/games/:gameId" element={<GameStatistics />} />
             <Route path="/user" element={<UserPage />} />
           </Route>
         </Route>

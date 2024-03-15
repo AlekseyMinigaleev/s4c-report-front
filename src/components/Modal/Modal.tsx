@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import { useRef, useEffect, ReactNode, useCallback } from "react";
 import classes from "./Modal.module.css";
 import closeIcon from "../../resources/images/cancel.png";
+import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
   title: string;
@@ -13,49 +14,40 @@ interface ModalProps {
 
 export default function Modal(props: ModalProps) {
   const dialog = useRef<HTMLDialogElement>(null);
-
-  const handleClose = useCallback(() => {
-    props.onClose();
-  }, [props.onClose]);
+  const navigate = useNavigate();
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === "Escape" && props.isOpen) {
-        handleClose();
+      if (event.key === "Escape") {
+        props.onClose();
       }
     },
-    [handleClose, props.isOpen]
+    [props.onClose]
   );
 
-  useEffect(() => {
-    const handleKeyDownLocal = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && props.isOpen) {
-        handleClose();
-      }
-    };
+  const handlePopState = useCallback(() => {
+    props.onClose();
+    closeHandle()
+  }, [props.onClose]);
 
+  useEffect(() => {
     if (props.isOpen && dialog.current) {
       document.body.classList.add(classes["modal-open"]);
+      document.addEventListener("keydown", handleKeyDown);
+      window.addEventListener("popstate", handlePopState);
       dialog.current.showModal();
-      document.addEventListener("keydown", handleKeyDownLocal);
     } else if (dialog.current) {
-      document.body.classList.remove(classes["modal-open"]);
       dialog.current.close();
-      document.removeEventListener("keydown", handleKeyDownLocal);
+      closeHandle()
+      navigate(-1);
     }
+  }, [props.isOpen, handleKeyDown, handlePopState]);
 
-    return () => {
-      document.removeEventListener("keydown", handleKeyDownLocal);
-    };
-  }, [props.isOpen, handleClose]);
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [handleKeyDown]);
+  function closeHandle(){
+    document.body.classList.remove(classes["modal-open"]);
+    document.removeEventListener("keydown", handleKeyDown);
+    window.removeEventListener("popstate", handlePopState);
+  }
 
   return (
     <>

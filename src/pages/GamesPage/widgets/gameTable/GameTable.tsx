@@ -5,14 +5,12 @@ import { game } from "../../../../models/gameModel";
 import { getNewSort } from "../../../../utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import useGetGames from "../../../../hooks/requests/useGetGames";
-import Modal from "../../../../components/modal/Modal";
-import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";
 import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
 import classes from "./gameTable.module.css";
 import gamePageClasses from "../../GamesPage.module.css";
-import GameStatisticHeader from "./widgets/gameStatiscHeader/GameStatisticHeader";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
+import { useNavigate } from "react-router";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -30,15 +28,6 @@ interface GameTableProps {
   classes: string;
   borderClasses: string;
 }
-
-export interface ClickedGame {
-  id: string;
-  gameName: string;
-  url: string;
-  previewURL: string;
-  categories: string[];
-}
-
 export default function GameTable(props: GameTableProps) {
   const tableHeaders: TableHeaderModel<game>[] = [
     {
@@ -74,15 +63,8 @@ export default function GameTable(props: GameTableProps) {
     sortType: sortType.desc,
   });
   const [games, setGames] = useState<game[]>(props.games);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [clickedGame, setClickedGame] = useState<ClickedGame>({
-    id: "",
-    gameName: "",
-    previewURL: "",
-    url: "",
-    categories: [],
-  });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,33 +95,11 @@ export default function GameTable(props: GameTableProps) {
   }
 
   function gameClickHandler(game: game) {
-    setClickedGame({
-      gameName: game.name,
-      id: game.id,
-      url: game.url,
-      previewURL: game.previewURL,
-      categories: game.categories,
-    });
-    setIsModalOpen(true);
+    navigate(`/games/${game.id}`);
   }
 
   return (
     <>
-      {clickedGame.id === "" ? null : (
-        <Modal
-          isOpen={isModalOpen}
-          title={clickedGame.gameName}
-          onClose={() => setIsModalOpen(false)}
-          content={
-            <GameStatisticTable
-              gameId={clickedGame.id}
-              classes={props.classes}
-            />
-          }
-          header={<GameStatisticHeader clickedGame={clickedGame} />}
-        />
-      )}
-
       <BlureContainer isLoading={isLoading} blurValue={"4px"}>
         <table
           className={`${classes["table"]} ${props.classes} ${props.borderClasses}`}
