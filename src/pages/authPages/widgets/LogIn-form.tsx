@@ -53,7 +53,7 @@ export default function LogInForm() {
         JSON.stringify(response.data.developerInfo)
       );
       setServerErrorMessage("");
-      navigate("/welcome");
+      navigate("/games");
     }
   }
 
