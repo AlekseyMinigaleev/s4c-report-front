@@ -7,10 +7,8 @@ import tableClasses from "../gamesPage/GamesPage.module.css";
 import useGetGameById, {
   getGameByIdResponse,
 } from "hooks/requests/useGetGameById";
-import { useNavigate } from "react-router-dom";
 
 export default function GameStatistics() {
-  const navigate = useNavigate();
   const { gameId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [game, setGame] = useState<getGameByIdResponse>({
@@ -34,7 +32,6 @@ export default function GameStatistics() {
         title={game.name}
         onClose={() => {
           setIsModalOpen(false);
-          navigate("/games")
         }}
         content={
           <GameStatisticTable
