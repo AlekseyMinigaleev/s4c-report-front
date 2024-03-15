@@ -1,4 +1,5 @@
 import classes from "./GamesPage.module.css";
+import "../../index.css";
 import GameTable from "./widgets/gameTable/GameTable";
 import { useEffect, useState } from "react";
 import useGetGames, {
@@ -50,19 +51,18 @@ export default function GamesPage() {
       ) : (
         <>
           <section>
-            <h1 className={classes["h1"]}>Общая статистика</h1>
+            <h1 className={"h1"}>Общая статистика</h1>
             <TotalTable
               total={getGamesRepsponse.total}
-              classes={classes["table"]}
-              borderClasses={classes["border"]}
+              classes={"table"}
             />
           </section>
           <section>
-            <h1 className={classes["h1"]}>Все игры</h1>
+            <h1 className={"h1"}>Все игры</h1>
             <GameTable
               games={getGamesRepsponse.games}
               count={getGamesRepsponse.total.count}
-              classes={classes["table"]}
+              classes={"table"}
               borderClasses={classes["border"]}
             />
           </section>

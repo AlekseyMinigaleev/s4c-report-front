@@ -15,3 +15,40 @@ body {
   flex-direction: column;
   min-height: 100%;
 }
+
+.table {
+  overflow: hidden;
+  border-spacing: 0px;
+  margin-bottom: 2rem;
+  font-size: 16pt;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: none;
+}
+
+.table tr {
+  display: table-row;
+  vertical-align: inherit;
+}
+
+.table th {
+  background-color: #a6a6a6;
+  vertical-align: middle;
+}
+
+.table td {
+  background-color: #dddddd;
+  border-bottom: 1px solid black;
+}
+.table th {
+  background-color: #a6a6a6;
+  border-bottom: 1px solid black;
+}
+
+.table th,
+.table td {
+  padding: 1rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}

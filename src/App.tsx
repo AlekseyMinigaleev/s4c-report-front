@@ -6,6 +6,7 @@ import RequireAuthLayout from "./hooks/layouts/RequireAuthLayout";
 import AppLayout from "./hooks/layouts/AppLayout";
 import PersistLoginLayout from "./hooks/layouts/PersistLoginLayout";
 import GameStatistics from "pages/gameStatisticPage/GameStatistics";
+import SetPageIds from "pages/setPageIds/SetPageIds";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route element={<RequireAuthLayout />}>
             <Route path="/games" element={<GamesPage />} />
             <Route path="/games/:gameId" element={<GameStatistics />} />
+            <Route path="/set-pageIds" element={<SetPageIds />} />
             <Route path="/user" element={<UserPage />} />
           </Route>
         </Route>

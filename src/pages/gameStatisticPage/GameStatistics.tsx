@@ -7,6 +7,7 @@ import tableClasses from "../gamesPage/GamesPage.module.css";
 import useGetGameById, {
   getGameByIdResponse,
 } from "hooks/requests/useGetGameById";
+import "../../index.css";
 
 export default function GameStatistics() {
   const { gameId } = useParams();
@@ -33,12 +34,7 @@ export default function GameStatistics() {
         onClose={() => {
           setIsModalOpen(false);
         }}
-        content={
-          <GameStatisticTable
-            gameId={gameId!}
-            classes={tableClasses["table"]}
-          />
-        }
+        content={<GameStatisticTable gameId={gameId!} classes={"table"} />}
         header={<GameStatisticHeader game={game} />}
       />
     </>
