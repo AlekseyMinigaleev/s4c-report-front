@@ -11,6 +11,7 @@ import classes from "./gameTable.module.css";
 import gamePageClasses from "../../GamesPage.module.css";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
 import { useNavigate } from "react-router";
+import { routeType } from "models/routeType";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -95,7 +96,7 @@ export default function GameTable(props: GameTableProps) {
   }
 
   function gameClickHandler(game: game) {
-    navigate(`/games/${game.id}`);
+    navigate(`/${routeType[routeType.games]}/${game.id}`);
   }
 
   return (

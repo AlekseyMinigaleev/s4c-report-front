@@ -1,4 +1,3 @@
-import Button from "../../components/button/Button";
 import "../../index.css";
 import UserMenu from "./components/UserMenu/UserMenu";
 import logo from "../../resources/images/logo.png";
@@ -6,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./header.module.css";
 import { useEffect, useState } from "react";
 import { developerInfo } from "../../models/developerInfo";
+import { routeType } from "models/routeType";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -26,44 +26,13 @@ export default function Header() {
         <div
           className={classes["logo-section"]}
           onClick={() => {
-            navigate("/welcome");
+            navigate(`/${routeType[routeType.games]}`);
           }}
         >
           <img height={75} src={logo} alt="" />
         </div>
 
-        <div className={classes["navigation-container"]}>
-          {/* <div className={classes["navigation-section"]}>
-            <Button
-              onClick={() => {
-                navigate("/welcome");
-              }}
-              isActive={false}
-              className={classes["padding-right"]}
-            >
-              Главная
-            </Button>
-
-            <Button
-              onClick={() => {
-                navigate("/welcome");
-              }}
-              isActive={false}
-              className={classes["padding-right"]}
-            >
-              Главная
-            </Button>
-
-            <Button
-              onClick={() => {
-                navigate("/welcome");
-              }}
-              isActive={false}
-            >
-              Главная
-            </Button>
-          </div> */}
-        </div>
+        <div className={classes["navigation-container"]}></div>
         <div className={classes["user-settings-section"]}>
           <a
             className={classes["developer-name"]}

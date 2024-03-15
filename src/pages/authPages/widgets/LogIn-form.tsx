@@ -15,6 +15,8 @@ import useLoading from "../../../hooks/useLoading";
 import RememberMe from "../components/rememberMe/RememberMe";
 import ForgotPassword from "../components/forgotPassword/ForgotPassword";
 import classes from "./form.module.css";
+import { round } from "lodash";
+import { routeType } from "models/routeType";
 
 export default function LogInForm() {
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
@@ -53,7 +55,7 @@ export default function LogInForm() {
         JSON.stringify(response.data.developerInfo)
       );
       setServerErrorMessage("");
-      navigate("/games");
+      navigate(`/${routeType[routeType.games]}`);
     }
   }
 
