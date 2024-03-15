@@ -1,3 +1,5 @@
+@import "../../../../resources/fonts/fonts.css";
+
 .preview {
   padding-right: 2rem;
 }
@@ -7,7 +9,7 @@
 
 .title {
   font-size: 25pt;
-  text-align: center;
+  white-space: nowrap;
 }
 
 .categories {
@@ -19,8 +21,61 @@
   font-size: 14pt;
 }
 
-.game-link {
+.game-container {
+  display: flex;
+  width: 100%;
+}
+
+.pageId-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+
+.pageId-wrapper {
+  margin-left: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+  width: 100%;
+}
+.pageId-wrapper input {
+  margin-right: 1rem;
+}
+.pageId-wrapper input,
+button {
+  padding: 0.8rem;
+  width: 40%;
   height: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+  font-family: "Futura PT Medium";
+}
+
+.pageId-wrapper button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.pageId-wrapper button:hover {
+  background-color: #2980b9;
+}
+
+.pageId-wrapper button,
+input {
+  font-size: 16pt;
+  border-radius: 5px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.game-link {
   margin-bottom: 0;
   background-color: #3498db;
   border-radius: 5px;
@@ -29,7 +84,6 @@
   width: 25%;
   font-size: 14pt;
   text-align: center;
-  text-decoration: none;
   color: #fff;
 }
 .game-link:hover {
@@ -42,6 +96,3 @@
 .link:hover {
   color: #ecf0f1;
 }
-
-
-
