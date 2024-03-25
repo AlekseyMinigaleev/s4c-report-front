@@ -19,37 +19,48 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
             />
           </div>
 
-          <div>
+          <div className={classes["game-info-container"]}>
             <p className={classes["title"]}>{props.game.name}</p>
+            <div className={classes["other"]}>
+              <div>
+                <div className={classes["categories"]}>
+                  {props.game.categories.map((category, index) => (
+                    <span className={classes["category"]} key={index}>
+                      {category}
+                    </span>
+                  ))}
+                </div>
 
-            <div className={classes["categories"]}>
-              {props.game.categories.map((category, index) => (
-                <span className={classes["category"]} key={index}>
-                  {category}
-                </span>
-              ))}
-            </div>
-
-            <div
-              className={classes["game-link"]}
-              onClick={() => (window.location.href = props.game.url)}
-            >
-              <a href={props.game.url} className={classes["link"]}>
-                Перейти
-              </a>
-            </div>
-          </div>
-
-          <div className={classes["pageId-wrapper"]}>
-            <div className={classes["pageId-container"]}>
-              <div className={classes["server-response-container"]}>
-                <p className={classes["error-message"]}>Указано не корректно значение</p>
-                <p className={classes["success-message"]}>Значение установлено</p>
+                <div
+                  className={classes["game-link"]}
+                  onClick={() => (window.location.href = props.game.url)}
+                >
+                  <a href={props.game.url} className={classes["link"]}>
+                    Перейти
+                  </a>
+                </div>
               </div>
-              <div className={classes["pageId"]}>
-                <label htmlFor="pageId">PageId</label>
-                <input id="pageId" placeholder="pageId" value={props.game.pageId}/>
-                <button>установить</button>
+
+              <div className={classes["pageId-wrapper"]}>
+                <div className={classes["pageId-container"]}>
+                  <div className={classes["server-response-container"]}>
+                    <p className={classes["error-message"]}>
+                      Указано не корректно значение
+                    </p>
+                    <p className={classes["success-message"]}>
+                      Значение установлено
+                    </p>
+                  </div>
+                  <div className={classes["pageId"]}>
+                    <label htmlFor="pageId">PageId</label>
+                    <input
+                      id="pageId"
+                      placeholder="pageId"
+                      value={props.game.pageId}
+                    />
+                    <button>установить</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

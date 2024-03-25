@@ -11,6 +11,16 @@
   width: 100%;
 }
 
+.game-info-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.other{
+  display: flex;
+}
+
 /* ==============game preview============== */
 .preview {
   padding-right: 2rem;
@@ -24,7 +34,6 @@
 /* ==============game info section============== */
 .title {
   font-size: 25pt;
-  white-space: nowrap;
 }
 
 .categories {
@@ -42,7 +51,6 @@
   border-radius: 5px;
   padding: 0.8rem;
   cursor: pointer;
-  width: 25%;
   font-size: 14pt;
   text-align: center;
   color: #fff;
