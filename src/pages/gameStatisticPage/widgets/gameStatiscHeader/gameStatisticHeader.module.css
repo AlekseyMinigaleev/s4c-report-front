@@ -1,12 +1,27 @@
 @import "../../../../resources/fonts/fonts.css";
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  
+}
 
+.container {
+  display: flex;
+  width: 100%;
+}
+
+/* ==============game preview============== */
 .preview {
   padding-right: 2rem;
 }
+
 .img {
   border-radius: 10px;
 }
+/* ==============game preview============== */
 
+/* ==============game info section============== */
 .title {
   font-size: 25pt;
   white-space: nowrap;
@@ -19,60 +34,6 @@
 .category {
   padding-right: 1rem;
   font-size: 14pt;
-}
-
-.game-container {
-  display: flex;
-  width: 100%;
-}
-
-.pageId-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: end;
-}
-
-.pageId-wrapper {
-  margin-left: 1rem;
-  display: flex;
-  justify-content: flex-end;
-  align-items: end;
-  width: 100%;
-}
-.pageId-wrapper input {
-  margin-right: 1rem;
-}
-.pageId-wrapper input,
-button {
-  padding: 0.8rem;
-  width: 40%;
-  height: 100%;
-  border: 1px solid black;
-  box-sizing: border-box;
-  font-family: "Futura PT Medium";
-}
-
-.pageId-wrapper button {
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.pageId-wrapper button:hover {
-  background-color: #2980b9;
-}
-
-.pageId-wrapper button,
-input {
-  font-size: 16pt;
-  border-radius: 5px;
-}
-
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
 }
 
 .game-link {
@@ -89,6 +50,7 @@ input {
 .game-link:hover {
   background-color: #2980b9;
 }
+
 .link {
   color: #fff;
   text-decoration: none;
@@ -96,3 +58,72 @@ input {
 .link:hover {
   color: #ecf0f1;
 }
+/* ==============game info section============== */
+
+/* ==============set pageId section============== */
+.pageId-wrapper {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: end;
+  width: 100%;
+}
+
+.pageId-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.pageId {
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+
+.pageId input,
+button {
+  padding: 0.8rem;
+  height: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+  font-family: "Futura PT Medium";
+  font-size: 16pt;
+  border-radius: 5px;
+}
+
+.pageId label {
+  font-size: 16pt;
+  align-self: center;
+  margin-right: 0.4rem;
+}
+
+.pageId input {
+  margin-right: 1rem;
+}
+
+.pageId button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.pageId button:hover {
+  background-color: #2980b9;
+}
+
+.server-response-container {
+  padding: 0.5rem 0.5rem 0.5rem 0rem;
+  font-size: 16pt;
+}
+
+.error-message {
+  color: red;
+}
+
+.success-message {
+  color: green;
+}
+/* ==============set pageId section============== */

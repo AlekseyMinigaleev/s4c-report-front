@@ -33,13 +33,13 @@ export default function GameStatistics() {
         onClose={() => {
           setIsModalOpen(false);
         }}
+        header={<GameStatisticHeader game={game} />}
         content={
           <GameStatisticTable
             gameId={gameId!}
             classes={tableClasses["table"]}
           />
         }
-        header={<GameStatisticHeader game={game} />}
       />
     </>
   );

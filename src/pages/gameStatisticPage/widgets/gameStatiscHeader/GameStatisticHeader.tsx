@@ -9,7 +9,7 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
   return (
     <>
       <div className={classes["wrapper"]}>
-        <div className={classes["game-container"]}>
+        <div className={classes["container"]}>
           <div className={classes["preview"]}>
             <img
               className={classes["img"]}
@@ -42,8 +42,15 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
 
           <div className={classes["pageId-wrapper"]}>
             <div className={classes["pageId-container"]}>
-              <input placeholder="pageId" />
-              <button>установить</button>
+              <div className={classes["server-response-container"]}>
+                <p className={classes["error-message"]}>Указано не корректно значение</p>
+                <p className={classes["success-message"]}>Значение установлено</p>
+              </div>
+              <div className={classes["pageId"]}>
+                <label htmlFor="pageId">PageId</label>
+                <input id="pageId" placeholder="pageId" value={props.game.pageId}/>
+                <button>установить</button>
+              </div>
             </div>
           </div>
         </div>
