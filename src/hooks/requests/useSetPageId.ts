@@ -11,19 +11,19 @@ export interface setPageIdBody {
   pageId?: number;
 }
 
-interface setPageIdPayload {
+export interface setPageIdPayload {
   body: setPageIdBody[];
 }
 
 export default function useSetPageId() {
   const api = useAuthorizedApi();
 
-  async function setPageId(body: setPageIdBody[]): Promise<setPageIdResponse> {
+  async function setPageId(body: setPageIdBody): Promise<setPageIdResponse[]> {
     const payload: setPageIdPayload = {
-      body: body,
+      body: [body],
     };
 
-    const response = await api.put<setPageIdResponse>(
+    const response = await api.put<setPageIdResponse[]>(
       `game/set-pageId`,
       payload
     );

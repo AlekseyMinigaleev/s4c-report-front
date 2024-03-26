@@ -11,12 +11,7 @@ import useGetGameById, {
 export default function GameStatistics() {
   const { gameId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const [game, setGame] = useState<getGameByIdResponse>({
-    name: "",
-    url: "",
-    previewURL: "",
-    categories: [],
-  });
+  const [game, setGame] = useState<getGameByIdResponse>();
   const getGameById = useGetGameById();
 
   useEffect(() => {
@@ -27,20 +22,22 @@ export default function GameStatistics() {
 
   return (
     <>
-      <Modal
-        isOpen={isModalOpen}
-        title={game.name}
-        onClose={() => {
-          setIsModalOpen(false);
-        }}
-        header={<GameStatisticHeader game={game} />}
-        content={
-          <GameStatisticTable
-            gameId={gameId!}
-            classes={tableClasses["table"]}
-          />
-        }
-      />
+      {game === undefined ? null : (
+        <Modal
+          isOpen={isModalOpen}
+          title={game.name}
+          onClose={() => {
+            setIsModalOpen(false);
+          }}
+          header={<GameStatisticHeader game={game} gameId={gameId!} />}
+          content={
+            <GameStatisticTable
+              gameId={gameId!}
+              classes={tableClasses["table"]}
+            />
+          }
+        />
+      )}
     </>
   );
 }
