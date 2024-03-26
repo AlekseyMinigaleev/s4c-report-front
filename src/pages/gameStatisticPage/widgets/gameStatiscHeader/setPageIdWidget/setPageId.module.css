@@ -1,0 +1,61 @@
+.pageId-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+}
+
+.pageId {
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+
+.pageId input,
+button {
+  padding: 0.8rem;
+  height: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+  font-family: "Futura PT Medium";
+  font-size: 14pt;
+  border-radius: 5px;
+}
+
+.pageId label {
+  font-size: 14pt;
+  align-self: center;
+  margin-right: 0.4rem;
+}
+
+.pageId input {
+  margin-right: 1rem;
+}
+
+.pageId button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 55px;
+}
+.pageId button:hover {
+  background-color: #2980b9;
+}
+
+.server-response-container {
+  padding: 0.5rem 0.5rem 0.5rem 0rem;
+  font-size: 16pt;
+}
+
+.error {
+  color: red;
+}
+
+.success{
+  color: green;
+}

@@ -4,6 +4,7 @@ export interface getGameByIdResponse {
   name: string;
   url: string;
   previewURL: string;
+  pageId?:number;
   categories: string[];
 }
 
