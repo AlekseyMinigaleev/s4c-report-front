@@ -14,6 +14,7 @@ import { getNewSort } from "utils/FilterUtils";
 
 import SortedTableHeader from "widgets/SortedTableHeader";
 import LoadingButton from "components/loadingButton/LoadingButton";
+import { BarLoader } from "react-spinners";
 
 interface GameStatisticTableProps {
   gameId: string;
@@ -185,6 +186,7 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
               text={"Загрузить еще"}
               onClick={downloadMoreHandler}
               isLoading={isLoading}
+              loader={<BarLoader />}
             />
           </div>
         ) : null}

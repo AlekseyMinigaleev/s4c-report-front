@@ -1,5 +1,7 @@
 import { getGameByIdResponse } from "hooks/requests/useGetGameById";
 import classes from "./gameStatisticHeader.module.css";
+import LoadingButton from "components/loadingButton/LoadingButton";
+import { BarLoader } from "react-spinners";
 
 interface GameStatisticHeaderProps {
   game: getGameByIdResponse;
@@ -44,21 +46,22 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
               <div className={classes["pageId-wrapper"]}>
                 <div className={classes["pageId-container"]}>
                   <div className={classes["server-response-container"]}>
-                    <p className={classes["error-message"]}>
+                    <p className={classes["error"]}>
                       Указано не корректно значение
                     </p>
-                    <p className={classes["success-message"]}>
-                      Значение установлено
-                    </p>
+                    <p className={classes["error"]}>Значение не установлено</p>
+                    <p className={classes["success"]}>Значение установлено</p>
                   </div>
                   <div className={classes["pageId"]}>
                     <label htmlFor="pageId">PageId</label>
-                    <input
-                      id="pageId"
-                      placeholder="pageId"
-                      value={props.game.pageId}
+                    <input id="pageId" value={props.game.pageId} />
+                    <LoadingButton
+                      text={"установить"}
+                      onClick={() => {}}
+                      isLoading={false}
+                      classes={classes["center"]}
+                      loader={<BarLoader color="white" />}
                     />
-                    <button>установить</button>
                   </div>
                 </div>
               </div>
