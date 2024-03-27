@@ -64,7 +64,6 @@ export default function SignUpForm() {
 
     setErrorMessages(errorMessages);
     setValidationStates(errorMessages);
-    
     if (
       errorMessages.developerPageUrl.length == 0 &&
       errorMessages.login.length == 0 &&
@@ -86,6 +85,7 @@ export default function SignUpForm() {
         JSON.stringify(response.data.developerInfo)
       );
       navigate(`/${routeType[routeType.games]}`);
+      alert("Аккаунт успешно создан");
     }
 
     setIsLoading(false);
