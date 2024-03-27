@@ -20,7 +20,7 @@ export function validatePassword(password: string): boolean {
 }
 
 export function validateDeveloperPageUrl(email: string): boolean {
-  let pattern = "https://yandex.ru/games/developer?name=";
+  let pattern = "https://yandex.ru/games/developer/";
   return email.startsWith(pattern);
 }
 
