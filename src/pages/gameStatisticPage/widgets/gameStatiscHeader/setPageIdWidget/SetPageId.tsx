@@ -9,6 +9,9 @@ interface SetPageIdProps {
 }
 
 export default function SetPageId(props: SetPageIdProps) {
+  const [settedValue, setSettedValue] = useState<number | undefined>(
+    props.pageId
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccessfulySet, setIsSuccessfulySet] = useState<boolean>();
   const [currentPageId, setCurrentPageId] = useState<number | undefined>(
@@ -20,11 +23,18 @@ export default function SetPageId(props: SetPageIdProps) {
   function handleSetPageId() {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await setPageId({
+      const responseArray = await setPageId({
         gameId: props.gameId,
         pageId: currentPageId,
       });
-      setIsSuccessfulySet(response[0].isSuccessfullySet);
+
+      const response = responseArray[0];
+
+      setIsSuccessfulySet(response.isSuccessfullySet);
+      if (response.isSuccessfullySet) {
+        setSettedValue(response.pageId);
+        setIsInputValueActual(true);
+      }
       setIsLoading(false);
     };
 
@@ -49,7 +59,7 @@ export default function SetPageId(props: SetPageIdProps) {
     }
 
     setCurrentPageId(pageIdValue);
-    if (pageIdValue == props.pageId) {
+    if (pageIdValue == settedValue) {
       setIsInputValueActual(true);
     } else {
       setIsInputValueActual(false);
@@ -65,8 +75,7 @@ export default function SetPageId(props: SetPageIdProps) {
             <p className={classes["error"]}>Значение не установлено</p>
           ) : null}
 
-          {isSuccessfulySet === undefined ||
-          isInputValueActual ? null : isSuccessfulySet ? (
+          {isSuccessfulySet === undefined ? null : isSuccessfulySet ? (
             <p className={classes["success"]}>Значение установлено</p>
           ) : (
             <p className={classes["error"]}>Указано не корректно значение</p>
@@ -77,7 +86,7 @@ export default function SetPageId(props: SetPageIdProps) {
           <label htmlFor="pageId">PageId</label>
           <input
             id="pageId"
-            value={currentPageId}
+            value={String(currentPageId)}
             type="number"
             onChange={handlePageIdChange}
           />
@@ -93,7 +102,7 @@ export default function SetPageId(props: SetPageIdProps) {
                 : classes["active-button"]
             }
           >
-            {!isLoading ? "установить" : <BarLoader color="white" />}
+            {!isLoading ? "установить" : <BarLoader width={"84.1"} color="white" />}
           </button>
         </div>
       </div>
