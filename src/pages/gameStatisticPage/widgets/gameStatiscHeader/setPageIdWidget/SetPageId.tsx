@@ -1,4 +1,3 @@
-import LoadingButton from "components/loadingButton/LoadingButton";
 import classes from "./setPageId.module.css";
 import { BarLoader } from "react-spinners";
 import useSetPageId from "hooks/requests/useSetPageId";
@@ -15,6 +14,7 @@ export default function SetPageId(props: SetPageIdProps) {
   const [currentPageId, setCurrentPageId] = useState<number | undefined>(
     props.pageId
   );
+  const [isInputValueActual, setIsInputValueActual] = useState<boolean>(true);
   const setPageId = useSetPageId();
 
   function handleSetPageId() {
@@ -32,18 +32,34 @@ export default function SetPageId(props: SetPageIdProps) {
   }
 
   function handlePageIdChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setCurrentPageId(parseInt(event.target.value, 10));
+    let pageIdValue: number | undefined;
+    if (event.currentTarget.value === "") {
+      pageIdValue = undefined;
+    } else {
+      const parsedValue = parseInt(event.target.value, 10);
+      pageIdValue = parsedValue < 0 ? 0 : parsedValue;
+    }
+
+    setCurrentPageId(pageIdValue);
+    setIsSuccessfulySet(undefined);
+    if (pageIdValue == props.pageId) {
+      setIsInputValueActual(true);
+    } else {
+      setIsInputValueActual(false);
+    }
   }
 
   return (
     <>
       <div className={classes["pageId-container"]}>
         <div className={classes["server-response-container"]}>
-          {currentPageId === null && isSuccessfulySet === undefined ? (
+          {(currentPageId === null || currentPageId === undefined) &&
+          isSuccessfulySet === undefined ? (
             <p className={classes["error"]}>Значение не установлено</p>
           ) : null}
 
-          {isSuccessfulySet === undefined ? null : isSuccessfulySet ? (
+          {isSuccessfulySet === undefined ||
+          isInputValueActual ? null : isSuccessfulySet ? (
             <p className={classes["success"]}>Значение установлено</p>
           ) : (
             <p className={classes["error"]}>Указано не корректно значение</p>
@@ -58,13 +74,20 @@ export default function SetPageId(props: SetPageIdProps) {
             type="number"
             onChange={handlePageIdChange}
           />
-          <LoadingButton
-            text={"установить"}
+
+          <button
             onClick={handleSetPageId}
-            isLoading={isLoading}
-            classes={classes["center"]}
-            loader={<BarLoader color="white" />}
-          />
+            disabled={isInputValueActual || isLoading}
+            className={
+              isInputValueActual
+                ? classes["disable-button"]
+                : isLoading
+                ? `${classes["laoding-button"]} ${classes["active-button"]}`
+                : classes["active-button"]
+            }
+          >
+            {!isLoading ? "установить" : <BarLoader color="white" />}
+          </button>
         </div>
       </div>
     </>

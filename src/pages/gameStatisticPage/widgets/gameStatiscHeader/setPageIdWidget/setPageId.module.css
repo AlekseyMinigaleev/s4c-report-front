@@ -32,7 +32,7 @@ button {
   margin-right: 1rem;
 }
 
-.pageId button {
+.active-button {
   background-color: #3498db;
   color: #fff;
   border: none;
@@ -43,19 +43,31 @@ button {
   justify-content: center;
   height: 55px;
 }
-.pageId button:hover {
+.active-button:hover {
   background-color: #2980b9;
+} 
+
+.disable-button {
+  cursor: not-allowed;
+  background-color: #e9e9e9;
+  border: none;
+  height: 55px;
+}
+
+.laoding-button {
+  cursor: not-allowed;
 }
 
 .server-response-container {
   padding: 0.5rem 0.5rem 0.5rem 0rem;
   font-size: 16pt;
+  height: 27px;
 }
 
 .error {
   color: red;
 }
 
-.success{
+.success {
   color: green;
 }
