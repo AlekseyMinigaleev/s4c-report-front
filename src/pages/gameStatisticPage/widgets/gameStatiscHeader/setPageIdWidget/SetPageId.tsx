@@ -1,4 +1,3 @@
-import LoadingButton from "components/loadingButton/LoadingButton";
 import classes from "./setPageId.module.css";
 import { BarLoader } from "react-spinners";
 import useSetPageId from "hooks/requests/useSetPageId";
@@ -10,21 +9,32 @@ interface SetPageIdProps {
 }
 
 export default function SetPageId(props: SetPageIdProps) {
+  const [settedValue, setSettedValue] = useState<number | undefined>(
+    props.pageId
+  );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSuccessfulySet, setIsSuccessfulySet] = useState<boolean>();
   const [currentPageId, setCurrentPageId] = useState<number | undefined>(
     props.pageId
   );
+  const [isInputValueActual, setIsInputValueActual] = useState<boolean>(true);
   const setPageId = useSetPageId();
 
   function handleSetPageId() {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await setPageId({
+      const responseArray = await setPageId({
         gameId: props.gameId,
         pageId: currentPageId,
       });
-      setIsSuccessfulySet(response[0].isSuccessfullySet);
+
+      const response = responseArray[0];
+
+      setIsSuccessfulySet(response.isSuccessfullySet);
+      if (response.isSuccessfullySet) {
+        setSettedValue(response.pageId);
+        setIsInputValueActual(true);
+      }
       setIsLoading(false);
     };
 
@@ -32,14 +42,36 @@ export default function SetPageId(props: SetPageIdProps) {
   }
 
   function handlePageIdChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setCurrentPageId(parseInt(event.target.value, 10));
+    let inputValue = event.target.value;
+
+    setIsSuccessfulySet(undefined);
+
+    if (inputValue.length > 11) {
+      inputValue = inputValue.slice(0, 11);
+    }
+
+    let pageIdValue: number | undefined;
+    if (inputValue === "") {
+      pageIdValue = undefined;
+    } else {
+      const parsedValue = parseInt(inputValue, 10);
+      pageIdValue = parsedValue < 0 ? 0 : parsedValue;
+    }
+
+    setCurrentPageId(pageIdValue);
+    if (pageIdValue == settedValue) {
+      setIsInputValueActual(true);
+    } else {
+      setIsInputValueActual(false);
+    }
   }
 
   return (
     <>
       <div className={classes["pageId-container"]}>
         <div className={classes["server-response-container"]}>
-          {currentPageId === null && isSuccessfulySet === undefined ? (
+          {(currentPageId === null || currentPageId === undefined) &&
+          isSuccessfulySet === undefined ? (
             <p className={classes["error"]}>Значение не установлено</p>
           ) : null}
 
@@ -54,17 +86,24 @@ export default function SetPageId(props: SetPageIdProps) {
           <label htmlFor="pageId">PageId</label>
           <input
             id="pageId"
-            value={currentPageId}
+            value={String(currentPageId)}
             type="number"
             onChange={handlePageIdChange}
           />
-          <LoadingButton
-            text={"установить"}
+
+          <button
             onClick={handleSetPageId}
-            isLoading={isLoading}
-            classes={classes["center"]}
-            loader={<BarLoader color="white" />}
-          />
+            disabled={isInputValueActual || isLoading}
+            className={
+              isInputValueActual
+                ? classes["disable-button"]
+                : isLoading
+                ? `${classes["laoding-button"]} ${classes["active-button"]}`
+                : classes["active-button"]
+            }
+          >
+            {!isLoading ? "установить" : <BarLoader width={"84.1"} color="white" />}
+          </button>
         </div>
       </div>
     </>
