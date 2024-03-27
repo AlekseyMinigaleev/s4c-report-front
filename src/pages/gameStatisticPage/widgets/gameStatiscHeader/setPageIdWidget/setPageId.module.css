@@ -2,7 +2,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  width: auto;
+  width: 417px;
 }
 
 .pageId {
@@ -45,7 +45,7 @@ button {
 }
 .active-button:hover {
   background-color: #2980b9;
-} 
+}
 
 .disable-button {
   cursor: not-allowed;
@@ -61,7 +61,8 @@ button {
 .server-response-container {
   padding: 0.5rem 0.5rem 0.5rem 0rem;
   font-size: 16pt;
-  height: 27px;
+  min-height: 27px;
+  max-height: 54px;
 }
 
 .error {

@@ -32,16 +32,23 @@ export default function SetPageId(props: SetPageIdProps) {
   }
 
   function handlePageIdChange(event: React.ChangeEvent<HTMLInputElement>) {
+    let inputValue = event.target.value;
+
+    setIsSuccessfulySet(undefined);
+
+    if (inputValue.length > 11) {
+      inputValue = inputValue.slice(0, 11);
+    }
+
     let pageIdValue: number | undefined;
-    if (event.currentTarget.value === "") {
+    if (inputValue === "") {
       pageIdValue = undefined;
     } else {
-      const parsedValue = parseInt(event.target.value, 10);
+      const parsedValue = parseInt(inputValue, 10);
       pageIdValue = parsedValue < 0 ? 0 : parsedValue;
     }
 
     setCurrentPageId(pageIdValue);
-    setIsSuccessfulySet(undefined);
     if (pageIdValue == props.pageId) {
       setIsInputValueActual(true);
     } else {
