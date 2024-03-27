@@ -25,6 +25,10 @@ h1 {
   font-size: var(--font-size);
 }
 
+.auth-page-font button{
+  height: 50px;
+}
+
 .center {
   display: flex;
   flex-direction: column;
