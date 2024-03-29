@@ -1,3 +1,8 @@
+.pageId-container:not(.active) {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .pageId-container {
   padding: 1rem;
   display: flex;

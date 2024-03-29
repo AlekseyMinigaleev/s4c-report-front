@@ -1,7 +1,8 @@
 import classes from "./setPageId.module.css";
 import { BarLoader } from "react-spinners";
 import useSetPageId from "hooks/requests/useSetPageId";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { developerInfo } from "../../../../../models/developerInfo";
 
 interface SetPageIdProps {
   gameId: string;
@@ -9,6 +10,12 @@ interface SetPageIdProps {
 }
 
 export default function SetPageId(props: SetPageIdProps) {
+  const [developerInfo, setDeveloperInfo] = useState<developerInfo>({
+    developerName: "",
+    developerPageUrl: "",
+    isAuthorizationTokenSet: false,
+  });
+
   const [settedValue, setSettedValue] = useState<number | undefined>(
     props.pageId
   );
@@ -19,6 +26,12 @@ export default function SetPageId(props: SetPageIdProps) {
   );
   const [isInputValueActual, setIsInputValueActual] = useState<boolean>(true);
   const setPageId = useSetPageId();
+
+  useEffect(() => {
+    const developerInfoString = localStorage.getItem("developerInfo");
+    const developerInfo: developerInfo = JSON.parse(developerInfoString!);
+    setDeveloperInfo(developerInfo);
+  }, []);
 
   function handleSetPageId() {
     const fetchData = async () => {
@@ -68,7 +81,11 @@ export default function SetPageId(props: SetPageIdProps) {
 
   return (
     <>
-      <div className={classes["pageId-container"]}>
+      <div
+        className={`${classes["pageId-container"]} ${
+          developerInfo.isAuthorizationTokenSet ? "active" : "disable"
+        }`}
+      >
         <div className={classes["server-response-container"]}>
           {(currentPageId === null || currentPageId === undefined) &&
           isSuccessfulySet === undefined ? (
@@ -102,7 +119,11 @@ export default function SetPageId(props: SetPageIdProps) {
                 : classes["active-button"]
             }
           >
-            {!isLoading ? "установить" : <BarLoader width={"84.1"} color="white" />}
+            {!isLoading ? (
+              "установить"
+            ) : (
+              <BarLoader width={"84.1"} color="white" />
+            )}
           </button>
         </div>
       </div>
