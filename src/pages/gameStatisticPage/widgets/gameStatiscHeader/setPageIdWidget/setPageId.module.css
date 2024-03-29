@@ -1,4 +1,4 @@
-.pageId-container:not(.active) {
+.disable {
   pointer-events: none;
   opacity: 0.5;
 }
@@ -78,4 +78,16 @@ button {
 
 .success {
   color: green;
+}
+
+.rsyaToken-not-set-message {
+  font-size: 14pt;
+}
+
+.link {
+  color: #0000ee;
+}
+
+.link:hover {
+  color: #6c6cfa;
 }

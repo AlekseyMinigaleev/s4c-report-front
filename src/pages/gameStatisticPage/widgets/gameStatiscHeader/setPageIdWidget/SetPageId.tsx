@@ -81,50 +81,64 @@ export default function SetPageId(props: SetPageIdProps) {
 
   return (
     <>
-      <div
-        className={`${classes["pageId-container"]} ${
-          developerInfo.isAuthorizationTokenSet ? "active" : "disable"
-        }`}
-      >
-        <div className={classes["server-response-container"]}>
-          {(currentPageId === null || currentPageId === undefined) &&
-          isSuccessfulySet === undefined ? (
-            <p className={classes["error"]}>Значение не установлено</p>
-          ) : null}
+      <div className={`${classes["pageId-container"]}`}>
+        <div>
+          <div className={classes["server-response-container"]}>
+            {(currentPageId === null || currentPageId === undefined) &&
+            isSuccessfulySet === undefined &&
+            developerInfo.isAuthorizationTokenSet ? (
+              <p className={classes["error"]}>Значение не установлено</p>
+            ) : null}
 
-          {isSuccessfulySet === undefined ? null : isSuccessfulySet ? (
-            <p className={classes["success"]}>Значение установлено</p>
-          ) : (
-            <p className={classes["error"]}>Указано не корректно значение</p>
-          )}
-        </div>
-
-        <div className={classes["pageId"]}>
-          <label htmlFor="pageId">PageId</label>
-          <input
-            id="pageId"
-            value={String(currentPageId)}
-            type="number"
-            onChange={handlePageIdChange}
-          />
-
-          <button
-            onClick={handleSetPageId}
-            disabled={isInputValueActual || isLoading}
-            className={
-              isInputValueActual
-                ? classes["disable-button"]
-                : isLoading
-                ? `${classes["laoding-button"]} ${classes["active-button"]}`
-                : classes["active-button"]
-            }
-          >
-            {!isLoading ? (
-              "установить"
+            {isSuccessfulySet === undefined ? null : isSuccessfulySet ? (
+              <p className={classes["success"]}>Значение установлено</p>
             ) : (
-              <BarLoader width={"84.1"} color="white" />
+              <p className={classes["error"]}>Указано не корректно значение</p>
             )}
-          </button>
+
+            {!developerInfo.isAuthorizationTokenSet ? (
+              <p
+                className={`${classes["rsyaToken-not-set-message"]} ${classes["error"]}`}
+              >
+                Для использования этого функционала, необходимо{" "}
+                <a className={classes["link"]} href="/user">
+                  установить токен авторизации РСЯ.
+                </a>
+              </p>
+            ) : null}
+          </div>
+
+          <div
+            className={`${classes["pageId"]} ${
+              developerInfo.isAuthorizationTokenSet ? "" : classes["disable"]
+            }`}
+          >
+            <label htmlFor="pageId">PageId</label>
+            <input
+              id="pageId"
+              value={String(currentPageId)}
+              type="number"
+              onChange={handlePageIdChange}
+            />
+
+            <button
+              onClick={handleSetPageId}
+              disabled={isInputValueActual || isLoading}
+              className={
+                isInputValueActual
+                  ? classes["disable-button"]
+                  : isLoading
+                  ? `${classes["laoding-button"]} ${classes["active-button"]}`
+                  : classes["active-button"]
+              }
+            >
+              {!isLoading ? (
+                "установить"
+              ) : (
+                <BarLoader width={"84.1"} color="white" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </>
