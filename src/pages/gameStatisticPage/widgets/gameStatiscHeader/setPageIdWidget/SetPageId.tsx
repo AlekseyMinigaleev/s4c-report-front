@@ -13,7 +13,7 @@ export default function SetPageId(props: SetPageIdProps) {
   const [developerInfo, setDeveloperInfo] = useState<developerInfo>({
     developerName: "",
     developerPageUrl: "",
-    isAuthorizationTokenSet: false,
+    isRsyaAuthorizationTokenSet: false,
   });
 
   const [settedValue, setSettedValue] = useState<number | undefined>(
@@ -86,7 +86,7 @@ export default function SetPageId(props: SetPageIdProps) {
           <div className={classes["server-response-container"]}>
             {(currentPageId === null || currentPageId === undefined) &&
             isSuccessfulySet === undefined &&
-            developerInfo.isAuthorizationTokenSet ? (
+            developerInfo.isRsyaAuthorizationTokenSet ? (
               <p className={classes["error"]}>Значение не установлено</p>
             ) : null}
 
@@ -96,7 +96,7 @@ export default function SetPageId(props: SetPageIdProps) {
               <p className={classes["error"]}>Указано не корректно значение</p>
             )}
 
-            {!developerInfo.isAuthorizationTokenSet ? (
+            {!developerInfo.isRsyaAuthorizationTokenSet ? (
               <p
                 className={`${classes["rsyaToken-not-set-message"]} ${classes["error"]}`}
               >
@@ -110,7 +110,7 @@ export default function SetPageId(props: SetPageIdProps) {
 
           <div
             className={`${classes["pageId"]} ${
-              developerInfo.isAuthorizationTokenSet ? "" : classes["disable"]
+              developerInfo.isRsyaAuthorizationTokenSet ? "" : classes["disable"]
             }`}
           >
             <label htmlFor="pageId">PageId</label>

@@ -12,7 +12,7 @@ export default function Header() {
   const [developerInfo, setDeveloperInfo] = useState<developerInfo>({
     developerName: "",
     developerPageUrl: "",
-    isAuthorizationTokenSet: false,
+    isRsyaAuthorizationTokenSet: false,
   });
 
   useEffect(() => {
