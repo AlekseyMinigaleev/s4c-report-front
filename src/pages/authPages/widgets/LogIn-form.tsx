@@ -17,6 +17,7 @@ import ForgotPassword from "../components/forgotPassword/ForgotPassword";
 import classes from "./form.module.css";
 import { round } from "lodash";
 import { routeType } from "models/routeType";
+import { BarLoader } from "react-spinners";
 
 export default function LogInForm() {
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
@@ -91,7 +92,7 @@ export default function LogInForm() {
         isActive={isValidFormForRequest}
         disabled={!isValidFormForRequest || isLoading}
       >
-        {isLoading ? "Загрузка..." : "войти"}
+        {isLoading ? <BarLoader color="white" /> : "Вход"}
       </Button>
 
       {serverErrorMessage == "" ? null : (
