@@ -3,7 +3,6 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  
 }
 
 .container {
@@ -11,13 +10,13 @@
   width: 100%;
 }
 
-.game-info-container{
+.game-info-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.other{
+.other {
   display: flex;
 }
 
@@ -77,7 +76,5 @@
   align-items: end;
   width: 100%;
 }
-
-
 
 /* ==============set pageId section============== */

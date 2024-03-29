@@ -1,7 +1,8 @@
 import classes from "./setPageId.module.css";
 import { BarLoader } from "react-spinners";
 import useSetPageId from "hooks/requests/useSetPageId";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { developerInfo } from "../../../../../models/developerInfo";
 
 interface SetPageIdProps {
   gameId: string;
@@ -9,6 +10,12 @@ interface SetPageIdProps {
 }
 
 export default function SetPageId(props: SetPageIdProps) {
+  const [developerInfo, setDeveloperInfo] = useState<developerInfo>({
+    developerName: "",
+    developerPageUrl: "",
+    isRsyaAuthorizationTokenSet: false,
+  });
+
   const [settedValue, setSettedValue] = useState<number | undefined>(
     props.pageId
   );
@@ -19,6 +26,12 @@ export default function SetPageId(props: SetPageIdProps) {
   );
   const [isInputValueActual, setIsInputValueActual] = useState<boolean>(true);
   const setPageId = useSetPageId();
+
+  useEffect(() => {
+    const developerInfoString = localStorage.getItem("developerInfo");
+    const developerInfo: developerInfo = JSON.parse(developerInfoString!);
+    setDeveloperInfo(developerInfo);
+  }, []);
 
   function handleSetPageId() {
     const fetchData = async () => {
@@ -68,42 +81,64 @@ export default function SetPageId(props: SetPageIdProps) {
 
   return (
     <>
-      <div className={classes["pageId-container"]}>
-        <div className={classes["server-response-container"]}>
-          {(currentPageId === null || currentPageId === undefined) &&
-          isSuccessfulySet === undefined ? (
-            <p className={classes["error"]}>Значение не установлено</p>
-          ) : null}
+      <div className={`${classes["pageId-container"]}`}>
+        <div>
+          <div className={classes["server-response-container"]}>
+            {(currentPageId === null || currentPageId === undefined) &&
+            isSuccessfulySet === undefined &&
+            developerInfo.isRsyaAuthorizationTokenSet ? (
+              <p className={classes["error"]}>Значение не установлено</p>
+            ) : null}
 
-          {isSuccessfulySet === undefined ? null : isSuccessfulySet ? (
-            <p className={classes["success"]}>Значение установлено</p>
-          ) : (
-            <p className={classes["error"]}>Указано не корректно значение</p>
-          )}
-        </div>
+            {isSuccessfulySet === undefined ? null : isSuccessfulySet ? (
+              <p className={classes["success"]}>Значение установлено</p>
+            ) : (
+              <p className={classes["error"]}>Указано не корректно значение</p>
+            )}
 
-        <div className={classes["pageId"]}>
-          <label htmlFor="pageId">PageId</label>
-          <input
-            id="pageId"
-            value={String(currentPageId)}
-            type="number"
-            onChange={handlePageIdChange}
-          />
+            {!developerInfo.isRsyaAuthorizationTokenSet ? (
+              <p
+                className={`${classes["rsyaToken-not-set-message"]} ${classes["error"]}`}
+              >
+                Для использования этого функционала, необходимо{" "}
+                <a className={classes["link"]} href="/user">
+                  установить токен авторизации РСЯ.
+                </a>
+              </p>
+            ) : null}
+          </div>
 
-          <button
-            onClick={handleSetPageId}
-            disabled={isInputValueActual || isLoading}
-            className={
-              isInputValueActual
-                ? classes["disable-button"]
-                : isLoading
-                ? `${classes["laoding-button"]} ${classes["active-button"]}`
-                : classes["active-button"]
-            }
+          <div
+            className={`${classes["pageId"]} ${
+              developerInfo.isRsyaAuthorizationTokenSet ? "" : classes["disable"]
+            }`}
           >
-            {!isLoading ? "установить" : <BarLoader width={"84.1"} color="white" />}
-          </button>
+            <label htmlFor="pageId">PageId</label>
+            <input
+              id="pageId"
+              value={String(currentPageId)}
+              type="number"
+              onChange={handlePageIdChange}
+            />
+
+            <button
+              onClick={handleSetPageId}
+              disabled={isInputValueActual || isLoading}
+              className={
+                isInputValueActual
+                  ? classes["disable-button"]
+                  : isLoading
+                  ? `${classes["laoding-button"]} ${classes["active-button"]}`
+                  : classes["active-button"]
+              }
+            >
+              {!isLoading ? (
+                "установить"
+              ) : (
+                <BarLoader width={"84.1"} color="white" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </>
