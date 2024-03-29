@@ -1,4 +1,4 @@
-import { authenticationTokens } from "../../models/authenticationTokens";
+import { authenticationTokens } from "../../models/AuthenticationTokens";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export default function useLogout() {

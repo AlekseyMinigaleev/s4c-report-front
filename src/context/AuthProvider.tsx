@@ -5,12 +5,12 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import { authenticationTokens } from "../models/authenticationTokens";
+import { authenticationTokens } from "../models/AuthenticationTokens";
 
 interface AuthentificationContextProps {
   auth?: authenticationTokens;
   setAuth: Dispatch<SetStateAction<authenticationTokens | undefined>>;
-  
+
   isPersist: boolean;
   setIsPersist: Dispatch<SetStateAction<boolean>>;
 }

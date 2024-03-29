@@ -1,5 +1,5 @@
+import { authenticationTokens } from "../../models/AuthenticationTokens";
 import anonymousApi from "../../api/anonymousApi";
-import { authenticationTokens } from "../../models/authenticationTokens";
 import useAuthContext from "../useAuthContext";
 
 export default function useRefreshToken() {
