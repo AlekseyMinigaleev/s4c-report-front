@@ -22,10 +22,16 @@ export default function App() {
           <Route element={<RequireAuthLayout />}>
             <Route
               path={`/${routeType[routeType.games]}`}
+              element={
+                <Navigate to={`/${routeType[routeType.games]}/1`} replace />
+              }
+            />
+            <Route
+              path={`/${routeType[routeType.games]}/:pageNumber`}
               element={<GamesPage />}
             />
             <Route
-              path={`/${routeType[routeType.games]}/:gameId`}
+              path={`/${routeType[routeType.game]}/:gameId`}
               element={<GameStatistics />}
             />
             <Route
