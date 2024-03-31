@@ -25,6 +25,7 @@ interface paginationProps {
 
 interface GameTableProps {
   games: game[];
+  page: number;
   count: number;
   classes: string;
   borderClasses: string;
@@ -58,7 +59,7 @@ export default function GameTable(props: GameTableProps) {
   const pageCount = Math.ceil(props.count / GAMES_PER_PAGE);
   const getGames = useGetGames();
 
-  const [currentPage, setCurrentPage] = useState(0);
+  const currentPage = props.page - 1;
   const [sort, setSort] = useState<sort<game>>({
     key: "rating",
     sortType: sortType.desc,
@@ -87,7 +88,7 @@ export default function GameTable(props: GameTableProps) {
 
   function onPageChange(props: paginationProps) {
     const pageNumber = props.selected;
-    setCurrentPage(pageNumber);
+    navigate(`/games/${pageNumber + 1}`);
   }
 
   function handleHeaderClick(tableHeader: TableHeaderModel<game>) {

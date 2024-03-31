@@ -22,13 +22,14 @@ export default function GamesPage() {
 
   const getGames = useGetGames();
   const { pageNumber } = useParams();
+  const page = parseInt(pageNumber || "1", 10);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await getGames({
         paginate: {
           itemsPerPage: GAMES_PER_PAGE,
-          pageNumber: parseInt(pageNumber || "1", 10),
+          pageNumber: page,
         },
         sort: {
           key: "rating",
@@ -62,6 +63,7 @@ export default function GamesPage() {
           <section>
             <h1 className={classes["h1"]}>Все игры</h1>
             <GameTable
+              page={page}
               games={getGamesRepsponse.games}
               count={getGamesRepsponse.total.count}
               classes={classes["table"]}
