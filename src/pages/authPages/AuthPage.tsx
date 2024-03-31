@@ -1,7 +1,7 @@
 import { useState } from "react";
-import classes from "../authPages/authPages.module.css";
+import classes from "../authPages/AuthPages.module.css";
 import Button from "../../components/button/Button";
-import LogInForm from "./widgets/LogIn-form"
+import LogInForm from "./widgets/LogIn-form";
 import SignUpForm from "./widgets/SignUp-form";
 
 type FromVariant = "LogIn" | "SignUp";
@@ -11,7 +11,9 @@ export default function AuthPage() {
 
   return (
     <div className={classes["center"]}>
-      <div className={`${classes["auth-page-font"]}  ${classes["form-container"]}`}>
+      <div
+        className={`${classes["auth-page-font"]}  ${classes["form-container"]}`}
+      >
         <div className={`${classes["input-container"]}`}>
           <Button
             onClick={() => setFormVaiant("LogIn")}

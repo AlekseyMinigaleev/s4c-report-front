@@ -2,7 +2,7 @@ import classes from "./setPageId.module.css";
 import { BarLoader } from "react-spinners";
 import useSetPageId from "hooks/requests/useSetPageId";
 import { useEffect, useState } from "react";
-import { developerInfo } from "../../../../../models/developerInfo";
+import { developerInfo } from "../../../../../models/DeveloperInfo";
 
 interface SetPageIdProps {
   gameId: string;

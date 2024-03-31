@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { userCreditionals } from "../../models/userCreditionals";
 import anonymousApi from "../../api/anonymousApi";
 import { authenticationTokens } from "../../models/AuthenticationTokens";
-import { developerInfo } from "../../models/developerInfo";
+import { developerInfo } from "../../models/DeveloperInfo";
 
 export interface LoginPayload {
   userCreditionals: userCreditionals;

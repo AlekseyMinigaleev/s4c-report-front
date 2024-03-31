@@ -4,7 +4,7 @@ import logo from "../../resources/images/logo.png";
 import { useNavigate } from "react-router-dom";
 import classes from "./header.module.css";
 import { useEffect, useState } from "react";
-import { developerInfo } from "../../models/developerInfo";
+import { developerInfo } from "../../models/DeveloperInfo";
 import { routeType } from "models/routeType";
 
 export default function Header() {
