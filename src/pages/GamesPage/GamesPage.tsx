@@ -8,6 +8,7 @@ import TotalTable from "./widgets/totalTable/TotalTable";
 import { sortType } from "models/filter";
 import { GAMES_PER_PAGE } from "./constants";
 import { MoonLoader } from "react-spinners";
+import { useParams } from "react-router-dom";
 
 export default function GamesPage() {
   const [getGamesRepsponse, setGetGamesResponse] = useState<GetGamesResponse>({
@@ -20,13 +21,14 @@ export default function GamesPage() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getGames = useGetGames();
+  const { pageNumber } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await getGames({
         paginate: {
           itemsPerPage: GAMES_PER_PAGE,
-          pageNumber: 1,
+          pageNumber: parseInt(pageNumber || "1", 10),
         },
         sort: {
           key: "rating",

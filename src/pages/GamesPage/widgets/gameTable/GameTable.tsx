@@ -96,7 +96,7 @@ export default function GameTable(props: GameTableProps) {
   }
 
   function gameClickHandler(game: game) {
-    navigate(`/${routeType[routeType.games]}/${game.id}`);
+    navigate(`/${routeType[routeType.game]}/${game.id}`);
   }
 
   return (
