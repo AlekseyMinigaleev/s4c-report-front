@@ -1,6 +1,6 @@
-import showIcon from "../resources/images/show.png";
-import hideIcon from "../resources/images/hide.png";
-import editIcon from "../resources/images/edit.png";
+import showIcon from "../../../resources/images/show.png";
+import hideIcon from "../../../resources/images/hide.png";
+import editIcon from "../../../resources/images/edit.png";
 
 export interface showHideEditButtonsProps {
   buttonsContainerClass?: string;

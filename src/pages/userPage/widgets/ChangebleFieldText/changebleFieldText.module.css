@@ -1,0 +1,63 @@
+.field-text-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+}
+
+.field-text-container p {
+  margin: 0;
+  word-break: break-all;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
+}
+.buttons img {
+  width: 25px;
+  height: 25px;
+}
+.buttons button {
+  height: auto;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem 0rem 0rem 0rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+}
+
+.buttons button:hover {
+  background-color: rgb(209, 209, 209);
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.edit-form input {
+  width: 100%;
+  min-width: 100px;
+  font-family: "Futura PT Medium";
+  font-size: 12pt;
+}
+.edit-form p {
+  margin-top: 1rem;
+}
+
+.edit-form-buttos-container {
+  margin-top: 1rem;
+}
+
+.edit-form-buttos-container button {
+  font-size: 12pt;
+  padding: 0.5rem;
+  margin-right: 1rem;
+}

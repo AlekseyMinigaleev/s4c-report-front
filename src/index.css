@@ -15,3 +15,11 @@ body {
   flex-direction: column;
   min-height: 100%;
 }
+
+.link-color {
+  color: #0000ee;
+}
+
+.link-color:hover {
+  color: #6c6cfa;
+}
