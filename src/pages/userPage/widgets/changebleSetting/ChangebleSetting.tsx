@@ -1,23 +1,23 @@
 import { useState } from "react";
-import classes from "./changebleFieldText.module.css";
+import classes from "./changebleSetting.module.css";
 import ShowHideEditButtons from "pages/userPage/Components/ShowHideEditButtons";
 
-export interface changebleFieldTextProps {
-  fieldValue: string;
-  editDescriptionText: string;
+export interface changebleSettingProps {
+  settingFieldValue: string;
   descriptionText: string;
+  editDescriptionText: string;
 }
 
-export default function ChangebleFieldText(props: changebleFieldTextProps) {
+export default function ChangebleSetting(props: changebleSettingProps) {
   const [isEditMod, setIsEditMod] = useState<boolean>(false);
   return (
     <>
-      <div className={classes["field-text-container"]}>
+      <div className={classes["setting-container"]}>
         {isEditMod ? (
-          <div className={classes["edit-form"]}>
-            <input value={props.fieldValue} />
-            <p>{props.editDescriptionText}</p>
-            <div className={classes["edit-form-buttos-container"]}>
+          <div className={classes["edit-container"]}>
+            <input value={props.settingFieldValue} />
+            <p>{props.descriptionText}</p>
+            <div className={classes["edit-container-buttons"]}>
               <button>Сохранить</button>
               <button onClick={() => setIsEditMod(false)}>Отмена</button>
             </div>
@@ -25,7 +25,7 @@ export default function ChangebleFieldText(props: changebleFieldTextProps) {
         ) : (
           <>
             <div>
-              <p>{props.fieldValue}</p>
+              <p>{props.settingFieldValue}</p>
             </div>
             <ShowHideEditButtons
               buttonsContainerClass={classes["buttons"]}

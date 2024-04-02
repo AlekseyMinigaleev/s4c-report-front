@@ -1,11 +1,11 @@
-import classes from "./staticFieldText.module.css";
+import classes from "./staticSetting.module.css";
 
-export interface staticFieldTextProps {
+export interface staticSettingProps {
   fieldValue: string;
   description: string;
 }
 
-export default function StaticFieldText(props: staticFieldTextProps) {
+export default function StaticSetting(props: staticSettingProps) {
   return (
     <>
       <div className={classes["developer-page-link"]}>

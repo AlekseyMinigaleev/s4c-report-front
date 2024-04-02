@@ -6,12 +6,12 @@
   margin-top: 1rem;
 }
 
-.form {
+.user-settings-container {
   border: 1px solid black;
   border-radius: 5px;
   width: 75%;
 }
 
-.form > :last-child {
+.user-settings-container > :last-child {
   border-bottom: none;
 }
