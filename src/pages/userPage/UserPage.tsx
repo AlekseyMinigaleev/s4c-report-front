@@ -3,10 +3,7 @@ import useGetUserInfo, {
   FetchUserRsponse,
 } from "../../hooks/requests/useFetchUser";
 import classes from "./userPage.module.css";
-
-import showIcon from "../../resources/images/show.png";
-import editIcon from "../../resources/images/edit.png";
-import hideIcon from "../../resources/images/hide.png";
+import UserFieldManagmentPanel from "./widgets/UserFieldManagmentPanel";
 
 export default function UserPage() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
@@ -28,40 +25,31 @@ export default function UserPage() {
     <>
       <div className={classes["wrapper"]}>
         <div className={classes["form"]}>
-          <div className={classes["container"]}>
-            <div className={classes["label-container"]}>
-              <label>Адрес электронной почты</label>
-            </div>
-            <div className={classes["content-container"]}>
-              <div className={classes["email"]}>
-                <div className={classes["email-text"]}>
-                  <p>{userFields?.email}</p>
-                </div>
-                <div className={classes["buttons"]}>
-                  <div className={classes["show-button"]}>
-                    <button>
-                      <img src={showIcon} />
-                    </button>
-                  </div>
-                  <div className={classes["show-button"]}>
-                    <button>
-                      <img src={hideIcon} />
-                    </button>
-                  </div>
-                  <div className={classes["edit-button"]}>
-                    <button>
-                      <img src={editIcon} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className={classes["description-container"]}>
-                <p>
-                  Этот адрес электронной почты привязан к вашей учетной записи.
-                </p>
-              </div>
-            </div>
-          </div>
+          <UserFieldManagmentPanel
+            fieldName={"Адрес электронной почты"}
+            description={
+              "Этот адрес электронной почты привязан к вашей учетной записи."
+            }
+            editDescription="Новый адрес электронной почты, который будет привязан к вашей учетной записи"
+            fieldValue={userFields?.email}
+          />
+
+          <UserFieldManagmentPanel
+            fieldName={"Ссылка на страницу разработчика"}
+            fieldValue={userFields?.developerPageUrl}
+            description={
+              "Ссылка на аккаунт по которого собирается статистика игр."
+            }
+          />
+          
+          <UserFieldManagmentPanel
+            fieldName={"Токен авториазции РСЯ"}
+            description={
+              "Токен авторизации в системе РСЯ, позволяющий собирать данные о доходе."
+            }
+            editDescription="Новый токен авторизации"
+            fieldValue={userFields?.rsyaAuthorizationToken}
+          />
         </div>
       </div>
     </>
