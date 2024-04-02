@@ -6,10 +6,21 @@ export interface changebleSettingProps {
   settingFieldValue: string;
   descriptionText: string;
   editDescriptionText: string;
+  maskSettingValue: (settingValue: string) => string;
 }
 
 export default function ChangebleSetting(props: changebleSettingProps) {
   const [isEditMod, setIsEditMod] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(false);
+  const [securitySettingFieldValue, setSettingFieldValue] = useState<string>(
+    props.maskSettingValue(props.settingFieldValue)
+  );
+
+  function showHideButtonOnClick() {
+    setIsShow((prev) => !prev);
+    setSettingFieldValue(props.maskSettingValue(props.settingFieldValue));
+  }
+
   return (
     <>
       <div className={classes["setting-container"]}>
@@ -25,11 +36,15 @@ export default function ChangebleSetting(props: changebleSettingProps) {
         ) : (
           <>
             <div>
-              <p>{props.settingFieldValue}</p>
+              <p>
+                {isShow ? props.settingFieldValue : securitySettingFieldValue}
+              </p>
             </div>
             <ShowHideEditButtons
               buttonsContainerClass={classes["buttons"]}
               editButtonOnClick={() => setIsEditMod(true)}
+              isShow={isShow}
+              showHideButtonOnClick={showHideButtonOnClick}
             />
           </>
         )}
