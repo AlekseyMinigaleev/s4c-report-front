@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form{
+  border: 1px solid black;  
+  border-radius: 5px;
+  width: 80%;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  font-size: 16pt;
+}
+
+.email {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons img {
+  width: 25px;
+  height: 25px;
+}
+.buttons button {
+  height: auto;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem 0rem 0rem 0rem;
+  margin-left: 0.5rem;
+}
+
+.label-container {
+  padding-right: 7rem;
+}
+
+.description-container {
+  margin-top: 1rem;
+}

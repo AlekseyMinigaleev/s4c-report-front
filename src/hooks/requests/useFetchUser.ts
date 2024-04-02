@@ -6,7 +6,7 @@ export interface FetchUserRsponse {
   rsyaAuthorizationToken: string;
 }
 
-export default function useFetchUser() {
+export default function useGetUserInfo() {
   const apiPrivate = useApiPrivate();
 
   async function fetchUser() {
