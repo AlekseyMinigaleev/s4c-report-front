@@ -6,6 +6,7 @@ import { BarLoader } from "react-spinners";
 import { edit } from "../ChangebleSetting";
 import { useFormField } from "hooks/useFormField";
 import { getErrorMessage } from "pages/authPages/helpers/utils";
+import useSetRsyaAuthorizationToken from "hooks/requests/useSetRsyaAuthorizationToken";
 
 export interface editFromProps {
   userFieldSettingValue?: string;
@@ -24,10 +25,34 @@ export default function EditForm(props: editFromProps) {
     string | undefined
   >(props.userFieldSettingValue);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccessfulySet, setIsSuccessfulySet] = useState<boolean>(false);
+
+  async function submitButtonHandler() {
+    setIsLoading(true);
+
+    const response = await props.edit.request(inputField.value);
+
+    if (Array.isArray(response.error)) {
+      inputField.setIsValid(false);
+      setErrorMessages(response.error);
+      setIsSuccessfulySet(false);
+    } else {
+      setUserFieldSettingValue(inputField.value);
+      setIsSuccessfulySet(true);
+    }
+
+    setIsLoading(false);
+  }
 
   return (
     <>
       <div className={classes["edit-container"]}>
+        {isSuccessfulySet ? (
+          <div className={classes["successfuly-message"]}>
+            <p>{props.edit.successfullyMessage}</p>
+          </div>
+        ) : null}
+
         <ValidatedInputField
           type={props.edit.validatedInputType}
           placeholderText={""}
@@ -44,9 +69,7 @@ export default function EditForm(props: editFromProps) {
               !inputField.isValid || userFieldSettingValue == inputField.value
             }
             text={"Сохранить"}
-            onClick={() => {
-              setIsLoading((prev) => !prev);
-            }}
+            onClick={submitButtonHandler}
             isLoading={isLoading}
             classes={"gray-button"}
             loader={<BarLoader width={"72px"} />}
@@ -56,7 +79,6 @@ export default function EditForm(props: editFromProps) {
             className="gray-button"
             onClick={() => {
               props.cancelButtonOnClick();
-              setIsLoading(false);
             }}
           >
             Отмена

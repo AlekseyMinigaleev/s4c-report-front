@@ -2,6 +2,7 @@ import { useState } from "react";
 import classes from "./changebleSetting.module.css";
 import ShowHideEditButtons from "pages/userPage/Components/ShowHideEditButtons";
 import EditForm from "./editForm/EditForm";
+import { errorMessages } from "hooks/requests/useSetRsyaAuthorizationToken";
 
 export interface changebleSettingProps {
   settingFieldValue?: string;
@@ -19,6 +20,9 @@ export interface edit {
   validateFunction: (value: string) => boolean;
   editDescriptionText: string;
   errorMessage: string;
+  successfullyMessage: string;
+
+  request: (value: string) => Promise<errorMessages>;
 }
 
 export default function ChangebleSetting(props: changebleSettingProps) {
