@@ -39,7 +39,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
                 }}
                 isLoading={isLoading}
                 classes={"gray-button"}
-                loader={<BarLoader width={"7px"} />}
+                loader={<BarLoader width={"72px"} />}
               />
               <button
                 className="gray-button"

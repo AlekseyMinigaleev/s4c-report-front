@@ -43,8 +43,7 @@
   width: 100%;
 }
 .edit-container input {
-  width: 100%;
-  min-width: 100px;
+  max-width: 60%;  
   font-family: "Futura PT Medium";
   font-size: 12pt;
 }
