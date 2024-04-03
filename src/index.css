@@ -10,6 +10,13 @@ body {
   font-family: "Futura PT Medium";
 }
 
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
 .root {
   display: flex;
   flex-direction: column;
@@ -22,4 +29,15 @@ body {
 
 .link-color:hover {
   color: #6c6cfa;
+}
+
+.gray-button {
+  border: none;
+}
+.gray-button:hover {
+  background: #e7e8e9;
+  color: #9fa3a9;
+}
+.gray-button:disabled {
+  background: #e7e8e9;
 }

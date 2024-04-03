@@ -37,10 +37,10 @@ export default function UserPage() {
               <ChangebleSetting
                 settingFieldValue={userFields?.email}
                 descriptionText={
-                  "Новый адрес электронной почты, который будет привязан к вашей учетной записи"
+                  "Этот адрес электронной почты привязан к вашей учетной записи."
                 }
                 editDescriptionText={
-                  "Этот адрес электронной почты привязан к вашей учетной записи."
+                  "Новый адрес электронной почты, который будет привязан к вашей учетной записи."
                 }
                 maskSettingValue={maskEmail}
               />
@@ -60,10 +60,10 @@ export default function UserPage() {
             <UserSetttingsRow settingFieldName={"Токен авториазции РСЯ"}>
               <ChangebleSetting
                 settingFieldValue={userFields?.rsyaAuthorizationToken!}
-                descriptionText={"Новый токен авторизации"}
-                editDescriptionText={
+                descriptionText={
                   "Токен авторизации в системе РСЯ, позволяющий собирать данные о доходе."
                 }
+                editDescriptionText={"Новый токен авторизации"}
                 maskSettingValue={maskRsyaAuthorizationToken}
               />
             </UserSetttingsRow>

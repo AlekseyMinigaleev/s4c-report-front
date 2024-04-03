@@ -54,10 +54,11 @@
 
 .edit-container-buttons {
   margin-top: 1rem;
+  display: flex;
 }
 
 .edit-container-buttons button {
   font-size: 12pt;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 1rem; 
   margin-right: 1rem;
 }

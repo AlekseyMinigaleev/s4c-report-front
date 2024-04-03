@@ -1,13 +1,12 @@
 .wrapper {
   display: flex;
-  margin: 0;
-  display: flex;
-  margin-left: 10rem;
+  align-items: center;
+  justify-content: center;
   margin-top: 1rem;
 }
 
 .user-settings-container {
-  border: 1px solid black;
+  border: 1px solid #000000;
   border-radius: 5px;
   width: 75%;
 }

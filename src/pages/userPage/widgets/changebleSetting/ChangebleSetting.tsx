@@ -1,6 +1,8 @@
 import { useState } from "react";
 import classes from "./changebleSetting.module.css";
 import ShowHideEditButtons from "pages/userPage/Components/ShowHideEditButtons";
+import LoadingButton from "components/loadingButton/LoadingButton";
+import { BarLoader } from "react-spinners";
 
 export interface changebleSettingProps {
   settingFieldValue: string;
@@ -10,6 +12,7 @@ export interface changebleSettingProps {
 }
 
 export default function ChangebleSetting(props: changebleSettingProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditMod, setIsEditMod] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [securitySettingFieldValue, setSettingFieldValue] = useState<string>(
@@ -27,10 +30,26 @@ export default function ChangebleSetting(props: changebleSettingProps) {
         {isEditMod ? (
           <div className={classes["edit-container"]}>
             <input value={props.settingFieldValue} />
-            <p>{props.descriptionText}</p>
+            <p>{props.editDescriptionText}</p>
             <div className={classes["edit-container-buttons"]}>
-              <button>Сохранить</button>
-              <button onClick={() => setIsEditMod(false)}>Отмена</button>
+              <LoadingButton
+                text={"Сохранить"}
+                onClick={() => {
+                  setIsLoading((prev) => !prev);
+                }}
+                isLoading={isLoading}
+                classes={"gray-button"}
+                loader={<BarLoader width={"7px"} />}
+              />
+              <button
+                className="gray-button"
+                onClick={() => {
+                  setIsEditMod(false);
+                  setIsLoading(false);
+                }}
+              >
+                Отмена
+              </button>
             </div>
           </div>
         ) : (
