@@ -35,6 +35,7 @@ export default function UserPage() {
           <div className={classes["user-settings-container"]}>
             <UserSetttingsRow settingFieldName={"Адрес электронной почты"}>
               <ChangebleSetting
+                isEditMod={false}
                 settingFieldValue={userFields?.email}
                 descriptionText={
                   "Этот адрес электронной почты привязан к вашей учетной записи."
@@ -65,6 +66,7 @@ export default function UserPage() {
                 }
                 editDescriptionText={"Новый токен авторизации"}
                 maskSettingValue={maskRsyaAuthorizationToken}
+                isEditMod={userFields.rsyaAuthorizationToken == undefined}
               />
             </UserSetttingsRow>
           </div>

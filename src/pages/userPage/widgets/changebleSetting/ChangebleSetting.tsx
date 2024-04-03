@@ -5,23 +5,37 @@ import LoadingButton from "components/loadingButton/LoadingButton";
 import { BarLoader } from "react-spinners";
 
 export interface changebleSettingProps {
-  settingFieldValue: string;
+  settingFieldValue?: string;
   descriptionText: string;
   editDescriptionText: string;
+  isEditMod: boolean;
   maskSettingValue: (settingValue: string) => string;
 }
 
 export default function ChangebleSetting(props: changebleSettingProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isEditMod, setIsEditMod] = useState<boolean>(false);
+  const [isEditMod, setIsEditMod] = useState<boolean>(props.isEditMod);
   const [isShow, setIsShow] = useState<boolean>(false);
-  const [securitySettingFieldValue, setSettingFieldValue] = useState<string>(
-    props.maskSettingValue(props.settingFieldValue)
+  const [currentSettingFieldValue, setcurrentSettingFieldValue] = useState<
+    string | undefined
+  >(props.settingFieldValue);
+  const [securitySettingFieldValue, setSettingFieldValue] = useState<
+    string | undefined
+  >(
+    props.settingFieldValue != undefined
+      ? props.maskSettingValue(props.settingFieldValue)
+      : undefined
   );
 
   function showHideButtonOnClick() {
     setIsShow((prev) => !prev);
-    setSettingFieldValue(props.maskSettingValue(props.settingFieldValue));
+    setSettingFieldValue(
+      props.maskSettingValue(
+        props.settingFieldValue != undefined
+          ? props.maskSettingValue(props.settingFieldValue)
+          : ""
+      )
+    );
   }
 
   return (
@@ -29,7 +43,12 @@ export default function ChangebleSetting(props: changebleSettingProps) {
       <div className={classes["setting-container"]}>
         {isEditMod ? (
           <div className={classes["edit-container"]}>
-            <input value={props.settingFieldValue} />
+            <input
+              value={currentSettingFieldValue}
+              onChange={(e) =>
+                setcurrentSettingFieldValue(e.currentTarget.value)
+              }
+            />
             <p>{props.editDescriptionText}</p>
             <div className={classes["edit-container-buttons"]}>
               <LoadingButton
@@ -42,6 +61,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
                 loader={<BarLoader width={"72px"} />}
               />
               <button
+                disabled={currentSettingFieldValue == undefined}
                 className="gray-button"
                 onClick={() => {
                   setIsEditMod(false);
@@ -54,7 +74,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
           </div>
         ) : (
           <>
-            <div>
+            <div className={classes["setting-value"]}>
               <p>
                 {isShow ? props.settingFieldValue : securitySettingFieldValue}
               </p>
