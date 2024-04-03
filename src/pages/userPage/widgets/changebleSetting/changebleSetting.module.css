@@ -6,10 +6,6 @@
   justify-content: space-between;
 }
 
-.setting-container p {
-  margin: 0;
-}
-
 .setting-value p {
   word-break: break-all;
 }
@@ -40,27 +36,9 @@
   background-color: rgb(209, 209, 209);
 }
 
-.edit-container {
+.view-container {
   display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.edit-container input {
-  max-width: 60%;
-  font-family: "Futura PT Medium";
-  font-size: 12pt;
-}
-.edit-container p {
-  margin-top: 1rem;
-}
+  flex-direction: row;
 
-.edit-container-buttons {
-  margin-top: 1rem;
-  display: flex;
-}
-
-.edit-container-buttons button {
-  font-size: 12pt;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  margin-right: 1rem;
+  margin-bottom: 1rem;
 }

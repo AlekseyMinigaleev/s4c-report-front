@@ -10,6 +10,11 @@ import {
   maskEmail,
   maskRsyaAuthorizationToken,
 } from "./widgets/maskSettingFunctions";
+import {
+  validateEmail,
+  validateRsyaAuthorizationToken,
+} from "pages/authPages/helpers/validations";
+import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "utils/constants";
 
 export default function UserPage() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
@@ -35,15 +40,19 @@ export default function UserPage() {
           <div className={classes["user-settings-container"]}>
             <UserSetttingsRow settingFieldName={"Адрес электронной почты"}>
               <ChangebleSetting
-                isEditMod={false}
                 settingFieldValue={userFields?.email}
-                descriptionText={
-                  "Этот адрес электронной почты привязан к вашей учетной записи."
-                }
-                editDescriptionText={
-                  "Новый адрес электронной почты, который будет привязан к вашей учетной записи."
-                }
-                maskSettingValue={maskEmail}
+                view={{
+                  maskSettingValue: maskEmail,
+                  descriptionText:
+                    "Этот адрес электронной почты привязан к вашей учетной записи.",
+                }}
+                edit={{
+                  errorMessage: DEFAULT_USER_FIELDS_ERROR_MESSAGES.email,
+                  editDescriptionText:
+                    "Новый адрес электронной почты, который будет привязан к вашей учетной записи.",
+                  validatedInputType: "email",
+                  validateFunction: validateEmail,
+                }}
               />
             </UserSetttingsRow>
 
@@ -61,12 +70,18 @@ export default function UserPage() {
             <UserSetttingsRow settingFieldName={"Токен авториазции РСЯ"}>
               <ChangebleSetting
                 settingFieldValue={userFields?.rsyaAuthorizationToken!}
-                descriptionText={
-                  "Токен авторизации в системе РСЯ, позволяющий собирать данные о доходе."
-                }
-                editDescriptionText={"Новый токен авторизации"}
-                maskSettingValue={maskRsyaAuthorizationToken}
-                isEditMod={userFields.rsyaAuthorizationToken == undefined}
+                view={{
+                  maskSettingValue: maskRsyaAuthorizationToken,
+                  descriptionText:
+                    "Токен авторизации в системе РСЯ, позволяющий собирать данные о доходе.",
+                }}
+                edit={{
+                  errorMessage:
+                    DEFAULT_USER_FIELDS_ERROR_MESSAGES.rsyaAuthorizationToken,
+                  editDescriptionText: "Новый токен авторизации",
+                  validatedInputType: "text",
+                  validateFunction: validateRsyaAuthorizationToken,
+                }}
               />
             </UserSetttingsRow>
           </div>

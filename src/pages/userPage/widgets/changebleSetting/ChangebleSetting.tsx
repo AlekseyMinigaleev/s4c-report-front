@@ -1,38 +1,45 @@
 import { useState } from "react";
 import classes from "./changebleSetting.module.css";
 import ShowHideEditButtons from "pages/userPage/Components/ShowHideEditButtons";
-import LoadingButton from "components/loadingButton/LoadingButton";
-import { BarLoader } from "react-spinners";
+import EditForm from "./editForm/EditForm";
 
 export interface changebleSettingProps {
   settingFieldValue?: string;
-  descriptionText: string;
-  editDescriptionText: string;
-  isEditMod: boolean;
+  view: view;
+  edit: edit;
+}
+
+export interface view {
   maskSettingValue: (settingValue: string) => string;
+  descriptionText: string;
+}
+
+export interface edit {
+  validatedInputType: string;
+  validateFunction: (value: string) => boolean;
+  editDescriptionText: string;
+  errorMessage: string;
 }
 
 export default function ChangebleSetting(props: changebleSettingProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isEditMod, setIsEditMod] = useState<boolean>(props.isEditMod);
+  const [isEditMod, setIsEditMod] = useState<boolean>(
+    props.settingFieldValue == undefined
+  );
   const [isShow, setIsShow] = useState<boolean>(false);
-  const [currentSettingFieldValue, setcurrentSettingFieldValue] = useState<
-    string | undefined
-  >(props.settingFieldValue);
   const [securitySettingFieldValue, setSettingFieldValue] = useState<
     string | undefined
   >(
     props.settingFieldValue != undefined
-      ? props.maskSettingValue(props.settingFieldValue)
+      ? props.view.maskSettingValue(props.settingFieldValue)
       : undefined
   );
 
   function showHideButtonOnClick() {
     setIsShow((prev) => !prev);
     setSettingFieldValue(
-      props.maskSettingValue(
+      props.view.maskSettingValue(
         props.settingFieldValue != undefined
-          ? props.maskSettingValue(props.settingFieldValue)
+          ? props.view.maskSettingValue(props.settingFieldValue)
           : ""
       )
     );
@@ -42,58 +49,35 @@ export default function ChangebleSetting(props: changebleSettingProps) {
     <>
       <div className={classes["setting-container"]}>
         {isEditMod ? (
-          <div className={classes["edit-container"]}>
-            <input
-              value={currentSettingFieldValue}
-              onChange={(e) =>
-                setcurrentSettingFieldValue(e.currentTarget.value)
-              }
-            />
-            <p>{props.editDescriptionText}</p>
-            <div className={classes["edit-container-buttons"]}>
-              <LoadingButton
-                text={"Сохранить"}
-                onClick={() => {
-                  setIsLoading((prev) => !prev);
-                }}
-                isLoading={isLoading}
-                classes={"gray-button"}
-                loader={<BarLoader width={"72px"} />}
+          <EditForm
+            userFieldSettingValue={props.settingFieldValue}
+            edit={props.edit}
+            cancelButtonOnClick={() => {
+              setIsEditMod(false);
+            }}
+          />
+        ) : (
+          <div className={classes["view-wrapper"]}>
+            <div className={classes["view-container"]}>
+              <div className={classes["setting-value"]}>
+                <p>
+                  {isShow ? props.settingFieldValue : securitySettingFieldValue}
+                </p>
+              </div>
+              <ShowHideEditButtons
+                buttonsContainerClass={classes["buttons"]}
+                editButtonOnClick={() => setIsEditMod(true)}
+                isShow={isShow}
+                showHideButtonOnClick={showHideButtonOnClick}
               />
-              <button
-                disabled={currentSettingFieldValue == undefined}
-                className="gray-button"
-                onClick={() => {
-                  setIsEditMod(false);
-                  setIsLoading(false);
-                }}
-              >
-                Отмена
-              </button>
+            </div>
+
+            <div className={classes["description-container"]}>
+              <p>{props.view.descriptionText}</p>
             </div>
           </div>
-        ) : (
-          <>
-            <div className={classes["setting-value"]}>
-              <p>
-                {isShow ? props.settingFieldValue : securitySettingFieldValue}
-              </p>
-            </div>
-            <ShowHideEditButtons
-              buttonsContainerClass={classes["buttons"]}
-              editButtonOnClick={() => setIsEditMod(true)}
-              isShow={isShow}
-              showHideButtonOnClick={showHideButtonOnClick}
-            />
-          </>
         )}
       </div>
-
-      {isEditMod ? null : (
-        <div className={classes["description-container"]}>
-          <p>{props.descriptionText}</p>
-        </div>
-      )}
     </>
   );
 }
