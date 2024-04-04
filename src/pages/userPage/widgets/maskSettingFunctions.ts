@@ -16,6 +16,6 @@ export function maskRsyaAuthorizationToken(value: string): string {
 
   const maskedLength = value.length - visibleLengthStart - visibleLengthEnd;
   const maskedPart = "*".repeat(maskedLength);
-
-  return visibleStart + maskedPart + visibleEnd;
+  const result = visibleStart + maskedPart + visibleEnd;
+  return result;
 }

@@ -42,7 +42,7 @@ export default function UserPage() {
           <div className={classes["user-settings-container"]}>
             <UserSetttingsRow settingFieldName={"Адрес электронной почты"}>
               <ChangebleSetting
-                settingFieldValue={userFields?.email}
+                actualSettingValue={userFields?.email}
                 view={{
                   maskSettingValue: maskEmail,
                   descriptionText:
@@ -76,7 +76,7 @@ export default function UserPage() {
 
             <UserSetttingsRow settingFieldName={"Токен авториазции РСЯ"}>
               <ChangebleSetting
-                settingFieldValue={userFields?.rsyaAuthorizationToken!}
+                actualSettingValue={userFields?.rsyaAuthorizationToken!}
                 view={{
                   maskSettingValue: maskRsyaAuthorizationToken,
                   descriptionText:
@@ -86,7 +86,7 @@ export default function UserPage() {
                   errorMessage:
                     DEFAULT_USER_FIELDS_ERROR_MESSAGES.rsyaAuthorizationToken,
                   successfullyMessage:
-                    "Токен авторизации РСЯ успешно установлен",
+                    "Токен авторизации РСЯ успешно установлен.",
                   editDescriptionText: "Новый токен авторизации РСЯ",
                   validatedInputType: "text",
                   validateFunction: validateRsyaAuthorizationToken,

@@ -1,12 +1,12 @@
 import ValidatedInputField from "components/validatedInputField/ValidatedInputField";
 import classes from "./editForm.module.css";
 import LoadingButton from "components/loadingButton/LoadingButton";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { edit } from "../ChangebleSetting";
 import { useFormField } from "hooks/useFormField";
 import { getErrorMessage } from "pages/authPages/helpers/utils";
-import useSetRsyaAuthorizationToken from "hooks/requests/useSetRsyaAuthorizationToken";
+import { ChangebleSettingContext } from "../changebleSettingContext";
 
 export interface editFromProps {
   userFieldSettingValue?: string;
@@ -17,28 +17,35 @@ export interface editFromProps {
 
 export default function EditForm(props: editFromProps) {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+
   const inputField = useFormField<string>(
     props.userFieldSettingValue ?? "",
     props.edit.validateFunction
   );
-  const [userFieldSettingValue, setUserFieldSettingValue] = useState<
-    string | undefined
-  >(props.userFieldSettingValue);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isSuccessfulySet, setIsSuccessfulySet] = useState<boolean>(false);
+
+  const changebleSettingContext = useContext(ChangebleSettingContext);
 
   async function submitButtonHandler() {
     setIsLoading(true);
 
     const response = await props.edit.request(inputField.value);
 
-    if (Array.isArray(response.error)) {
+    if (Array.isArray(response.ErrorMessages)) {
       inputField.setIsValid(false);
-      setErrorMessages(response.error);
-      setIsSuccessfulySet(false);
+      setErrorMessages(response.ErrorMessages);
+      changebleSettingContext?.setUserSettingFieldState((prev) => ({
+        ...prev,
+        isSuccessfulySet: false,
+      }));
     } else {
-      setUserFieldSettingValue(inputField.value);
-      setIsSuccessfulySet(true);
+      changebleSettingContext?.setUserSettingFieldState({
+        actualValue: inputField.value,
+        isSuccessfulySet: true,
+      });
+
+      props.cancelButtonOnClick();
     }
 
     setIsLoading(false);
@@ -47,12 +54,6 @@ export default function EditForm(props: editFromProps) {
   return (
     <>
       <div className={classes["edit-container"]}>
-        {isSuccessfulySet ? (
-          <div className={classes["successfuly-message"]}>
-            <p>{props.edit.successfullyMessage}</p>
-          </div>
-        ) : null}
-
         <ValidatedInputField
           type={props.edit.validatedInputType}
           placeholderText={""}
@@ -66,7 +67,9 @@ export default function EditForm(props: editFromProps) {
         <div className={classes["edit-container-buttons"]}>
           <LoadingButton
             disable={
-              !inputField.isValid || userFieldSettingValue == inputField.value
+              !inputField.isValid ||
+              changebleSettingContext?.userSettingFieldState.actualValue ==
+                inputField.value
             }
             text={"Сохранить"}
             onClick={submitButtonHandler}
@@ -75,7 +78,10 @@ export default function EditForm(props: editFromProps) {
             loader={<BarLoader width={"72px"} />}
           />
           <button
-            disabled={userFieldSettingValue == undefined}
+            disabled={
+              changebleSettingContext?.userSettingFieldState.actualValue ==
+              undefined
+            }
             className="gray-button"
             onClick={() => {
               props.cancelButtonOnClick();

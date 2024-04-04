@@ -1,7 +1,7 @@
 import useAuthorizedApi from "../useAuthorizedApi";
 
-export interface errorMessages {
-  error: string[];
+export interface CHLENI {
+  errorMessages: string[];
 }
 
 export interface rsyaAythorizationToken {
@@ -17,14 +17,14 @@ export default function useSetRsyaAuthorizationToken() {
 
   async function setRsyaAuthorizationToken(
     token: string
-  ): Promise<errorMessages> {
+  ): Promise<{ ErrorMessages: string[] }> {
     const payload: setRsyaAuthorizationTokenPayload = {
       rsyaAythorizationToken: {
         token: token,
       },
     };
 
-    const response = await api.put<errorMessages>(
+    const response = await api.put<{ ErrorMessages: string[] }>(
       `user/set-rsya-authorization-token`,
       payload
     );
