@@ -32,9 +32,9 @@ export default function EditForm(props: editFromProps) {
 
     const response = await props.edit.request(inputField.value);
 
-    if (Array.isArray(response.ErrorMessages)) {
+    if (response.status != 200) {
       inputField.setIsValid(false);
-      setErrorMessages(response.ErrorMessages);
+      setErrorMessages(response.data.ErrorMessages);
       changebleSettingContext?.setUserSettingFieldState((prev) => ({
         ...prev,
         isSuccessfulySet: false,
@@ -45,7 +45,9 @@ export default function EditForm(props: editFromProps) {
         isSuccessfulySet: true,
       });
 
-      props.cancelButtonOnClick();
+      props.edit.updateLocalStorage(inputField.value);
+
+      if (inputField.value) props.cancelButtonOnClick();
     }
 
     setIsLoading(false);

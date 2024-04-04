@@ -1,3 +1,4 @@
+import { AxiosResponse } from "axios";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export interface CHLENI {
@@ -5,7 +6,7 @@ export interface CHLENI {
 }
 
 export interface rsyaAythorizationToken {
-  token: string;
+  token: string | null;
 }
 
 export interface setRsyaAuthorizationTokenPayload {
@@ -15,12 +16,17 @@ export interface setRsyaAuthorizationTokenPayload {
 export default function useSetRsyaAuthorizationToken() {
   const api = useAuthorizedApi();
 
-  async function setRsyaAuthorizationToken(
-    token: string
-  ): Promise<{ ErrorMessages: string[] }> {
+  async function setRsyaAuthorizationToken(token: string): Promise<
+    AxiosResponse<
+      {
+        ErrorMessages: string[];
+      },
+      any
+    >
+  > {
     const payload: setRsyaAuthorizationTokenPayload = {
       rsyaAythorizationToken: {
-        token: token,
+        token: token == "" ? null : token,
       },
     };
 
@@ -29,7 +35,7 @@ export default function useSetRsyaAuthorizationToken() {
       payload
     );
 
-    return response.data;
+    return response;
   }
 
   return setRsyaAuthorizationToken;

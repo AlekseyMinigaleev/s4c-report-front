@@ -5,6 +5,7 @@ import EditForm from "./editForm/EditForm";
 import { CHLENI } from "hooks/requests/useSetRsyaAuthorizationToken";
 
 import { ChangebleSettingContext } from "./changebleSettingContext";
+import { AxiosResponse } from "axios";
 
 export interface changebleSettingProps {
   actualSettingValue?: string;
@@ -24,7 +25,16 @@ export interface edit {
   errorMessage: string;
   successfullyMessage: string;
 
-  request: (value: string) => Promise<{ ErrorMessages: string[] }>;
+  request: (value: string) => Promise<
+    AxiosResponse<
+      {
+        ErrorMessages: string[];
+      },
+      any
+    >
+  >;
+  updateLocalStorage: (value: string) => void;
+  // TODO: убрать после реализации смены email.
   disableEditButton: boolean;
 }
 
@@ -63,6 +73,10 @@ export default function ChangebleSetting(props: changebleSettingProps) {
       setSecuritySettingFieldValue(
         props.view.maskSettingValue(userSettingFieldState.actualValue)
       );
+
+      if (userSettingFieldState.isSuccessfulySet) {
+        props.edit.updateLocalStorage(userSettingFieldState.actualValue);
+      }
     }
   }, [userSettingFieldState.actualValue]);
 
@@ -95,7 +109,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
 
           {isEditMod ? (
             <EditForm
-              userFieldSettingValue={props.actualSettingValue}
+              userFieldSettingValue={userSettingFieldState.actualValue}
               edit={props.edit}
               cancelButtonOnClick={() => {
                 setIsEditMod(false);

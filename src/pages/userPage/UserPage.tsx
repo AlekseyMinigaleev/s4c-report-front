@@ -16,6 +16,7 @@ import {
 } from "pages/authPages/helpers/validations";
 import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "utils/constants";
 import useSetRsyaAuthorizationToken from "hooks/requests/useSetRsyaAuthorizationToken";
+import { developerInfo } from "models/DeveloperInfo";
 
 export default function UserPage() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
@@ -56,6 +57,9 @@ export default function UserPage() {
                     "Адрес электронной почты успешно обновлен.",
                   validatedInputType: "email",
                   validateFunction: validateEmail,
+                  updateLocalStorage: function (value: string) {
+                    throw new Error("Function not implemented.");
+                  },
                   request: function (value: string) {
                     throw new Error("Function not implemented.");
                   },
@@ -92,6 +96,22 @@ export default function UserPage() {
                   editDescriptionText: "Новый токен авторизации РСЯ",
                   validatedInputType: "text",
                   validateFunction: validateRsyaAuthorizationToken,
+                  updateLocalStorage: (value: string) => {
+                    const storedData = localStorage.getItem("developerInfo");
+                    if (!storedData) {
+                      return;
+                    }
+
+                    const developerInfo: developerInfo = JSON.parse(storedData);
+
+                    if (value) developerInfo.isRsyaAuthorizationTokenSet = true;
+                    else developerInfo.isRsyaAuthorizationTokenSet = false;
+
+                    localStorage.setItem(
+                      "developerInfo",
+                      JSON.stringify(developerInfo)
+                    );
+                  },
                   request: (value) => setRsyaAuthorizationToken(value),
 
                   disableEditButton: false,
