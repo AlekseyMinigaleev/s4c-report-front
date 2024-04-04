@@ -25,6 +25,7 @@ export interface edit {
   successfullyMessage: string;
 
   request: (value: string) => Promise<{ ErrorMessages: string[] }>;
+  disableEditButton: boolean;
 }
 
 export interface userSettingFieldState {
@@ -115,6 +116,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
                   editButtonOnClick={() => setIsEditMod(true)}
                   isShow={isShow}
                   showHideButtonOnClick={showHideButtonOnClick}
+                  disableEditButton={props.edit.disableEditButton}
                 />
               </div>
 

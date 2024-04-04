@@ -7,6 +7,8 @@ export interface showHideEditButtonsProps {
   buttonsContainerClass?: string;
   editButtonOnClick: () => void;
   showHideButtonOnClick: () => void;
+
+  disableEditButton: boolean;
 }
 
 export default function ShowHideEditButtons(props: showHideEditButtonsProps) {
@@ -27,7 +29,10 @@ export default function ShowHideEditButtons(props: showHideEditButtonsProps) {
           </div>
         )}
         <div>
-          <button onClick={props.editButtonOnClick}>
+          <button
+            onClick={props.editButtonOnClick}
+            disabled={props.disableEditButton}
+          >
             <img src={editIcon} />
           </button>
         </div>

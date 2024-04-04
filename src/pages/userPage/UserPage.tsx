@@ -59,6 +59,8 @@ export default function UserPage() {
                   request: function (value: string) {
                     throw new Error("Function not implemented.");
                   },
+
+                  disableEditButton: true,
                 }}
               />
             </UserSetttingsRow>
@@ -91,6 +93,8 @@ export default function UserPage() {
                   validatedInputType: "text",
                   validateFunction: validateRsyaAuthorizationToken,
                   request: (value) => setRsyaAuthorizationToken(value),
+
+                  disableEditButton: false,
                 }}
               />
             </UserSetttingsRow>
