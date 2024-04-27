@@ -14,7 +14,7 @@ import {
   validateEmail,
   validateRsyaAuthorizationToken,
 } from "pages/authPages/helpers/validations";
-import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "utils/constants";
+import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "Utils/constants";
 import useSetRsyaAuthorizationToken from "hooks/requests/useSetRsyaAuthorizationToken";
 import { developerInfo } from "models/DeveloperInfo";
 

@@ -1,6 +1,6 @@
 import lodash from "lodash";
-import { sort, sortType } from "./filter";
-import { valueWithProgressModel as valueWithProgressModel } from "./valueWithProgress";
+import { sort, sortType } from "./Filter";
+import { valueWithProgressModel as valueWithProgressModel } from "./ValueWithProgress";
 
 export interface game {
   id: string;

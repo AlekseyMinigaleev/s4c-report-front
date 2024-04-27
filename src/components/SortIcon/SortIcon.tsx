@@ -1,6 +1,6 @@
 import sortIcon from "../../resources/images/sort-icon.png";
-import { sortType } from "../../models/filter";
-import classes from "./sortIcon.module.css";
+import { sortType } from "../../models/Filter";
+import classes from "./SortIcon.module.css";
 
 interface SortIconProps {
   sort: sortType;

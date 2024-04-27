@@ -8,12 +8,12 @@ import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
 } from "hooks/requests/useGetGameStatisticById";
 import { TableHeaderModel } from "pages/gamesPage/widgets/gameTable/GameTable";
-import { gameStatisticModel } from "models/gameStatisticModel";
-import { sortType, sort } from "models/filter";
-import { getNewSort } from "utils/FilterUtils";
+import { gameStatisticModel } from "models/GameStatisticModel";
+import { sortType, sort } from "models/Filter";
+import { getNewSort } from "Utils/FilterUtils";
 
 import SortedTableHeader from "widgets/SortedTableHeader";
-import LoadingButton from "components/loadingButton/LoadingButton";
+import LoadingButton from "components/LoadingButton/LoadingButton";
 import { BarLoader } from "react-spinners";
 
 interface GameStatisticTableProps {

@@ -1,5 +1,5 @@
 import formclasses from "../../widgets/form.module.css";
-import classes from "./forgotPassword.module.css";
+import classes from "./ForgotPassword.module.css";
 
 export default function ForgotPassword() {
   return (

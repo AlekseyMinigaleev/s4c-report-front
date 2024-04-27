@@ -1,4 +1,4 @@
-import { valueWithProgressModel } from "./valueWithProgress";
+import { valueWithProgressModel } from "./ValueWithProgress";
 
 export interface gameStatisticModel {
   evaluation: number;

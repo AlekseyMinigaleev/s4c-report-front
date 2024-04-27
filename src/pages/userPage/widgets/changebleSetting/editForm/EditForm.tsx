@@ -1,6 +1,6 @@
 import ValidatedInputField from "components/validatedInputField/ValidatedInputField";
 import classes from "./editForm.module.css";
-import LoadingButton from "components/loadingButton/LoadingButton";
+import LoadingButton from "components/LoadingButton/LoadingButton";
 import { useContext, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { edit } from "../ChangebleSetting";

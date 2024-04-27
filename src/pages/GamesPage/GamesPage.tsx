@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
-import TotalTable from "./widgets/totalTable/TotalTable";
-import { sortType } from "models/filter";
+import TotalTable from "./widgets/TotalTable/TotalTable";
+import { sortType } from "models/Filter";
 import { GAMES_PER_PAGE } from "./constants";
 import { MoonLoader } from "react-spinners";
 import { useParams } from "react-router-dom";

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import ValidatedInputField from "../../../components/validatedInputField/ValidatedInputField";
-import Button from "../../../components/button/Button";
+import Button from "../../../components/Button/Button";
 import {
   validateEmail,
   validateDeveloperPageUrl,
@@ -21,7 +21,7 @@ import AuthContext from "../../../context/AuthProvider";
 import { routeType } from "models/routeType";
 import { useNavigate } from "react-router-dom";
 import classes from "./form.module.css";
-import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "utils/constants";
+import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "Utils/constants";
 
 export default function SignUpForm() {
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { sort } from "../models/filter";
+import { sort } from "../models/Filter";
 import { TableHeaderModel } from "../pages/gamesPage/widgets/gameTable/GameTable";
-import SortIcon from "../components/sortIcon/SortIcon";
+import SortIcon from "../components/SortIcon/SortIcon";
 
 interface SortedTableHeaderProps<T> {
   sort: sort<T>;

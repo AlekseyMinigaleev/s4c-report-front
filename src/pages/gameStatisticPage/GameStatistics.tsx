@@ -1,4 +1,4 @@
-import Modal from "components/modal/Modal";
+import Modal from "components/Modal/Modal";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";

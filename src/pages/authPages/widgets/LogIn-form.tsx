@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import ValidatedInputField from "../../../components/validatedInputField/ValidatedInputField";
-import Button from "../../../components/button/Button";
+import Button from "../../../components/Button/Button";
 import { validateEmail, validatePassword } from "../helpers/validations";
 import { useFormField } from "../../../hooks/useFormField";
 import AuthContext from "../../../context/AuthProvider";
@@ -12,8 +12,8 @@ import useLogin, {
   LoginResponse,
 } from "../../../hooks/requests/useLogin";
 import useLoading from "../../../hooks/useLoading";
-import RememberMe from "../components/rememberMe/RememberMe";
-import ForgotPassword from "../components/forgotPassword/ForgotPassword";
+import RememberMe from "../components/RememberMe/RememberMe";
+import ForgotPassword from "../components/ForgotPassword/ForgotPassword";
 import classes from "./form.module.css";
 import { routeType } from "models/routeType";
 import { BarLoader } from "react-spinners";

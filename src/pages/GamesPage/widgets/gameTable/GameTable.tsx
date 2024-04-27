@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { sort, sortType } from "../../../../models/filter";
+import { sort, sortType } from "../../../../models/Filter";
 import ValueWithProgress from "../../components/ValueWithProgress";
-import { game } from "../../../../models/gameModel";
-import { getNewSort } from "../../../../utils/FilterUtils";
+import { game } from "../../../../models/GameModel";
+import { getNewSort } from "../../../../Utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import useGetGames from "../../../../hooks/requests/useGetGames";
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";

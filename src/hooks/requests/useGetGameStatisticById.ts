@@ -1,5 +1,5 @@
-import { paginate, sort } from "../../models/filter";
-import { gameStatisticModel } from "../../models/gameStatisticModel";
+import { paginate, sort } from "../../models/Filter";
+import { gameStatisticModel } from "../../models/GameStatisticModel";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export interface GetGameStatisticByGamePayload {

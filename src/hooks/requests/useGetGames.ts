@@ -1,5 +1,5 @@
-import { paginate, sort } from "models/filter";
-import { game } from "../../models/gameModel";
+import { paginate, sort } from "models/Filter";
+import { game } from "../../models/GameModel";
 import useAuthorizedApi from "../useAuthorizedApi";
 
 export interface GetGamesResponse {

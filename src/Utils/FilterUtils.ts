@@ -1,4 +1,4 @@
-import { sort, sortType } from "../models/filter";
+import { sort, sortType } from "../models/Filter";
 import { TableHeaderModel } from "../pages/gamesPage/widgets/gameTable/GameTable";
 
 export function paginate<T>(

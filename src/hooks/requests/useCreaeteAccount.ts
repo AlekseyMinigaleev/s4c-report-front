@@ -1,5 +1,5 @@
 import anonymousApi from "../../api/anonymousApi";
-import { userCreditionals } from "../../models/userCreditionals";
+import { userCreditionals } from "../../models/UserCreditionals";
 
 export interface CreateAccountPayload {
   credentionals: userCreditionals;

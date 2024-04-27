@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { userCreditionals } from "../../models/userCreditionals";
+import { userCreditionals } from "../../models/UserCreditionals";
 import anonymousApi from "../../api/anonymousApi";
 import { authenticationTokens } from "../../models/AuthenticationTokens";
 import { developerInfo } from "../../models/DeveloperInfo";
