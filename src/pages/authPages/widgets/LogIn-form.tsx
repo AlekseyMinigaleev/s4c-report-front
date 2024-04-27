@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import ValidatedInputField from "../components/validatedInputField/ValidatedInputField";
+import ValidatedInputField from "../../../components/validatedInputField/ValidatedInputField";
 import Button from "../../../components/button/Button";
-import { validateLogin, validatePassword } from "../helpers/validations";
+import { validateEmail, validatePassword } from "../helpers/validations";
 import { useFormField } from "../../../hooks/useFormField";
 import AuthContext from "../../../context/AuthProvider";
-import ErrorMessage from "../components/errorMessaage/ErrorMessage";
+import ErrorMessage from "../../../components/errorMessaage/ErrorMessage";
 import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import useLogin, {
@@ -21,7 +21,7 @@ import { BarLoader } from "react-spinners";
 export default function LogInForm() {
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
 
-  const email = useFormField<string>("", validateLogin);
+  const email = useFormField<string>("", validateEmail);
   const password = useFormField<string>("", validatePassword);
 
   const authContext = useContext(AuthContext);
@@ -60,7 +60,7 @@ export default function LogInForm() {
   }
 
   let isValidFormForRequest =
-    validateLogin(email.value) && validatePassword(password.value);
+    validateEmail(email.value) && validatePassword(password.value);
 
   return (
     <form onSubmit={(e) => e.preventDefault()} noValidate>
@@ -71,6 +71,8 @@ export default function LogInForm() {
         onChange={email.handleChange}
         isValid={email.isValid}
         errorMessage={"Некорректный формат электронной почты"}
+        inputContainerClasses={classes["section"]}
+        value={email.value}
       />
 
       <ValidatedInputField
@@ -82,6 +84,8 @@ export default function LogInForm() {
         errorMessage={
           "Минимальная длина пароля - 8 символов, пароль должен содержать хотя бы одну: заглавную букву, строчную букву, цифру"
         }
+        inputContainerClasses={classes["section"]}
+        value={password.value}
       />
 
       <RememberMe />

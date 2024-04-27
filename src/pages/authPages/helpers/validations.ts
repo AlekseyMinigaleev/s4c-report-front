@@ -1,4 +1,4 @@
-export function validateLogin(login: string): boolean {
+export function validateEmail(login: string): boolean {
   let isValid = false;
   if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(login)) {
     isValid = true;

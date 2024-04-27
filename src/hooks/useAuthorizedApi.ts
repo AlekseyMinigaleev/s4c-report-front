@@ -37,7 +37,7 @@ export default function useAuthorizedApi() {
           }
         }
 
-        return Promise.reject(error);
+        return Promise.resolve(error.response);
       }
     );
 

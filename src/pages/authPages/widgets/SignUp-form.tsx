@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import ValidatedInputField from "../components/validatedInputField/ValidatedInputField";
+import ValidatedInputField from "../../../components/validatedInputField/ValidatedInputField";
 import Button from "../../../components/button/Button";
 import {
-  validateLogin,
+  validateEmail,
   validateDeveloperPageUrl,
   validateRsyaAuthorizationToken,
   validatePassword,
@@ -20,12 +20,8 @@ import useLogin, { LoginPayload } from "hooks/requests/useLogin";
 import AuthContext from "../../../context/AuthProvider";
 import { routeType } from "models/routeType";
 import { useNavigate } from "react-router-dom";
-
-const defaultErrorMessages = {
-  email: "Некорректный формат электронной почты",
-  developerPageUrl: "Указана не корректная ссылка на страницу разработчика",
-  rsyaAuthorizationToken: "Указан неверный токен авторизации",
-};
+import classes from "./form.module.css";
+import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "utils/constants";
 
 export default function SignUpForm() {
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
@@ -33,7 +29,7 @@ export default function SignUpForm() {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const email = useFormField<string>("", validateLogin);
+  const email = useFormField<string>("", validateEmail);
   const password = useFormField<string>("", validatePassword);
   const developerPageUrl = useFormField<string>("", validateDeveloperPageUrl);
   const rsyaAuthorizationToken = useFormField<string>(
@@ -100,7 +96,7 @@ export default function SignUpForm() {
   }
 
   let isValidFormForRequest =
-    validateLogin(email.value) &&
+    validateEmail(email.value) &&
     validatePassword(password.value) &&
     validateDeveloperPageUrl(developerPageUrl.value) &&
     validateRsyaAuthorizationToken(rsyaAuthorizationToken.value) &&
@@ -116,9 +112,11 @@ export default function SignUpForm() {
           onChange={email.handleChange}
           isValid={email.isValid}
           errorMessage={getErrorMessage(
-            defaultErrorMessages.email,
+            DEFAULT_USER_FIELDS_ERROR_MESSAGES.email,
             errorMessages.login
           )}
+          inputContainerClasses={classes["section"]}
+          value={email.value}
         />
 
         <ValidatedInputField
@@ -128,9 +126,11 @@ export default function SignUpForm() {
           onChange={developerPageUrl.handleChange}
           isValid={developerPageUrl.isValid}
           errorMessage={getErrorMessage(
-            defaultErrorMessages.developerPageUrl,
+            DEFAULT_USER_FIELDS_ERROR_MESSAGES.developerPageUrl,
             errorMessages.developerPageUrl
           )}
+          inputContainerClasses={classes["section"]}
+          value={developerPageUrl.value}
         />
 
         <ValidatedInputField
@@ -140,9 +140,11 @@ export default function SignUpForm() {
           onChange={rsyaAuthorizationToken.handleChange}
           isValid={rsyaAuthorizationToken.isValid}
           errorMessage={getErrorMessage(
-            defaultErrorMessages.rsyaAuthorizationToken,
+            DEFAULT_USER_FIELDS_ERROR_MESSAGES.rsyaAuthorizationToken,
             errorMessages.rsyaAuthorizationToken
           )}
+          inputContainerClasses={classes["section"]}
+          value={rsyaAuthorizationToken.value}
         />
 
         <ValidatedInputField
@@ -154,6 +156,8 @@ export default function SignUpForm() {
           errorMessage={
             "Минимальная длина пароля - 8 символов, пароль должен содержать хотя бы одну: заглавную букву, строчную букву, цифру"
           }
+          inputContainerClasses={classes["section"]}
+          value={password.value}
         />
 
         <ValidatedInputField
@@ -163,6 +167,8 @@ export default function SignUpForm() {
           onChange={repeatPassword.handleChange}
           isValid={validateRepeatPassword(repeatPassword.value, password.value)}
           errorMessage={"Пароли не совпадают"}
+          inputContainerClasses={classes["section"]}
+          value={repeatPassword.value}
         />
         <Button
           onClick={handleCreateAccount}
