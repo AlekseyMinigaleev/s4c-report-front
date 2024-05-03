@@ -149,7 +149,11 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
                     {gameStatistic.lastSynchroDate &&
                       new Date(
                         gameStatistic.lastSynchroDate
-                      ).toLocaleDateString()}
+                      ).toLocaleDateString("ru-RU")}{" "}
+                    {new Date(gameStatistic.lastSynchroDate).toLocaleTimeString(
+                      "ru-RU",
+                      { hour: "2-digit", minute: "2-digit" }
+                    )}
                   </td>
                   <td>{gameStatistic.evaluation.toLocaleString()}</td>
                   <td>
