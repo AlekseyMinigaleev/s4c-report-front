@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { sort, sortType } from "../../../../models/Filter";
 import ValueWithProgress from "../../components/ValueWithProgress";
 import { game } from "../../../../models/GameModel";
@@ -6,7 +6,6 @@ import { getNewSort } from "../../../../Utils/FilterUtils";
 import ReactPaginate from "react-paginate";
 import useGetGames from "../../../../hooks/requests/useGetGames";
 import SortedTableHeader from "../../../../widgets/SortedTableHeader";
-import { GAMES_PER_PAGE } from "pages/gamesPage/constants";
 import classes from "./gameTable.module.css";
 import gamePageClasses from "../../GamesPage.module.css";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
@@ -56,10 +55,13 @@ export default function GameTable(props: GameTableProps) {
     },
   ];
 
-  const pageCount = Math.ceil(props.count / GAMES_PER_PAGE);
   const getGames = useGetGames();
 
   const currentPage = props.page - 1;
+  const [gamesPerPage, setGamesPerPage] = useState<number>(() => {
+    const savedValue = localStorage.getItem('gamesPerPage');
+    return savedValue ? parseInt(savedValue) : 10;
+  });
   const [sort, setSort] = useState<sort<game>>({
     key: "rating",
     sortType: sortType.desc,
@@ -67,6 +69,11 @@ export default function GameTable(props: GameTableProps) {
   const [games, setGames] = useState<game[]>(props.games);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+  const pageCount = Math.ceil(props.count / gamesPerPage);
+
+  useEffect(() => {
+    localStorage.setItem('gamesPerPage', gamesPerPage.toString());
+  }, [gamesPerPage]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,7 +81,7 @@ export default function GameTable(props: GameTableProps) {
       const newGames = await getGames({
         paginate: {
           pageNumber: currentPage + 1,
-          itemsPerPage: GAMES_PER_PAGE,
+          itemsPerPage: gamesPerPage,
         },
         sort: sort,
         includeTotal: false,
@@ -84,7 +91,7 @@ export default function GameTable(props: GameTableProps) {
     };
 
     fetchData();
-  }, [currentPage, sort]);
+  }, [currentPage, sort, gamesPerPage]);
 
   function onPageChange(props: paginationProps) {
     const pageNumber = props.selected;
@@ -98,6 +105,10 @@ export default function GameTable(props: GameTableProps) {
 
   function gameClickHandler(game: game) {
     navigate(`/${routeType[routeType.game]}/${game.id}`);
+  }
+
+  function selectGamesPerPageHandler(event: ChangeEvent<HTMLSelectElement>) {
+    setGamesPerPage(parseInt(event.target.value));
   }
 
   return (
@@ -169,21 +180,39 @@ export default function GameTable(props: GameTableProps) {
             ))}
           </tbody>
         </table>
-        <ReactPaginate
-          nextLabel=">"
-          previousLabel="<"
-          breakLabel=""
-          onPageChange={onPageChange}
-          pageCount={pageCount}
-          forcePage={currentPage}
-          pageRangeDisplayed={1}
-          marginPagesDisplayed={1}
-          containerClassName={classes["pagination"]}
-          pageLinkClassName={classes["page-num"]}
-          previousLinkClassName={classes["page-num"]}
-          nextLinkClassName={classes["page-num"]}
-          activeLinkClassName={classes["active"]}
-        />
+
+        <div className={classes["paginate-container"]}>
+          <ReactPaginate
+            nextLabel=">"
+            previousLabel="<"
+            breakLabel=""
+            onPageChange={onPageChange}
+            pageCount={pageCount}
+            forcePage={currentPage}
+            pageRangeDisplayed={1}
+            marginPagesDisplayed={1}
+            containerClassName={classes["pagination"]}
+            pageLinkClassName={classes["page-num"]}
+            previousLinkClassName={classes["page-num"]}
+            nextLinkClassName={classes["page-num"]}
+            activeLinkClassName={classes["active"]}
+          />
+
+          <div className={classes["rows-per-page-container"]}>
+            <label htmlFor="rows per page">Записей на странице</label>
+            <select
+              value={gamesPerPage}
+              id="rows per page"
+              onChange={selectGamesPerPageHandler}
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
       </BlureContainer>
     </>
   );

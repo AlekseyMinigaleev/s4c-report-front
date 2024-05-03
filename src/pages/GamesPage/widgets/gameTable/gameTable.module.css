@@ -1,8 +1,10 @@
+@import "../../../../resources/fonts/fonts.css";
+
 .table {
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
   border-bottom: none;
+  width: 100%;
 }
 
 .table thead {
@@ -58,16 +60,28 @@
   padding-left: 0.3rem;
 }
 
+.paginate-container{
+  display: flex;
+  justify-content: space-between;
+  font-size: 16pt;
+}
+
+.rows-per-page-container{
+  width: auto;
+}
+.rows-per-page-container select{
+  font-size: 16pt;
+  font-family: "Futura PT Medium";
+  margin-left: 0.5rem;
+}
+
 .pagination {
+  left: 50%;
   flex: 0 0 auto;
   list-style: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
-  margin-bottom: 2rem;
-
-  font-size: 16pt;
   gap: 5px;
   height: auto;
 }
