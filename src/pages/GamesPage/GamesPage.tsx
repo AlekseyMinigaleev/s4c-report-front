@@ -51,7 +51,7 @@ export default function GamesPage() {
           <MoonLoader />
         </div>
       ) : (
-        <>
+        <div className={classes["container"]}>
           <section>
             <h1 className={classes["h1"]}>Общая статистика</h1>
             <TotalTable
@@ -70,7 +70,7 @@ export default function GamesPage() {
               borderClasses={classes["border"]}
             />
           </section>
-        </>
+        </div>
       )}
     </>
   );

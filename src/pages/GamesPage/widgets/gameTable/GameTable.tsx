@@ -169,21 +169,35 @@ export default function GameTable(props: GameTableProps) {
             ))}
           </tbody>
         </table>
-        <ReactPaginate
-          nextLabel=">"
-          previousLabel="<"
-          breakLabel=""
-          onPageChange={onPageChange}
-          pageCount={pageCount}
-          forcePage={currentPage}
-          pageRangeDisplayed={1}
-          marginPagesDisplayed={1}
-          containerClassName={classes["pagination"]}
-          pageLinkClassName={classes["page-num"]}
-          previousLinkClassName={classes["page-num"]}
-          nextLinkClassName={classes["page-num"]}
-          activeLinkClassName={classes["active"]}
-        />
+
+        <div className={classes["paginate-container"]}>
+          <ReactPaginate
+            nextLabel=">"
+            previousLabel="<"
+            breakLabel=""
+            onPageChange={onPageChange}
+            pageCount={pageCount}
+            forcePage={currentPage}
+            pageRangeDisplayed={1}
+            marginPagesDisplayed={1}
+            containerClassName={classes["pagination"]}
+            pageLinkClassName={classes["page-num"]}
+            previousLinkClassName={classes["page-num"]}
+            nextLinkClassName={classes["page-num"]}
+            activeLinkClassName={classes["active"]}
+          />
+          
+          <div className={classes["rows-per-page-container"]}>
+            <label htmlFor="rows per page">Записей на странице</label>
+            <select name="" id="rows per page">
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </div>
+        </div>
       </BlureContainer>
     </>
   );
