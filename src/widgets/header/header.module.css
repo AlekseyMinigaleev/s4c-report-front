@@ -8,6 +8,11 @@
 .logo-section {
   width: auto;
   cursor: pointer;
+  border-radius: 10px;
+  padding: 0.5rem
+}
+.logo-section:hover{
+  background-color: lightgray;
 }
 
 .navigation-container {
@@ -35,6 +40,11 @@
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  border-radius: 10px;
+  padding: 0.5rem
+}
+.developer-name:hover{
+  background-color: lightgray;
 }
 
 .header {
