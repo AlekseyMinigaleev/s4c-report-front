@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
-import classes from "./userFieldManagmentPanel.module.css";
+import classes from "./ManagmentPanel.module.css";
 
-export interface userSettingsRowProps {
+export interface managmentPanelProps {
   settingFieldName?: string;
   children: ReactNode;
 }
 
-export default function UserSetttingsRow(
-  props: userSettingsRowProps
+export default function ManagmentPanel(
+  props: managmentPanelProps
 ) {
   return (
     <div className={classes["container"]}>
