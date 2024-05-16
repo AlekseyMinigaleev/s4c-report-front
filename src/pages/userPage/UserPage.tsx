@@ -17,7 +17,7 @@ import {
 import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "Utils/constants";
 import useSetRsyaAuthorizationToken from "hooks/requests/useSetRsyaAuthorizationToken";
 import { developerInfo } from "models/DeveloperInfo";
-
+import SwitchButton from "components/switchButton/SwitchButton";
 
 export default function UserPage() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
@@ -35,6 +35,21 @@ export default function UserPage() {
 
     fetchData();
   }, []);
+
+  const [isConfidentialModeOn, setIsConfidentialMode] = useState<boolean>(
+    () => {
+      const storedValue = localStorage.getItem("isConfidentialModeOn");
+      return storedValue === "true";
+    }
+  );
+
+  function confidentioalModeHandle() {
+    setIsConfidentialMode((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("isConfidentialModeOn", `${newValue}`);
+      return newValue;
+    });
+  }
 
   return (
     <>
@@ -127,7 +142,21 @@ export default function UserPage() {
               />
             </ManagmentPanel>
 
-
+            <ManagmentPanel settingFieldName="Конфидециальный режим">
+              <StaticField
+                fieldValue={
+                  <>
+                    <SwitchButton
+                      isOn={isConfidentialModeOn}
+                      handleToggle={confidentioalModeHandle}
+                    />
+                  </>
+                }
+                description={
+                  "Режим при котором вся конфидециальная информация, не  вывыодится"
+                }
+              ></StaticField>
+            </ManagmentPanel>
           </div>
         </div>
       )}
