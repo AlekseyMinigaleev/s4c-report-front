@@ -1,6 +1,8 @@
 import { getGameByIdResponse } from "hooks/requests/useGetGameById";
 import classes from "./gameStatisticHeader.module.css";
 import SetPageId from "./setPageIdWidget/SetPageId";
+import BlureContainer from "widgets/blureContainer/BlureContainer";
+import ConfidentioalContainer from "widgets/confidentialContainer/confidentialContainer";
 
 interface GameStatisticHeaderProps {
   game: getGameByIdResponse;
@@ -44,7 +46,9 @@ export default function GameStatisticHeader(props: GameStatisticHeaderProps) {
               </div>
 
               <div className={classes["pageId-wrapper"]}>
-                <SetPageId gameId={props.gameId} pageId={props.game.pageId} />
+                <ConfidentioalContainer>
+                  <SetPageId gameId={props.gameId} pageId={props.game.pageId} />
+                </ConfidentioalContainer>
               </div>
             </div>
           </div>
