@@ -3,29 +3,30 @@ import classes from "./editForm.module.css";
 import LoadingButton from "components/LoadingButton/LoadingButton";
 import { useContext, useState } from "react";
 import { BarLoader } from "react-spinners";
-import { edit } from "../ChangebleSetting";
+import { edit } from "../DynamicField";
 import { useFormField } from "hooks/useFormField";
 import { getErrorMessage } from "pages/authPages/helpers/utils";
-import { ChangebleSettingContext } from "../changebleSettingContext";
+import { DinamicFieldContext } from "../DynamicFieldContext";
 
 export interface editFromProps {
-  userFieldSettingValue?: string;
-  edit: edit;
-
+  value?: string;
   cancelButtonOnClick: () => void;
+
+  edit: edit;
 }
+
 
 export default function EditForm(props: editFromProps) {
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   const inputField = useFormField<string>(
-    props.userFieldSettingValue ?? "",
+    props.value ?? "",
     props.edit.validateFunction
   );
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const changebleSettingContext = useContext(ChangebleSettingContext);
+  const changebleSettingContext = useContext(DinamicFieldContext);
 
   async function submitButtonHandler() {
     setIsLoading(true);

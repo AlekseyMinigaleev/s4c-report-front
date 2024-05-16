@@ -11,6 +11,7 @@ import gamePageClasses from "../../GamesPage.module.css";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
 import { useNavigate } from "react-router";
 import { routeType } from "models/routeType";
+import ConfidentioalContainer from "widgets/confidentialContainer/confidentialContainer";
 
 export interface TableHeaderModel<T> {
   key: keyof T;
@@ -59,7 +60,7 @@ export default function GameTable(props: GameTableProps) {
 
   const currentPage = props.page - 1;
   const [gamesPerPage, setGamesPerPage] = useState<number>(() => {
-    const savedValue = localStorage.getItem('gamesPerPage');
+    const savedValue = localStorage.getItem("gamesPerPage");
     return savedValue ? parseInt(savedValue) : 10;
   });
   const [sort, setSort] = useState<sort<game>>({
@@ -72,7 +73,7 @@ export default function GameTable(props: GameTableProps) {
   const pageCount = Math.ceil(props.count / gamesPerPage);
 
   useEffect(() => {
-    localStorage.setItem('gamesPerPage', gamesPerPage.toString());
+    localStorage.setItem("gamesPerPage", gamesPerPage.toString());
   }, [gamesPerPage]);
 
   useEffect(() => {
@@ -159,15 +160,17 @@ export default function GameTable(props: GameTableProps) {
                   )}
                 </td>
                 <td>
-                  {game.cashIncome != null ? (
-                    <ValueWithProgress
-                      valueWithProgress={game.cashIncome.valueWithProgress}
-                      progressClassName={classes["progress"]}
-                      regressClassName={classes["regress"]}
-                    />
-                  ) : (
-                    "-"
-                  )}
+                  <ConfidentioalContainer>
+                    {game.cashIncome != null ? (
+                      <ValueWithProgress
+                        valueWithProgress={game.cashIncome.valueWithProgress}
+                        progressClassName={classes["progress"]}
+                        regressClassName={classes["regress"]}
+                      />
+                    ) : (
+                      "-"
+                    )}
+                  </ConfidentioalContainer>
                 </td>
                 <td>
                   {game.cashIncome?.valueWithProgress?.actualValue == 0 ? (

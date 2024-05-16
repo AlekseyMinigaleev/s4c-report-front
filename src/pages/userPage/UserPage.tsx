@@ -3,9 +3,9 @@ import useGetUserInfo, {
   FetchUserRsponse,
 } from "../../hooks/requests/useFetchUser";
 import classes from "./userPage.module.css";
-import UserSetttingsRow from "./widgets/UserFieldManagmentPanel";
-import ChangebleSetting from "./widgets/changebleSetting/ChangebleSetting";
-import StaticSetting from "./widgets/staticSetting/StaticSetting";
+import ManagmentPanel from "./widgets/ManagmentPanel";
+import DynamicField from "./widgets/dynamicField/DynamicField";
+import StaticField from "./widgets/staticField/StaticField";
 import {
   maskEmail,
   maskRsyaAuthorizationToken,
@@ -17,6 +17,7 @@ import {
 import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "Utils/constants";
 import useSetRsyaAuthorizationToken from "hooks/requests/useSetRsyaAuthorizationToken";
 import { developerInfo } from "models/DeveloperInfo";
+import SwitchButton from "components/switchButton/SwitchButton";
 
 export default function UserPage() {
   const [userFields, setUserFields] = useState<FetchUserRsponse>();
@@ -35,15 +36,30 @@ export default function UserPage() {
     fetchData();
   }, []);
 
+  const [isConfidentialModeOn, setIsConfidentialMode] = useState<boolean>(
+    () => {
+      const storedValue = localStorage.getItem("isConfidentialModeOn");
+      return storedValue === "true";
+    }
+  );
+
+  function confidentioalModeHandle() {
+    setIsConfidentialMode((prev) => {
+      const newValue = !prev;
+      localStorage.setItem("isConfidentialModeOn", `${newValue}`);
+      return newValue;
+    });
+  }
+
   return (
     <>
       {userFields?.developerPageUrl === undefined ||
       userFields.email === undefined ? null : (
         <div className={classes["wrapper"]}>
           <div className={classes["user-settings-container"]}>
-            <UserSetttingsRow settingFieldName={"Адрес электронной почты"}>
-              <ChangebleSetting
-                actualSettingValue={userFields?.email}
+            <ManagmentPanel settingFieldName={"Адрес электронной почты"}>
+              <DynamicField
+                value={userFields?.email}
                 view={{
                   maskSettingValue: maskEmail,
                   descriptionText:
@@ -67,22 +83,29 @@ export default function UserPage() {
                   disableEditButton: true,
                 }}
               />
-            </UserSetttingsRow>
+            </ManagmentPanel>
 
-            <UserSetttingsRow
+            <ManagmentPanel
               settingFieldName={"Ссылка на страницу разработчика"}
             >
-              <StaticSetting
-                fieldValue={userFields?.developerPageUrl!}
+              <StaticField
+                fieldValue={
+                  <a
+                    className="link-color"
+                    href={userFields?.developerPageUrl!}
+                  >
+                    {userFields?.developerPageUrl!}
+                  </a>
+                }
                 description={
-                  "Ссылка на страницу разработчика, по которой собирается статистика  "
+                  "Ссылка на страницу разработчика, по которой собирается статистика"
                 }
               />
-            </UserSetttingsRow>
+            </ManagmentPanel>
 
-            <UserSetttingsRow settingFieldName={"Токен авториазции РСЯ"}>
-              <ChangebleSetting
-                actualSettingValue={userFields?.rsyaAuthorizationToken!}
+            <ManagmentPanel settingFieldName={"Токен авториазции РСЯ"}>
+              <DynamicField
+                value={userFields?.rsyaAuthorizationToken!}
                 view={{
                   maskSettingValue: maskRsyaAuthorizationToken,
                   descriptionText:
@@ -117,7 +140,23 @@ export default function UserPage() {
                   disableEditButton: false,
                 }}
               />
-            </UserSetttingsRow>
+            </ManagmentPanel>
+
+            <ManagmentPanel settingFieldName="Конфидециальный режим">
+              <StaticField
+                fieldValue={
+                  <>
+                    <SwitchButton
+                      isOn={isConfidentialModeOn}
+                      handleToggle={confidentioalModeHandle}
+                    />
+                  </>
+                }
+                description={
+                  "Режим при котором вся конфидециальная информация, не  вывыодится"
+                }
+              ></StaticField>
+            </ManagmentPanel>
           </div>
         </div>
       )}

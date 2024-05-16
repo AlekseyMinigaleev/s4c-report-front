@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import classes from "./changebleSetting.module.css";
+import classes from "./dinamicField.module.css";
 import ShowHideEditButtons from "pages/userPage/Components/ShowHideEditButtons";
 import EditForm from "./editForm/EditForm";
 
-
-import { ChangebleSettingContext } from "./changebleSettingContext";
+import { DinamicFieldContext } from "./DynamicFieldContext";
 import { AxiosResponse } from "axios";
 
-export interface changebleSettingProps {
-  actualSettingValue?: string;
+export interface dynamicFieldProps {
+  value?: string;
   view: view;
   edit: edit;
 }
@@ -43,16 +42,16 @@ export interface userSettingFieldState {
   isSuccessfulySet: boolean;
 }
 
-export default function ChangebleSetting(props: changebleSettingProps) {
+export default function DynamicField(props: dynamicFieldProps) {
   const [isEditMod, setIsEditMod] = useState<boolean>(
-    props.actualSettingValue == undefined
+    props.value == undefined
   );
 
   const [isShow, setIsShow] = useState<boolean>(false);
 
   const [userSettingFieldState, setUserSettingFieldState] =
     useState<userSettingFieldState>({
-      actualValue: props.actualSettingValue,
+      actualValue: props.value,
       isSuccessfulySet: false,
     });
 
@@ -94,7 +93,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
 
   return (
     <>
-      <ChangebleSettingContext.Provider
+      <DinamicFieldContext.Provider
         value={{
           setUserSettingFieldState: setUserSettingFieldState,
           userSettingFieldState: userSettingFieldState,
@@ -109,11 +108,11 @@ export default function ChangebleSetting(props: changebleSettingProps) {
 
           {isEditMod ? (
             <EditForm
-              userFieldSettingValue={userSettingFieldState.actualValue}
-              edit={props.edit}
+              value={userSettingFieldState.actualValue}
               cancelButtonOnClick={() => {
                 setIsEditMod(false);
               }}
+              edit={props.edit}
             />
           ) : (
             <div className={classes["view-wrapper"]}>
@@ -140,7 +139,7 @@ export default function ChangebleSetting(props: changebleSettingProps) {
             </div>
           )}
         </div>
-      </ChangebleSettingContext.Provider>
+      </DinamicFieldContext.Provider>
     </>
   );
 }

@@ -15,6 +15,7 @@ import { getNewSort } from "Utils/FilterUtils";
 import SortedTableHeader from "widgets/SortedTableHeader";
 import LoadingButton from "components/LoadingButton/LoadingButton";
 import { BarLoader } from "react-spinners";
+import ConfidentioalContainer from "widgets/confidentialContainer/confidentialContainer";
 
 interface GameStatisticTableProps {
   gameId: string;
@@ -168,15 +169,17 @@ export default function GameStatisticTable(props: GameStatisticTableProps) {
                     )}
                   </td>
                   <td>
-                    {gameStatistic.cashIncome != null ? (
-                      <ValueWithProgress
-                        valueWithProgress={gameStatistic.cashIncome}
-                        progressClassName={gameTableClasses["progress"]}
-                        regressClassName={gameTableClasses["regress"]}
-                      />
-                    ) : (
-                      "-"
-                    )}
+                    <ConfidentioalContainer>
+                      {gameStatistic.cashIncome != null ? (
+                        <ValueWithProgress
+                          valueWithProgress={gameStatistic.cashIncome}
+                          progressClassName={gameTableClasses["progress"]}
+                          regressClassName={gameTableClasses["regress"]}
+                        />
+                      ) : (
+                        "-"
+                      )}
+                    </ConfidentioalContainer>
                   </td>
                 </tr>
               ))}
