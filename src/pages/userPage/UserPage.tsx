@@ -142,7 +142,7 @@ export default function UserPage() {
               />
             </ManagmentPanel>
 
-            <ManagmentPanel settingFieldName="Конфидециальный режим">
+            <ManagmentPanel settingFieldName="Конфиденциальный режим">
               <StaticField
                 fieldValue={
                   <>

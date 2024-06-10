@@ -25,7 +25,7 @@ export default function AuthPage() {
             onClick={() => setFormVaiant("SignUp")}
             isActive={formVariant == "SignUp"}
           >
-            Регистарция
+            Регистрация
           </Button>
         </div>
 
