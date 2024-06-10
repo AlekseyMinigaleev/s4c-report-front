@@ -72,8 +72,7 @@ export default function LogInForm() {
         isValid={email.isValid}
         errorMessage={"Некорректный формат электронной почты"}
         inputContainerClasses={classes["section"]}
-        value={email.value}
-      />
+        value={email.value} labelText={""}      />
 
       <ValidatedInputField
         type="password"
@@ -81,12 +80,9 @@ export default function LogInForm() {
         required={true}
         onChange={password.handleChange}
         isValid={password.isValid}
-        errorMessage={
-          "Минимальная длина пароля - 8 символов, пароль должен содержать хотя бы одну: заглавную букву, строчную букву, цифру"
-        }
+        errorMessage={"Минимальная длина пароля - 8 символов, пароль должен содержать хотя бы одну: заглавную букву, строчную букву, цифру"}
         inputContainerClasses={classes["section"]}
-        value={password.value}
-      />
+        value={password.value} labelText={""}      />
 
       <RememberMe />
 

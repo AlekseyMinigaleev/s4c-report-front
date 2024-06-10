@@ -22,6 +22,7 @@ import { routeType } from "models/routeType";
 import { useNavigate } from "react-router-dom";
 import classes from "./form.module.css";
 import { DEFAULT_USER_FIELDS_ERROR_MESSAGES } from "Utils/constants";
+import RequireLabel from "components/RequireLabel/RequireLabel";
 
 export default function SignUpForm() {
   const [errorMessages, setErrorMessages] = useState<ErrorMessages>(
@@ -117,6 +118,7 @@ export default function SignUpForm() {
           )}
           inputContainerClasses={classes["section"]}
           value={email.value}
+          labelText={<RequireLabel text={"Адрес электронной почты"}/>}
         />
 
         <ValidatedInputField
@@ -131,6 +133,7 @@ export default function SignUpForm() {
           )}
           inputContainerClasses={classes["section"]}
           value={developerPageUrl.value}
+          labelText={<RequireLabel text={"Ссылка на страницу разработчика"}/>}
         />
 
         <ValidatedInputField
@@ -145,6 +148,7 @@ export default function SignUpForm() {
           )}
           inputContainerClasses={classes["section"]}
           value={rsyaAuthorizationToken.value}
+          labelText={"Токен авторизации РСЯ"}
         />
 
         <ValidatedInputField
@@ -158,17 +162,19 @@ export default function SignUpForm() {
           }
           inputContainerClasses={classes["section"]}
           value={password.value}
+          labelText={<RequireLabel text={"Пароль"}/>}
         />
 
         <ValidatedInputField
           type="password"
           required={true}
-          placeholderText="повтор пароля"
+          placeholderText="Повтор пароля"
           onChange={repeatPassword.handleChange}
           isValid={validateRepeatPassword(repeatPassword.value, password.value)}
           errorMessage={"Пароли не совпадают"}
           inputContainerClasses={classes["section"]}
           value={repeatPassword.value}
+          labelText={<RequireLabel text={"Подтверждение пароля"}/>}
         />
         <Button
           onClick={handleCreateAccount}

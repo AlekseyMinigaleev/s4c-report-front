@@ -1,9 +1,11 @@
 import classes from "./validatedInputField.module.css";
 import ErrorMessage from "../errorMessaage/ErrorMessage";
+import { ReactNode } from "react";
 
 interface ValidatedInputFieldProps {
   type: string;
   placeholderText: string;
+  labelText: ReactNode;
   required?: boolean;
   isValid: boolean;
   errorMessage: string;
@@ -22,6 +24,7 @@ export default function ValidatedInputField(props: ValidatedInputFieldProps) {
     <div
       className={`${classes["input-container"]} ${props.inputContainerClasses}`}
     >
+      {props.labelText}
       <input
         className={inputClasses}
         type={`${props.type}`}
