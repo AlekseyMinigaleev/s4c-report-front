@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 export default function Button(props: ButtonProps) {
-  const activeClass = `${props.isActive ? `${classes.button} ${classes.active}` : `${classes.button}`}`
+  const activeClass = `${props.isActive ? `${classes.button} ${classes.active}` : `${classes.button} ${classes.inactive}`}`
   const className = `${props.className}`;
   return (
     <button

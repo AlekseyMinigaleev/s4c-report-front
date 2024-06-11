@@ -1,0 +1,49 @@
+.section {
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.description{
+  margin-bottom: 2rem;
+  font-size: 16pt;
+}
+
+h1{
+  margin-bottom: 3rem;
+}
+.input-sent-container{
+  display: flex;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field {
+  border-radius: 0.3rem;
+  border: 0.1rem solid black;
+  height: 2rem;
+  width: 20rem;
+  padding: 0.4rem;
+  margin-right: 1rem;
+}
+
+input.invalid {
+  border: 1px solid red;
+}
+
+.center{
+  text-align:  center;
+  margin-top: 2rem;
+}
+.width{
+  max-width: 600px;
+}
