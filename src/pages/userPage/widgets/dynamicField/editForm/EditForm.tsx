@@ -63,8 +63,7 @@ export default function EditForm(props: editFromProps) {
           isValid={inputField.isValid}
           errorMessage={getErrorMessage(props.edit.errorMessage, errorMessages)}
           onChange={inputField.handleChange}
-          value={inputField.value}
-        />
+          value={inputField.value} labelText={""}        />
 
         <p>{props.edit.editDescriptionText}</p>
         <div className={classes["edit-container-buttons"]}>

@@ -63,12 +63,12 @@ export default function UserPage() {
                 view={{
                   maskSettingValue: maskEmail,
                   descriptionText:
-                    "Этот адрес электронной почты привязан к вашей учетной записи.",
+                    "Этот адрес электронной почты привязан к вашей учетной записи",
                 }}
                 edit={{
                   errorMessage: DEFAULT_USER_FIELDS_ERROR_MESSAGES.email,
                   editDescriptionText:
-                    "Новый адрес электронной почты, который будет привязан к вашей учетной записи.",
+                    "Новый адрес электронной почты, который будет привязан к вашей учетной записи",
                   successfullyMessage:
                     "Адрес электронной почты успешно обновлен.",
                   validatedInputType: "email",
@@ -109,13 +109,13 @@ export default function UserPage() {
                 view={{
                   maskSettingValue: maskRsyaAuthorizationToken,
                   descriptionText:
-                    "Токен авторизации в системе РСЯ, позволяющий собирать данные о доходе.",
+                    "Токен авторизации в системе РСЯ, позволяющий собирать данные о доходе",
                 }}
                 edit={{
                   errorMessage:
                     DEFAULT_USER_FIELDS_ERROR_MESSAGES.rsyaAuthorizationToken,
                   successfullyMessage:
-                    "Токен авторизации РСЯ успешно установлен.",
+                    "Токен авторизации РСЯ успешно установлен",
                   editDescriptionText: "Новый токен авторизации РСЯ",
                   validatedInputType: "text",
                   validateFunction: validateRsyaAuthorizationToken,
@@ -142,7 +142,7 @@ export default function UserPage() {
               />
             </ManagmentPanel>
 
-            <ManagmentPanel settingFieldName="Конфидециальный режим">
+            <ManagmentPanel settingFieldName="Конфиденциальный режим">
               <StaticField
                 fieldValue={
                   <>

@@ -24,7 +24,7 @@ export default function useCreateAccount() {
     payload: CreateAccountPayload
   ): Promise<ErrorMessages> {
     const response = await anonymousApi.post(
-      "user/createAccount",
+      "Authentication/createAccount",
       JSON.stringify(payload),
       {
         withCredentials: true,

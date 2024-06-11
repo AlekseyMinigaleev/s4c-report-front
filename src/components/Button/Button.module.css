@@ -16,6 +16,11 @@
   color: #fff;
 }
 
+.button.inactive {
+  background:    #dfdfdf;
+  color: black;
+}
+
 .button:disabled {
   cursor: not-allowed;
 }

@@ -7,6 +7,7 @@ import AppLayout from "./hooks/layouts/AppLayout";
 import PersistLoginLayout from "./hooks/layouts/PersistLoginLayout";
 import GameStatistics from "pages/gameStatisticPage/GameStatistics";
 import { routeType } from "models/routeType";
+import EmailVerificationForm from "pages/authPages/widgets/EmailVerificationForm/EmailVerificationForm";
 
 export default function App() {
   return (
@@ -16,6 +17,10 @@ export default function App() {
         <Route
           path={`/${routeType[routeType.auth]}/*`}
           element={<Navigate to={`/${routeType[routeType.auth]}`} replace />}
+        />
+        <Route
+          path={`/${routeType[routeType["email-verification"]]}/:email`}
+          element={<EmailVerificationForm />}
         />
 
         <Route element={<PersistLoginLayout />}>

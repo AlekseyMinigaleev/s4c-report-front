@@ -3,4 +3,5 @@ export enum routeType{
   "games",
   "game",
   "user",
+  "email-verification"
 }
