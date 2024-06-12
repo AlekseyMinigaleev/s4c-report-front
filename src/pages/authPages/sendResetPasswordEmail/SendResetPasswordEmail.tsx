@@ -2,14 +2,14 @@ import ValidatedInputField from "components/validatedInputField/ValidatedInputFi
 import AuthPageContainer from "../components/AuthPageContainer/AuthPageContainer";
 import { useFormField } from "hooks/useFormField";
 import { validateEmail } from "../helpers/validations";
-import classes from ".//ResetPasswordPage.module.css";
+import classes from "./sendResetPasswordEmail.module.css";
 import Button from "components/Button/Button";
 import { BarLoader } from "react-spinners";
 import ErrorMessage from "components/errorMessaage/ErrorMessage";
 import { useState } from "react";
 import useSendResetPassword from "hooks/requests/useSendResetPassword";
 
-export default function ResetPasswordPage() {
+export default function SendResetPasswordEmail() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [serverErrorMessage, setServerErrorMessage] = useState<string>("");
   const [successMessage, setSuccessMessage] = useState<string>("");
