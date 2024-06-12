@@ -13,8 +13,12 @@ import { convertCompilerOptionsFromJson } from "typescript";
 const EmailVerificationForm: React.FC = () => {
   const { email } = useParams();
   const [verificationCode, setVerificationCode] = useState("");
-  const [isVerificationCodeLoading, setIsVerificationCodeLoading] = useState(false);
-  const [isSendVerificationEmailCodeLoading, setIsSendVerificationEmailCodeLoading] = useState(false);
+  const [isVerificationCodeLoading, setIsVerificationCodeLoading] =
+    useState(false);
+  const [
+    isSendVerificationEmailCodeLoading,
+    setIsSendVerificationEmailCodeLoading,
+  ] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isValidInput, setIsValidInput] = useState<boolean>(true);
 
@@ -35,8 +39,8 @@ const EmailVerificationForm: React.FC = () => {
 
   const handleVerifyCode = async () => {
     setIsVerificationCodeLoading(true);
-    
-    const isValid = (await verifyCode(verificationCode));
+
+    const isValid = await verifyCode(verificationCode);
     console.log(isValid);
 
     if (isValid) {
@@ -61,8 +65,8 @@ const EmailVerificationForm: React.FC = () => {
         <div className={classes["width"]}>
           <h1>Подтверждение адреса электронной почты</h1>
           <p className={classes["description"]}>
-            На адресс электронной почты <b>{email}</b>, был выслан 6-ти значный код.
-            Скопируйте его в поле ниже
+            На адресс электронной почты <b>{email}</b>, был выслан 6-ти значный
+            код. Скопируйте его в поле ниже
           </p>
           <div>
             <div className={classes["input-sent-container"]}>
@@ -73,13 +77,18 @@ const EmailVerificationForm: React.FC = () => {
                 value={verificationCode}
                 onChange={(e) => {
                   const input = e.target.value;
-                  setVerificationCode(input);
-                  if (validateVerificationCode(input)) {
+                  // Оставляем только цифры от 0 до 9
+                  const formattedInput = input.replace(/\D/g, "");
+                  // Обрезаем до 6 символов
+                  const truncatedInput = formattedInput.slice(0, 6);
+                  setVerificationCode(truncatedInput);
+                  if (validateVerificationCode(truncatedInput)) {
                     setIsValidInput(true);
+                  } else {
+                    setIsValidInput(false);
                   }
                 }}
                 maxLength={6}
-                pattern="\d{6}"
               />
               <Button
                 onClick={handleSendVerificationEmail}
@@ -106,7 +115,11 @@ const EmailVerificationForm: React.FC = () => {
                 className={classes.section}
                 isActive={validateVerificationCode(verificationCode)}
               >
-                {isVerificationCodeLoading ? <BarLoader color="white" /> : "Готово"}
+                {isVerificationCodeLoading ? (
+                  <BarLoader color="white" />
+                ) : (
+                  "Готово"
+                )}
               </Button>
             </div>
           </div>
