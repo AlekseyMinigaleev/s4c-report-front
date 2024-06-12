@@ -83,7 +83,7 @@ export default function SignUpForm() {
         JSON.stringify(response.data.developerInfo)
       );
 
-      navigate(`/${routeType[routeType["email-verification"]]}/${email.value}`);
+      navigate(`/${routeType[routeType["confirm-email"]]}/${email.value}`);
     }
     setIsLoading(false);
   }

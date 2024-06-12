@@ -19,7 +19,7 @@ export default function useVerifyEmailCode() {
     };
 
     const response = await apiPrivate.post(
-      "Email/VerifyEmailVerificationCode",
+      "Email/verify-email-verification-code",
       JSON.stringify(payload),
       {
         withCredentials: true,

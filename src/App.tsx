@@ -19,7 +19,7 @@ export default function App() {
           element={<Navigate to={`/${routeType[routeType.auth]}`} replace />}
         />
         <Route
-          path={`/${routeType[routeType["email-verification"]]}/:email`}
+          path={`/${routeType[routeType["confirm-email"]]}/:email`}
           element={<EmailVerificationForm />}
         />
 

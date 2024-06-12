@@ -102,7 +102,7 @@ const EmailVerificationForm: React.FC = () => {
             <div className={classes["center"]}>
               <Button
                 onClick={handleVerifyCode}
-                disabled={validateVerificationCode(verificationCode)}
+                disabled={!validateVerificationCode(verificationCode)}
                 className={classes.section}
                 isActive={validateVerificationCode(verificationCode)}
               >
