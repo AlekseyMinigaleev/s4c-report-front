@@ -4,5 +4,6 @@ export enum routeType{
   "game",
   "user",
   "confirm-email",
-  "send-reset-password"
+  "send-reset-password",
+  "reset-password"
 }

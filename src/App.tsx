@@ -9,6 +9,7 @@ import GameStatistics from "pages/gameStatisticPage/GameStatistics";
 import { routeType } from "models/routeType";
 import EmailVerificationForm from "pages/authPages/widgets/EmailVerificationForm/EmailVerificationForm";
 import SendResetPasswordEmail from "pages/authPages/sendResetPasswordEmail/SendResetPasswordEmail";
+import ResetPassword from "pages/authPages/ResetPassword/ResetPassword";
 
 export default function App() {
   return (
@@ -26,6 +27,11 @@ export default function App() {
         <Route
           path={`/${routeType[routeType["send-reset-password"]]}`}
           element={<SendResetPasswordEmail />}
+        />
+
+        <Route
+          path={`/${routeType[routeType["reset-password"]]}`}
+          element={<ResetPassword />}
         />
 
         <Route element={<PersistLoginLayout />}>
