@@ -8,6 +8,7 @@ import PersistLoginLayout from "./hooks/layouts/PersistLoginLayout";
 import GameStatistics from "pages/gameStatisticPage/GameStatistics";
 import { routeType } from "models/routeType";
 import EmailVerificationForm from "pages/authPages/widgets/EmailVerificationForm/EmailVerificationForm";
+import ResetPasswordPage from "pages/authPages/resetPasswordPage/ResetPasswordPage";
 
 export default function App() {
   return (
@@ -21,6 +22,10 @@ export default function App() {
         <Route
           path={`/${routeType[routeType["confirm-email"]]}/:email`}
           element={<EmailVerificationForm />}
+        />
+        <Route
+          path={`/${routeType[routeType["send-reset-password"]]}`}
+          element={<ResetPasswordPage />}
         />
 
         <Route element={<PersistLoginLayout />}>
