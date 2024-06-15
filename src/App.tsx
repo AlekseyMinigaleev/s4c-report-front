@@ -5,11 +5,11 @@ import AuthPage from "./pages/authPages/AuthPage";
 import RequireAuthLayout from "./hooks/layouts/RequireAuthLayout";
 import AppLayout from "./hooks/layouts/AppLayout";
 import PersistLoginLayout from "./hooks/layouts/PersistLoginLayout";
-import GameStatistics from "pages/gameStatisticPage/GameStatistics";
-import { routeType } from "models/routeType";
-import EmailVerificationForm from "pages/authPages/widgets/EmailVerificationForm/EmailVerificationForm";
-import SendResetPasswordEmail from "pages/authPages/sendResetPasswordEmail/SendResetPasswordEmail";
-import ResetPassword from "pages/authPages/ResetPassword/ResetPassword";
+import GameStatistics from "./pages/gameStatisticPage/GameStatistics";
+import { routeType } from "./models/routeType";
+import EmailVerificationForm from "./pages/authPages/widgets/EmailVerificationForm/EmailVerificationForm";
+import SendResetPasswordEmail from "./pages/authPages/sendResetPasswordEmail/SendResetPasswordEmail";
+import ResetPassword from "./pages/authPages/ResetPassword/ResetPassword";
 
 export default function App() {
   return (
@@ -38,9 +38,7 @@ export default function App() {
           <Route element={<RequireAuthLayout />}>
             <Route
               path={`/${routeType[routeType.games]}`}
-              element={
-                <Navigate to={`/${routeType[routeType.games]}/1`} replace />
-              }
+              element={<Navigate to={`/${routeType[routeType.games]}/1`} replace />}
             />
             <Route
               path={`/${routeType[routeType.games]}/:pageNumber`}

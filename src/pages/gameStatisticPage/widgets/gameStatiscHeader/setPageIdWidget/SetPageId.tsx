@@ -101,7 +101,7 @@ export default function SetPageId(props: SetPageIdProps) {
                 className={`${classes["rsyaToken-not-set-message"]} ${classes["error"]}`}
               >
                 Для использования этого функционала, необходимо{" "}
-                <a className="link-color" href="/user">
+                <a className="link-color" href="/#user">
                   установить токен авторизации РСЯ.
                 </a>
               </p>
