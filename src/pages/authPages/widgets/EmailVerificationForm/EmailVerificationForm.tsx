@@ -65,7 +65,7 @@ const EmailVerificationForm: React.FC = () => {
         <div className={classes["width"]}>
           <h1>Подтверждение адреса электронной почты</h1>
           <p className={classes["description"]}>
-            На адресс электронной почты <b>{email}</b>, был выслан 6-ти значный
+            На адрес электронной почты <b>{email}</b>, был выслан 6-ти значный
             код. Скопируйте его в поле ниже
           </p>
           <div>
