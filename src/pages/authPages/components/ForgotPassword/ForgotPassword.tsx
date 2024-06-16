@@ -8,7 +8,7 @@ export default function ForgotPassword() {
       <label className={classes["forgot-passport-label"]}>
         Забыли логин или пароль?
       </label>
-      <a href='/send-reset-password'> Восстановить</a>
+      <a href='/s4c-report-front/#/send-reset-password'> Восстановить</a>
       </div>
     </>
   );
