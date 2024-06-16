@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/s4c-report-front/static/css/main.bddaa109.css",
-    "main.js": "/s4c-report-front/static/js/main.a42b2b59.js",
+    "main.js": "/s4c-report-front/static/js/main.541535eb.js",
     "static/media/ofont.ru_Futura PT.ttf": "/s4c-report-front/static/media/ofont.ru_Futura PT.098188f70722ebed7df7.ttf",
     "static/media/cyrillicround.ttf": "/s4c-report-front/static/media/cyrillicround.f610f2df0ec1f6b41e62.ttf",
     "static/media/logo.png": "/s4c-report-front/static/media/logo.f72785c137877c0dbfdf.png",
     "static/media/menu-bar.png": "/s4c-report-front/static/media/menu-bar.3ce4ef381d491daee808.png",
     "index.html": "/s4c-report-front/index.html",
     "main.bddaa109.css.map": "/s4c-report-front/static/css/main.bddaa109.css.map",
-    "main.a42b2b59.js.map": "/s4c-report-front/static/js/main.a42b2b59.js.map"
+    "main.541535eb.js.map": "/s4c-report-front/static/js/main.541535eb.js.map"
   },
   "entrypoints": [
     "static/css/main.bddaa109.css",
-    "static/js/main.a42b2b59.js"
+    "static/js/main.541535eb.js"
   ]
 }
