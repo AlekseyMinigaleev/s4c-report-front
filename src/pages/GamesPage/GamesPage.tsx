@@ -1,10 +1,10 @@
 import classes from "./GamesPage.module.css";
-import GameTable from "./widgets/gameTable/GameTable";
+import GameTable from "../GamesPage/widgets/gameTable/GameTable";
 import { useEffect, useState } from "react";
 import useGetGames, {
   GetGamesResponse,
 } from "../../hooks/requests/useGetGames";
-import TotalTable from "./widgets/TotalTable/TotalTable";
+import TotalTable from "../GamesPage/widgets/TotalTable/TotalTable";
 import { sortType } from "models/Filter";
 import { MoonLoader } from "react-spinners";
 import { useParams } from "react-router-dom";

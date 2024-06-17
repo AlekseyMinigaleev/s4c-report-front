@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import GameStatisticTable from "./widgets/gameStatisticTable/GameStatisticTable";
 import GameStatisticHeader from "./widgets/gameStatiscHeader/GameStatisticHeader";
-import tableClasses from "../gamesPage/GamesPage.module.css";
+import tableClasses from "../GamesPage/GamesPage.module.css";
 import useGetGameById, {
   getGameByIdResponse,
 } from "hooks/requests/useGetGameById";

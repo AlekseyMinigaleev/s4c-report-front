@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import classes from "./gameStatisticTable.module.css";
-import gamePageclasses from "../../../gamesPage/GamesPage.module.css";
-import gameTableClasses from "../../../gamesPage/widgets/gameTable/gameTable.module.css";
-import ValueWithProgress from "pages/gamesPage/components/ValueWithProgress";
+import gamePageclasses from "../../../GamesPage/GamesPage.module.css";
+import gameTableClasses from "../../../GamesPage/widgets/gameTable/gameTable.module.css";
+import ValueWithProgress from "../../../GamesPage/components/ValueWithProgress";
 import BlureContainer from "widgets/blureContainer/BlureContainer";
 import useGetGameStatisticById, {
   GetGameStatisticByGamePayload,
 } from "hooks/requests/useGetGameStatisticById";
-import { TableHeaderModel } from "pages/gamesPage/widgets/gameTable/GameTable";
+import { TableHeaderModel } from "../../../GamesPage/widgets/gameTable/GameTable";
 import { gameStatisticModel } from "models/GameStatisticModel";
 import { sortType, sort } from "models/Filter";
 import { getNewSort } from "Utils/FilterUtils";

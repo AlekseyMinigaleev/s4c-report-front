@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import GamesPage from "./pages/gamesPage/GamesPage";
+import GamesPage from "../src/pages/GamesPage/GamesPage";
 import UserPage from "./pages/userPage/UserPage";
 import AuthPage from "./pages/authPages/AuthPage";
 import RequireAuthLayout from "./hooks/layouts/RequireAuthLayout";
