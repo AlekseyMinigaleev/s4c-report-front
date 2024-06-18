@@ -28,7 +28,7 @@ export function validateRsyaAuthorizationToken(
   rsyaAuthorizationToken: string
 ): boolean {
   return (
-    /^[a-zA-Z0-9_]+$/.test(rsyaAuthorizationToken) ||
+    /^y0_/.test(rsyaAuthorizationToken) ||
     rsyaAuthorizationToken == ""
   );
 }
