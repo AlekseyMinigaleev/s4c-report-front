@@ -1,46 +1,98 @@
-# Getting Started with Create React App
+# C4S.Report
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Описание проекта
 
-## Available Scripts
+C4S.Report - это проект для автоматизации сбора статистики по играм на платформе Яндекс Игры. Платформа предоставляет два различных ресурса для отслеживания статистики: один для метрик, связанных с доходом игры, и другой для метрик, связанных с самой игрой (оценка, рейтинг, дата публикации и прочие). Наш продукт решает проблему консолидации данных и автоматического сбора информации из разных источников.
 
-In the project directory, you can run:
+## Текущий статус
 
-### `npm start`
+Проект находится в стадии разработки. Возможны ошибки и баги. Актуальная версия проекта находится в ветке `dev`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Архитектура проекта
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Проект состоит из двух частей:
 
-### `npm test`
+- **Backend**: репозиторий с исходным кодом [C4S.Report Backend](https://github.com/AlekseyMinigaleev/C4S.Report/tree/dev).
+- **Frontend**: репозиторий с исходным кодом фронтенда [C4S.Report Frontend](https://github.com/AlekseyMinigaleev/s4c-report-front/tree/dev).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Технологии
 
-### `npm run build`
+Этот проект разработан с использованием следующих технологий:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **React**: JavaScript библиотека для создания пользовательских интерфейсов.
+- **TypeScript**: Статически типизированный язык программирования, расширяющий возможности JavaScript.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Запуск проекта
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Установка с помощью Git
 
-### `npm run eject`
+1. Склонируйте репозиторий с GitHub:
+    ```sh
+    git clone -b dev https://github.com/AlekseyMinigaleev/C4S.Frontend.git
+    cd C4S.Frontend
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. Установите зависимости:
+    ```sh
+    npm install
+    ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Запустите проект:
+    ```sh
+    npm start
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Установка с помощью Docker Compose
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Если вы предпочитаете использовать Docker для развертывания проекта, следуйте этим шагам:
 
-## Learn More
+1. Убедитесь, что у вас установлены Docker и Docker Compose.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Создайте файл `docker-compose.yml` с указанным ниже содержимым:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```yaml
+    version: '3.4'
+
+    networks:
+      c4s.report:
+
+    services:
+      db:
+        container_name: db
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        ports:
+          - 8001:1433
+        environment:
+          - ACCEPT_EULA=Y
+          - MSSQL_SA_PASSWORD=your_password
+        networks:
+          - c4s.report
+      api:
+        container_name: api
+        image: alekseyminigaleev/c4sapi:3.1
+        ports:
+          - 8080:8080
+        depends_on:
+          - db
+        networks:
+          - c4s.report
+      front:
+        container_name: front
+        image: alekseyminigaleev/c4s-front:3.1
+        ports:
+          - 3000:3000
+        networks:
+          - c4s.report
+    ```
+
+3. Запустите Docker Compose:
+    ```sh
+    docker-compose up
+    ```
+
+Эта конфигурация позволяет легко и быстро развернуть все необходимые компоненты проекта C4S.Report, используя Docker Compose. Все сервисы будут доступны на соответствующих портах на вашем локальном компьютере.
+
+Откройте браузер и перейдите по адресу:
+    ```
+    http://localhost:3000/auth
+    ```
