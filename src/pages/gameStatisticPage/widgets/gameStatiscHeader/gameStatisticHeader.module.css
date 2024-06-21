@@ -1,0 +1,80 @@
+@import "../../../../resources/fonts/fonts.css";
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.game-info-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.other {
+  display: flex;
+}
+
+/* ==============game preview============== */
+.preview {
+  padding-right: 2rem;
+}
+
+.img {
+  border-radius: 10px;
+}
+/* ==============game preview============== */
+
+/* ==============game info section============== */
+.title {
+  font-size: 25pt;
+}
+
+.categories {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.category {
+  padding-right: 1rem;
+  font-size: 14pt;
+}
+
+.game-link {
+  margin-bottom: 0;
+  background-color: #3498db;
+  border-radius: 5px;
+  padding: 0.8rem;
+  cursor: pointer;
+  font-size: 14pt;
+  text-align: center;
+  color: #fff;
+}
+.game-link:hover {
+  background-color: #2980b9;
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+}
+.link:hover {
+  color: #ecf0f1;
+}
+/* ==============game info section============== */
+
+/* ==============set pageId section============== */
+.pageId-wrapper {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: end;
+  width: 100%;
+}
+
+/* ==============set pageId section============== */

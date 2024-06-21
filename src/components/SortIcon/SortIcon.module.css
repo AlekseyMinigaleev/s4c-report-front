@@ -1,0 +1,11 @@
+.img {
+  max-width: 2rem;
+}
+
+.asc {
+  transform: scaleY(-1);
+}
+
+.desc {
+  transform: scaleY(1);
+}

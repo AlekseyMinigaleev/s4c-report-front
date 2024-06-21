@@ -1,0 +1,10 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section {
+  padding: 1rem;
+  width: 22rem;
+}

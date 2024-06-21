@@ -1,7 +1,43 @@
-.center {
+@import "../src/resources/fonts/fonts.css";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  height: 100%;
+  font-family: "Futura PT Medium";
+}
+
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
+.root {
   display: flex;
   flex-direction: column;
-  margin: auto;
-  margin-top: 10rem;
-  padding-bottom: 3rem;
+  min-height: 100%;
+}
+
+.link-color {
+  color: #0000ee;
+}
+
+.link-color:hover {
+  color: #6c6cfa;
+}
+
+.gray-button {
+  border: none;
+}
+.gray-button:hover {
+  background: #e7e8e9;
+  color: #9fa3a9;
+}
+.gray-button:disabled {
+  background: #e7e8e9;
 }

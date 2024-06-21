@@ -1,0 +1,63 @@
+@import "../../resources/fonts/fonts.css";
+
+.header-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.logo-section {
+  width: auto;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 0.5rem
+}
+.logo-section:hover{
+  background-color: lightgray;
+}
+
+.navigation-container {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.navigation-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-settings-section {
+  display: flex;
+  width: auto;
+  align-items: center;
+}
+
+.developer-name {
+  margin-right: 3rem;
+  font-weight: bolder;
+  font-family: "CyrillicRound", sans-serif;
+  font-size: 32pt;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 10px;
+  padding: 0.5rem
+}
+.developer-name:hover{
+  background-color: lightgray;
+}
+
+.header {
+  background-color: gray;
+  width: auto;
+  height: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.4rem;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 1rem;
+}
+
+.padding-right {
+  margin-right: 1rem;
+}

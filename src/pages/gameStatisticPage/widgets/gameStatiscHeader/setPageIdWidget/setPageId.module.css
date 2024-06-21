@@ -1,0 +1,87 @@
+.disable {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.pageId-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 417px;
+}
+
+.pageId {
+  display: flex;
+  justify-content: flex-end;
+  align-items: end;
+}
+
+.pageId input,
+button {
+  padding: 0.8rem;
+  height: 100%;
+  border: 1px solid black;
+  box-sizing: border-box;
+  font-family: "Futura PT Medium";
+  font-size: 14pt;
+  border-radius: 5px;
+}
+
+.pageId label {
+  font-size: 14pt;
+  align-self: center;
+  margin-right: 0.4rem;
+}
+
+.pageId input {
+  margin-right: 1rem;
+}
+
+.pageId button {
+  height: 55px;
+}
+
+.active-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.active-button:hover {
+  background-color: #2980b9;
+}
+
+.disable-button {
+  cursor: not-allowed;
+  background-color: #e9e9e9;
+  border: none;
+}
+
+.laoding-button {
+  cursor: not-allowed;
+}
+
+.server-response-container {
+  padding: 0.5rem 0.5rem 0.5rem 0rem;
+  font-size: 16pt;
+  min-height: 27px;
+  max-height: 54px;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+.rsyaToken-not-set-message {
+  font-size: 14pt;
+}
+
+

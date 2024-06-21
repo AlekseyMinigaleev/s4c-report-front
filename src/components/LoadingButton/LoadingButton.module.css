@@ -1,0 +1,16 @@
+.submit-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  outline: none;
+  min-height: 36px;
+  padding: 1rem;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.submit-btn:disabled {
+  cursor: not-allowed;
+}

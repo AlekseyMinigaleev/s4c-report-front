@@ -1,0 +1,116 @@
+@import "../../../../resources/fonts/fonts.css";
+
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom: none;
+  width: 100%;
+}
+
+.table thead {
+  vertical-align: middle;
+}
+
+.table th:nth-child(1) {
+  width: 30%;
+}
+.table th:nth-child(2) {
+  width: 15%;
+}
+.table th:nth-child(3) {
+  width: 9%;
+}
+.table th:nth-child(4) {
+  width: 23%;
+}
+.table th:nth-child(5) {
+  width: 24%;
+}
+.table th:nth-child(5) {
+  width: 24%;
+}
+
+.table th {
+  cursor: pointer;
+}
+
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+  cursor: pointer;
+}
+
+.table td {
+  vertical-align: middle;
+  border: 1px solid black;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+}
+
+.progress {
+  color: hsl(120, 95%, 42%);
+  padding-left: 0.3rem;
+}
+
+.regress {
+  color: hsl(0, 95%, 42%);
+  padding-left: 0.3rem;
+}
+
+.paginate-container{
+  display: flex;
+  justify-content: space-between;
+  font-size: 16pt;
+}
+
+.rows-per-page-container{
+  width: auto;
+}
+.rows-per-page-container select{
+  font-size: 16pt;
+  font-family: "Futura PT Medium";
+  margin-left: 0.5rem;
+}
+
+.pagination {
+  left: 50%;
+  flex: 0 0 auto;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: auto;
+}
+
+.pagination .page-num {
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 400;
+}
+
+.pagination .page-num:hover {
+  background-color: #5ab1bb;
+  color: #fff;
+}
+
+.pagination .active {
+  background-color: #5ab1bb;
+}
+
+.th-label {
+  padding-right: 1rem;
+  cursor: pointer;
+}
+
+.th-text-center {
+  text-align: center;
+}
+
+.rounded {
+  border-radius: 10px;
+}
